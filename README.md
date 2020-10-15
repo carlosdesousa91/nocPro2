@@ -5,3 +5,4 @@
 #Configuração
 - instalar modulo open ticket no centreon - https://documentation.centreon.com/docs/centreon-open-tickets/en/latest/installation/index.html
 yum install centreon-open-tickets
+aa
