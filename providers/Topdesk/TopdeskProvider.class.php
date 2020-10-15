@@ -1,3 +1,3 @@
 <?php 
-    echo 'deploy servidor homologação 2';
+    echo 'deploy servidor homologação 3';
 ?>
