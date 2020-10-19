@@ -70,9 +70,9 @@ class TopdeskProvider extends AbstractProvider {
      */
     protected function _setDefaultValueExtra() {
         $this->default_data['address'] = '127.0.0.1';
-        $this->default_data['path'] = '/tas/api';
-        $this->default_data['rest_link'] = '/incidents';
-        $this->default_data['webservice_name'] = '';
+        $this->default_data['path'] = '/tas';
+        $this->default_data['rest_link'] = '/api';
+        $this->default_data['webservice_name'] = '/incidents';
         $this->default_data['https'] = 0;
         $this->default_data['timeout'] = 60;
         
