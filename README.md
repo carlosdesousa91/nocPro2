@@ -15,10 +15,8 @@
 
 ``` $register_providers['Topdesk'] = 14; ```
 
-- Clonar o diretório /usr/share/centreon/www/modules/centreon-open-tickets/providers/Otrs/ e renomea-lo para /usr/share/centreon/www/modules/centreon-open-tickets/providers/Topdesk
-- Renomear o arquivo /usr/share/centreon/www/modules/centreon-open-tickets/providers/Topdesk/OtrsProvider.class.php para /usr/share/centreon/www/modules/centreon-open-tickets/providers/Topdesk/TopdeskProvider.class.php
-- Abrir o arquivo /usr/share/centreon/www/modules/centreon-open-tickets/providers/Topdesk/TopdeskProvider.class.php e renomear a primeira classe para ```class TopdeskProvider extends AbstractProvider```
+- Clonar o diretório providers/Topdesk para /usr/share/centreon/www/modules/centreon-open-tickets/providers/Topdesk
 
 Com isso o Provider Topdesk ficará disponível no Centreon todo baseado no provider do Otrs.
 
-
+### Classe TopdeskProvider
