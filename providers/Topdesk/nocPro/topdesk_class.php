@@ -43,7 +43,7 @@ function verificaTicket($id_relacinamento, $horadafalha, $rule_data=array()){
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 	curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-        'Authorization: Basic Y2FybG9zLnNvdXNhOjN6dmc1LWl1MnJyLW5qcW82LW15dGlnLXdibmFs',
+        'Authorization: Basic ' . $Authorization,
 		'Content-Type: application/json',
 		'Accept: application/json',
 		'Content-Length: ' . strlen($argument_json),
@@ -80,8 +80,7 @@ function verificaTicket($id_relacinamento, $horadafalha, $rule_data=array()){
     if($horadafalha_ticket_existente > $horadafalha_menos1Hora || is_null($decoded_result[0]['optionalFields1']['date1']) || $decoded_result[0]['optionalFields1']['date1'] == 'null'){
         return 1;
     }   
-    $decoded_result = $Authorization;
-	//$this->_otrs_call_response = $decoded_result;
+    
 	return $decoded_result;
 	
 }
