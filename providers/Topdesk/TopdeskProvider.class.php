@@ -18,7 +18,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-include '/usr/share/centreon/www/modules/centreon-open-tickets/providers/Otrs/nocPro/otrs_class.php';
+include '/usr/share/centreon/www/modules/centreon-open-tickets/providers/Topdesk/nocPro/topdesk_class.php';
 
 class TopdeskProvider extends AbstractProvider {
     protected $_otrs_connected = 0;
@@ -792,13 +792,14 @@ class TopdeskProvider extends AbstractProvider {
         return 0;
     }
     
-    protected function createTicketOtrs($ticket_arguments, $ticket_dynamic_fields, $serviceOuHost, $tabRelacionamentoFull) {
+    protected function createTicketTopdesk($ticket_arguments, $ticket_dynamic_fields, $serviceOuHost, $tabRelacionamentoFull) {
         
 		#loga no otrs a cada ticket criado e salva sessão.
-		$this->loginOtrs();
+		#$this->loginOtrs();
 		
 		//verificar se tem ticket pare ele mesmo
-		$ticket_existente = verificaTicket($ticket_dynamic_fields[0]['Value'], $ticket_dynamic_fields[1]['Value']);
+        #$ticket_existente = verificaTicket($ticket_dynamic_fields[0]['Value'], $ticket_dynamic_fields[1]['Value']);
+        $ticket_existente = verificaTicket($ticket_arguments['CustomerUser'], $ticket_dynamic_fields[1]['Value']);
 		
 		if ($ticket_existente == 2){
 			
