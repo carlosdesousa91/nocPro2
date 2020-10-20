@@ -64,12 +64,18 @@ function verificaTicket($id_relacinamento, $horadafalha){
             return 2;
     }
 
-    $decoded_result =  strtotime($decoded_result[0]['optionalFields1']['date1']);
-    $decoded_result = date('Y-m-d H:i:s', $decoded_result);
+    
+    $horadafalha_ticket_existente =  strtotime($decoded_result[0]['optionalFields1']['date1']);
+    $horadafalha_ticket_existente = date('Y-m-d H:i:s', $horadafalha_ticket_existente);
+    $decoded_result = date('Y-m-d H:i:s', strtotime('-60 minute', strtotime($horadafalha)));
+    //if($horadafalha_ticket_existente){
+
+    //}
+   
         
 	//$this->_otrs_call_response = $decoded_result;
 	return $decoded_result;
 	
 }
 
-echo json_encode(verificaTicket('123','2020'));
+echo json_encode(verificaTicket('123','1577847660'));
