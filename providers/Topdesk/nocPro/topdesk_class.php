@@ -78,4 +78,4 @@ function verificaTicket($id_relacinamento, $horadafalha){
 	
 }
 
-echo json_encode(verificaTicket('123','1577847660'));
+echo json_encode(verificaTicket('123','2020-01-01 00:00:00'));
