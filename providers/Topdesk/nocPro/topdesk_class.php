@@ -1,7 +1,10 @@
 <?php
 
 function verificaTicket($id_relacinamento, $horadafalha){
-	$base_url = 'https://rnp.topdesk.net/tas/api/incidents?object_name=123&processing_status=2817418e-5afc-4a8e-b2e4-7e4ff104e095&processing_status=a3e2ad64-16e2-4fe3-9c66-9e50ad9c4d69';
+    $base_url = 'https://rnp.topdesk.net/tas/api/incidents?' .
+    'fields=id,number,optionalFields1.date1&' .
+    'object_name=123&' .
+    'processing_status=2817418e-5afc-4a8e-b2e4-7e4ff104e095&processing_status=a3e2ad64-16e2-4fe3-9c66-9e50ad9c4d69';
 	$ch = curl_init($base_url);
 	if ($ch == false) {
 		$this->setWsError("cannot init curl object");
@@ -30,7 +33,7 @@ function verificaTicket($id_relacinamento, $horadafalha){
 	curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
 	curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 60);
 	curl_setopt($ch, CURLOPT_TIMEOUT, 60);
-	curl_setopt($ch, CURLOPT_POSTFIELDS, $argument_json);
+	//curl_setopt($ch, CURLOPT_POSTFIELDS, $argument_json);
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 	curl_setopt($ch, CURLOPT_HTTPHEADER, array(
