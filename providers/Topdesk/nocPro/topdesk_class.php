@@ -1,7 +1,8 @@
 <?php
 
 function verificaTicket($id_relacinamento, $horadafalha){
-    $base_url = 'https://rnp.topdesk.net/tas/api/incidents?fields=id,number,optionalFields1.date1&object_name=123&processing_status=2817418e-5afc-4a8e-b2e4-7e4ff104e095&processing_status=a3e2ad64-16e2-4fe3-9c66-9e50ad9c4d69';
+    $base_url = 'https://rnp.topdesk.net/tas/api/incidents?fields=id,number,optionalFields1.date1';
+    //&object_name=123&processing_status=2817418e-5afc-4a8e-b2e4-7e4ff104e095&processing_status=a3e2ad64-16e2-4fe3-9c66-9e50ad9c4d69';
 	$ch = curl_init($base_url);
 	if ($ch == false) {
 		$this->setWsError("cannot init curl object");
@@ -10,16 +11,14 @@ function verificaTicket($id_relacinamento, $horadafalha){
 	
 	$argument = array(
 			
-            //'TicketNumber' => '40303767'
-            //'StateType' => ['open', 'new', 'pending reminder', 'pending auto'],
-            'processingStatus' => array('id' => '2817418e-5afc-4a8e-b2e4-7e4ff104e095'),
-            'processingStatus' => array('id' => 'a3e2ad64-16e2-4fe3-9c66-9e50ad9c4d69'),
+            'processing_status' => '2817418e-5afc-4a8e-b2e4-7e4ff104e095',
+            'processing_status' => 'a3e2ad64-16e2-4fe3-9c66-9e50ad9c4d69',
             
-            'object_name'=> '1232',
+            'object_name' => '123'
 			//'DynamicField_nocproserviceid' => array(
 			//	'Equals' => [$id_relacinamento]
             //),
-            'optionalFields1' => array('date1' => '2015-11-15T14:00:00.000+0200')
+            //'optionalFields1' => array('date1' => '2015-11-15T14:00:00.000+0200')
 			//'DynamicField_HoradaFalha' => array(
 				//'SmallerThan' => $horadafalha + 3600
 			//	'GreaterThan' => date('Y-m-d H:i:s', strtotime('-60 minute', strtotime($horadafalha)))
