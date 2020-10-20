@@ -808,9 +808,10 @@ class TopdeskProvider extends AbstractProvider {
 			//		return -1;
 			//	}
 			//}
-			$this->loginOtrs();	
+			//$this->loginOtrs();	
 			//$this->_otrs_session = criaSessao();
-			$ticket_existente = verificaTicket($ticket_dynamic_fields[0]['Value'], $ticket_dynamic_fields[1]['Value']);
+            //$ticket_existente = verificaTicket($ticket_arguments['CustomerUser'], $ticket_dynamic_fields[1]['Value']);
+            return -1;
 				
 		}
 		

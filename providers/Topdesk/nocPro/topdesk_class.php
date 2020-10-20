@@ -1,6 +1,6 @@
 <?php
 
-function verificaTicket($id_relacinamento, $horadafalha){
+function verificaTicket($id_relacinamento, $horadafalha, $rule_data=array()){
     $base_url = 'https://rnp.topdesk.net/tas/api/incidents?fields=id,number,optionalFields1.date1&';
     $base_url .= 'object_name=' . $id_relacinamento . '&';
     $base_url .= 'processing_status=2817418e-5afc-4a8e-b2e4-7e4ff104e095&processing_status=a3e2ad64-16e2-4fe3-9c66-9e50ad9c4d69';
@@ -74,10 +74,10 @@ function verificaTicket($id_relacinamento, $horadafalha){
         return 1;
     }
    
-        
+    $decoded_result = $rule_data['address'] ;
 	//$this->_otrs_call_response = $decoded_result;
 	return $decoded_result;
 	
 }
 
-echo json_encode(verificaTicket('123','2020-11-19 01:16:00'));
+echo json_encode( verificaTicket('123','2020-11-19 01:16:00', array('address' => 'rnp.topdesk.net', 'path' => ' ')) );
