@@ -70,7 +70,7 @@ function verificaTicket($id_relacinamento, $horadafalha){
     $horadafalha_ticket_existente =  strtotime($decoded_result[0]['optionalFields1']['date1']);
     //$horadafalha_ticket_existente = date('Y-m-d H:i:s', $horadafalha_ticket_existente);
     $horadafalha_menos1Hora = strtotime('-60 minute', strtotime($horadafalha));
-    if($horadafalha_ticket_existente > $horadafalha_menos1Hora){
+    if($horadafalha_ticket_existente > $horadafalha_menos1Hora || is_null($decoded_result[0]['optionalFields1']['date1']) || $decoded_result[0]['optionalFields1']['date1'] == 'null'){
         return 1;
     }
    
