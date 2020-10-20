@@ -62,11 +62,13 @@ function verificaTicket($id_relacinamento, $horadafalha){
             //$this->setWsError($decoded_result['Error']['ErrorMessage']);
 			//erro autenticação
             return 2;
-        }
+    }
+
+    $decoded_result = $decoded_result[0]['optionalFields1']['date1'];
         
 	//$this->_otrs_call_response = $decoded_result;
 	return $decoded_result;
 	
 }
 
-echo json_encode(verificaTicket('123','data'));
+echo json_encode(verificaTicket('123','2020'));
