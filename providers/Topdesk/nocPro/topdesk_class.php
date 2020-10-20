@@ -35,7 +35,7 @@ function verificaTicket($id_relacinamento, $horadafalha){
 	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 	curl_setopt($ch, CURLOPT_HTTPHEADER, array(
         'Authorization: Basic Y2FybG9zLnNvdXNhOjN6dmc1LWl1MnJyLW5qcW82LW15dGlnLXdibmFs',
-		//Content-Type: application/json',
+		'Content-Type: application/json',
 		'Accept: application/json',
 		'Content-Length: ' . strlen($argument_json),
 		'Connection: close', 
