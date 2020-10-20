@@ -1,7 +1,7 @@
 <?php
 
 function verificaTicket($id_relacinamento, $horadafalha){
-	$base_url = 'https://rnp.topdesk.net/tas/api/incidents';
+	$base_url = 'https://rnp.topdesk.net/tas/api/incidents?object_name=123';
 	$ch = curl_init($base_url);
 	if ($ch == false) {
 		$this->setWsError("cannot init curl object");
