@@ -64,7 +64,7 @@ function verificaTicket($id_relacinamento, $horadafalha){
             return 2;
     }
 
-    $decoded_result = $decoded_result[0]['optionalFields1']['date1'];
+    $decoded_result =  strtotime($decoded_result[0]['optionalFields1']['date1']);
         
 	//$this->_otrs_call_response = $decoded_result;
 	return $decoded_result;
