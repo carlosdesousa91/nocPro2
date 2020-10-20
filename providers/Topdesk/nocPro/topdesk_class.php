@@ -8,6 +8,9 @@ function verificaTicket($id_relacinamento, $horadafalha, $rule_data=array()){
     $base_url .= 'object_name=' . $id_relacinamento . '&';
     //estados em atendimento e abertos
     $base_url .= 'processing_status=2817418e-5afc-4a8e-b2e4-7e4ff104e095&processing_status=a3e2ad64-16e2-4fe3-9c66-9e50ad9c4d69';
+    
+    $Authorization = base64_encode($rule_data['username'] . ":" . $rule_data['password']);
+    
 	$ch = curl_init($base_url);
 	if ($ch == false) {
 		$this->setWsError("cannot init curl object");
@@ -77,10 +80,13 @@ function verificaTicket($id_relacinamento, $horadafalha, $rule_data=array()){
     if($horadafalha_ticket_existente > $horadafalha_menos1Hora || is_null($decoded_result[0]['optionalFields1']['date1']) || $decoded_result[0]['optionalFields1']['date1'] == 'null'){
         return 1;
     }   
-    
+    $decoded_result = $Authorization;
 	//$this->_otrs_call_response = $decoded_result;
 	return $decoded_result;
 	
 }
 
-echo json_encode( verificaTicket('123','2020-11-19 01:16:00', array('address' => 'rnp.topdesk.net', 'path' => '/tas')) );
+echo json_encode( verificaTicket('123','2020-11-19 01:16:00', 
+array('address' => 'rnp.topdesk.net', 'path' => '/tas','username' => 'carlos.sousa', 'password' => '3zvg5-iu2rr-njqo6-mytig-wbnal')
+) 
+);

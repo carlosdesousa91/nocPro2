@@ -799,7 +799,7 @@ class TopdeskProvider extends AbstractProvider {
 		
 		//verificar se tem ticket pare ele mesmo
         #$ticket_existente = verificaTicket($ticket_dynamic_fields[0]['Value'], $ticket_dynamic_fields[1]['Value']);
-        $ticket_existente = verificaTicket($ticket_arguments['CustomerUser'], $ticket_dynamic_fields[1]['Value']);
+        $ticket_existente = verificaTicket($ticket_arguments['CustomerUser'], $ticket_dynamic_fields[1]['Value'], $this->rule_data);
 		
 		if ($ticket_existente == 2){
 			
