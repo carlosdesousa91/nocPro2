@@ -9,7 +9,7 @@ function verificaTicket($id_relacinamento, $horadafalha){
 	}
 	
 	$argument = array(
-			'Authorization' => 'Basic Y2FybG9zLnNvdXNhOjN6dmc1LWl1MnJyLW5qcW82LW15dGlnLXdibmFs',
+			
             //'TicketNumber' => '40303767'
             //'StateType' => ['open', 'new', 'pending reminder', 'pending auto'],
             'processingStatus' => array('id' => '2817418e-5afc-4a8e-b2e4-7e4ff104e095'),
@@ -34,6 +34,7 @@ function verificaTicket($id_relacinamento, $horadafalha){
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 	curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+        'Authorization' => 'Basic Y2FybG9zLnNvdXNhOjN6dmc1LWl1MnJyLW5qcW82LW15dGlnLXdibmFs',
 		'Content-Type: application/json',
 		'Accept: application/json',
 		'Content-Length: ' . strlen($argument_json),
