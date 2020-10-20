@@ -85,7 +85,3 @@ function verificaTicket($id_relacinamento, $horadafalha, $rule_data=array()){
 	
 }
 
-echo json_encode( verificaTicket('123','2020-11-19 01:16:00', 
-array('address' => 'rnp.topdesk.net', 'path' => '/tas','username' => 'carlos.sousa', 'password' => '3zvg5-iu2rr-njqo6-mytig-wbnal')
-) 
-);
