@@ -1059,6 +1059,60 @@ class TopdeskProvider extends AbstractProvider {
         $this->_otrs_call_response = $decoded_result;
         return 0;
     }
+
+    protected function callRestTopdesk($argument) {
+        $this->_otrs_call_response = null;
+       
+        $proto = 'http';
+        if (isset($this->rule_data['https']) && $this->rule_data['https'] == 'yes') {
+            $proto = 'https';
+        }
+        
+        $argument_json = json_encode($argument);
+        $base_url = $proto . '://' . $this->rule_data['address'] . $this->rule_data['path'] . '/' . $this->rule_data['rest_link'] . '/' . $this->rule_data['webservice_name'];
+        $ch = curl_init($base_url);
+        if ($ch == false) {
+            $this->setWsError("cannot init curl object");
+            return 1;
+        }
+        
+        $Authorization = base64_encode($rule_data['username'] . ":" . $rule_data['password']);
+
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $this->rule_data['timeout']);
+        curl_setopt($ch, CURLOPT_TIMEOUT, $this->rule_data['timeout']);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $argument_json);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+            'Authorization: Basic ' . $Authorization,
+            'Content-Type: application/json',
+            'Accept: application/json',
+            'Content-Length: ' . strlen($argument_json))
+        );
+        $result = curl_exec($ch);
+        if ($result == false) {
+            $this->setWsError(curl_error($ch));
+            curl_close($ch);
+            return 1;
+        }
+                
+        $decoded_result = json_decode($result, TRUE);
+        if (is_null($decoded_result) || $decoded_result == false) {
+            $this->setWsError($result);
+            return 1;
+        }
+        
+        curl_close($ch);
+        
+        if (isset($decoded_result['Error'])) {
+            $this->setWsError($decoded_result['Error']['ErrorMessage']);
+            return 1;
+        }
+        
+        $this->_otrs_call_response = $decoded_result;
+        return 0;
+    }
     
     public function closeTicket(&$tickets) {
         if ($this->doCloseTicket()) {
