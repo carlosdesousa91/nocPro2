@@ -945,15 +945,15 @@ class TopdeskProvider extends AbstractProvider {
                     
             );
 			
-			$files = array();
-			$attach_files = $this->getUploadFiles();
-			foreach ($attach_files as $file) {
-				$base64_content = base64_encode(file_get_contents($file['filepath']));
-				$files[] = array('Content' => $base64_content, 'Filename' => $file['filename'], 'ContentType' => mime_content_type($file['filepath']));
-			}
-			if (count($files) > 0) {
-				$argument['Attachment'] = $files;
-			}
+			//$files = array();
+			//$attach_files = $this->getUploadFiles();
+			//foreach ($attach_files as $file) {
+			//	$base64_content = base64_encode(file_get_contents($file['filepath']));
+			//	$files[] = array('Content' => $base64_content, 'Filename' => $file['filename'], 'ContentType' => mime_content_type($file['filepath']));
+			//}
+			//if (count($files) > 0) {
+			//	$argument['Attachment'] = $files;
+			//}
 			
 			//if (count($ticket_dynamic_fields) > 0) {
 			//	$argument['DynamicField'] = $ticket_dynamic_fields;
