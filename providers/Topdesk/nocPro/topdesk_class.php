@@ -562,7 +562,29 @@ function createTicketExemplo($rule_data=array()){
             'Content-Length: ' . strlen($argument_json))
         );
 
-
+        $result = curl_exec($ch);
+        if ($result == false) {
+            //$this->setWsError(curl_error($ch));
+            curl_close($ch);
+            return 1;
+        }
+                    
+        $decoded_result = json_decode($result, TRUE);
+        if (is_null($decoded_result) || $decoded_result == false) {
+            //$this->setWsError($result);
+            //retorna nehum ticket
+            return 1;
+        }
+        
+        curl_close($ch);
+        
+        if (isset($decoded_result['Error'])) {
+                //$this->setWsError($decoded_result['Error']['ErrorMessage']);
+                //erro autenticação
+                return 2;
+        }
+        
+        return $decoded_result;
 }
 
 echo json_encode( createTicketExemplo(array('address' => 'rnp.topdesk.net', 'path' => '/tas','username' => 'carlos.sousa', 'password' => '3zvg5-iu2rr-njqo6-mytig-wbnal')
