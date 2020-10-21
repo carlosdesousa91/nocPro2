@@ -615,7 +615,7 @@ class TopdeskProvider extends AbstractProvider {
 						$this->_otrs_call_response['TicketNumber'] = "O principal está indisponível, consulte a topologia.<br/>Principal: " . $tabRelacionamento['name'];
 						//$result['ticket_error_message'] = "O principal está indisponível, consulte a topologia.<br/>Principal: " . $tabRelacionamento['name'];
 					}else{
-						$code = $this->createTicketOtrs($ticket_arguments, $ticket_dynamic_fields, $serviceOuHost, null);
+						$code = $this->createTicketTopdesk($ticket_arguments, $ticket_dynamic_fields, $serviceOuHost, null);
 						if ($code == -1) {
 							$result['ticket_error_message'] = $this->ws_error;
 							return $result;
@@ -637,7 +637,7 @@ class TopdeskProvider extends AbstractProvider {
 					}
 					
 					$ticket_arguments['CustomerUser'] = $relacionamentos_array[1];
-					$code = $this->createTicketOtrs($ticket_arguments, $ticket_dynamic_fields, $serviceOuHost, $tabRelacionamentoFull);
+					$code = $this->createTicketTopdesk($ticket_arguments, $ticket_dynamic_fields, $serviceOuHost, $tabRelacionamentoFull);
 					if ($code == -1) {
 						$result['ticket_error_message'] = $this->ws_error;
 						return $result;
@@ -646,7 +646,7 @@ class TopdeskProvider extends AbstractProvider {
 			
 				}else{
 				
-					$code = $this->createTicketOtrs($ticket_arguments, $ticket_dynamic_fields, $serviceOuHost, null);
+					$code = $this->createTicketTopdesk($ticket_arguments, $ticket_dynamic_fields, $serviceOuHost, null);
 					if ($code == -1) {
 						$result['ticket_error_message'] = $this->ws_error;
 						return $result;
@@ -792,13 +792,14 @@ class TopdeskProvider extends AbstractProvider {
         return 0;
     }
     
-    protected function createTicketOtrs($ticket_arguments, $ticket_dynamic_fields, $serviceOuHost, $tabRelacionamentoFull) {
+    protected function createTicketTopdesk($ticket_arguments, $ticket_dynamic_fields, $serviceOuHost, $tabRelacionamentoFull) {
         
 		#loga no otrs a cada ticket criado e salva sessão.
-		$this->loginOtrs();
+		#$this->loginOtrs();
 		
 		//verificar se tem ticket pare ele mesmo
-		$ticket_existente = verificaTicket($ticket_dynamic_fields[0]['Value'], $ticket_dynamic_fields[1]['Value']);
+        #$ticket_existente = verificaTicket($ticket_dynamic_fields[0]['Value'], $ticket_dynamic_fields[1]['Value']);
+        $ticket_existente = verificaTicket($ticket_arguments['CustomerUser'], $ticket_dynamic_fields[1]['Value'], $this->rule_data);
 		
 		if ($ticket_existente == 2){
 			
@@ -807,9 +808,10 @@ class TopdeskProvider extends AbstractProvider {
 			//		return -1;
 			//	}
 			//}
-			$this->loginOtrs();	
+			//$this->loginOtrs();	
 			//$this->_otrs_session = criaSessao();
-			$ticket_existente = verificaTicket($ticket_dynamic_fields[0]['Value'], $ticket_dynamic_fields[1]['Value']);
+            //$ticket_existente = verificaTicket($ticket_arguments['CustomerUser'], $ticket_dynamic_fields[1]['Value']);
+            return -1;
 				
 		}
 		
@@ -817,8 +819,8 @@ class TopdeskProvider extends AbstractProvider {
 		if($ticket_existente == 1 && $tabRelacionamentoFull !== null){
 			$ticket_existeAnterior = 1;
 			foreach($tabRelacionamentoFull as $valuetabRelacionamento){
-				
-				$ticket_existente = verificaTicket($valuetabRelacionamento[0]['id'], $ticket_dynamic_fields[1]['Value']);
+				$relacionamentos_array = explode("::", $valuetabRelacionamento[0]['ic']);
+				$ticket_existente = verificaTicket($relacionamentos_array[1], $ticket_dynamic_fields[1]['Value'], $this->rule_data);
 				
 				if($ticket_existente !== 1){
 					$ticket_existeAnterior = $ticket_existente;
@@ -867,8 +869,9 @@ class TopdeskProvider extends AbstractProvider {
 			
 			//checa tipo de ticket um/backbone/sti
 			if($regra_tipo == "ultimamilha"){
-				$titulo = $ticket_arguments['Subject'];
-				$ServiceID = 2920;
+                $titulo = $ticket_arguments['Subject'];
+                //serviço de conectividade
+				$ServiceID = "989624e9-4b7f-4bef-ab65-aa6135d52299";
 						
 				$ticket_dynamic_fields[2]['Value'] = $ic_uf;
 				//$email_cliente = $email_cliente;
@@ -916,37 +919,31 @@ class TopdeskProvider extends AbstractProvider {
 			$titulo = str_replace("<br/>", " / ", $titulo);
 	
 			$argument = array(
-				//'SessionID' => $this->_otrs_session, 
-				'SessionID' => recuperaSessao(),
-				'Ticket' => array(
-					//'Title'             => $ticket_arguments['Subject'],
-					'Title'             => $titulo,
-					//'QueueID'         => xxx,
-					'Queue'             => $ticket_arguments['Queue'],
-					//'StateID'         => xxx,
-					'State'             => $ticket_arguments['State'],
-					//'PriorityID'      => xxx,
-					'Priority'          => $ticket_arguments['Priority'],
+					//'Title'           => $ticket_arguments['Subject'],
+                    'action'            => $titulo,
+                    'request'           => $ticket_arguments['Body'],
+                    'briefDescription'  => $titulo,
+                    //'Queue'             => $ticket_arguments['Queue'],
+                    'operatorGroup'     =>  array('name' => $ticket_arguments['Queue']),
+                    //'State'             => $ticket_arguments['State'],
+                    'processingStatus'  =>  array('name' => $ticket_arguments['State']),
+                    //'Priority'          => $ticket_arguments['Priority'],
+                    'priority'          =>  array('name' =>  $ticket_arguments['Priority']),
 					//'TypeID'          => 123,
 					//'Type'              => $ticket_arguments['Type'],					
-					'Type'              => 'Incidente', //o campo type refere-se ao tipo de chamado, incidente, requisição, etc. No contexto do nocpro ele será usada para outro fim e todos os chamado serão do tipo Incidente
+					'callType'          => 'Incidente', //o campo type refere-se ao tipo de chamado, incidente, requisição, etc. No contexto do nocpro ele será usada para outro fim e todos os chamado serão do tipo Incidente
 					//'OwnerID'         => 123,
-					'Owner'             => $ticket_arguments['Owner'],
+                    //'Owner'             => $ticket_arguments['Owner'],
+                    //'operador'            => array('name':  $ticket_arguments['Owner']),
 					//'ResponsibleID'   => 123,
-					'Responsible'       => $ticket_arguments['Responsible'],
+					//'Responsible'       => $ticket_arguments['Responsible'],
 					//'CustomerUser'      => $ticket_arguments['CustomerUser'],
-					'CustomerUser'      => $email_cliente,
-					'ServiceID'			=> $ServiceID,
-				),
-				'Article' => array(
-					//'From' => $ticket_arguments['From'], // Must be an email
-					'From' => $email_cliente, // Must be an email
-					//'Subject' => $ticket_arguments['Subject'],
-					'Subject' => $titulo,
-					'Body' => $ticket_arguments['Body'],
-					'ContentType' => $ticket_arguments['ContentType'],
-				),
-			);
+                    //'CustomerUser'      => $email_cliente,
+                    'caller'            =>  array('dynamicName' =>  $email_cliente),
+                    //'ServiceID'         => $ServiceID
+                    'category'          =>  array('id' => $ServiceID)
+                    
+            );
 			
 			$files = array();
 			$attach_files = $this->getUploadFiles();
@@ -958,19 +955,19 @@ class TopdeskProvider extends AbstractProvider {
 				$argument['Attachment'] = $files;
 			}
 			
-			if (count($ticket_dynamic_fields) > 0) {
-				$argument['DynamicField'] = $ticket_dynamic_fields;
-			}
+			//if (count($ticket_dynamic_fields) > 0) {
+			//	$argument['DynamicField'] = $ticket_dynamic_fields;
+			//}
 
-			if ($this->callRest('Ticket/Create/', $argument) == 1) {
+			if ($this->callRestTopdesk($argument) == 1) {
 				return -1;
 			}
 			//associa IC
-			if($ic_recuperado_id != 1 && $ic_recuperado_id != 2 && $ic_recuperado_id != ""){
-				$associacao_return = associaIc($this->_otrs_call_response['TicketID'], $ic_recuperado_id);
-			}
+			//if($ic_recuperado_id != 1 && $ic_recuperado_id != 2 && $ic_recuperado_id != ""){
+			//	$associacao_return = associaIc($this->_otrs_call_response['TicketID'], $ic_recuperado_id);
+			//}
 			//associa IC filhos/netos
-			if($tabRelacionamentoFull !== null){
+			/**if($tabRelacionamentoFull !== null){
 				foreach($tabRelacionamentoFull as $valuetabRelacionamento){
 					$relacionamentos_array = explode("::", $valuetabRelacionamento[0]['ic']);
 					if($relacionamentos_array[1] !== null && $relacionamentos_array[1] !== "0000"){
@@ -982,10 +979,11 @@ class TopdeskProvider extends AbstractProvider {
 					}
 					
 				}
-			}
+			}**/
 		}else{
-			$tn = infoTicket($ticket_existente['TicketID'][0]);
-			$this->_otrs_call_response['TicketNumber'] = "ticket já existe::" . $tn['Ticket'][0]['TicketNumber'];
+			//$tn = infoTicket($ticket_existente['TicketID'][0]);
+            //$this->_otrs_call_response['TicketNumber'] = "ticket já existe::" . $tn['Ticket'][0]['TicketNumber'];
+            $this->_otrs_call_response['TicketNumber'] = json_encode($ticket_existente);
 		}
         return 0;
     }
