@@ -939,7 +939,8 @@ class TopdeskProvider extends AbstractProvider {
 					//'Responsible'       => $ticket_arguments['Responsible'],
 					//'CustomerUser'      => $ticket_arguments['CustomerUser'],
                     //'CustomerUser'      => $email_cliente,
-                    'caller'            =>  array('dynamicName' =>  $email_cliente),
+                    //'caller'            =>  array('dynamicName' =>  $email_cliente),
+                    'caller'            =>  array('id' =>  'c3870881-03fa-41b5-a88d-2d65aed12ea8'),
                     //'ServiceID'         => $ServiceID
                     'category'          =>  array('id' => $ServiceID)
                     
