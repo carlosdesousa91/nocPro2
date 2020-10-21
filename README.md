@@ -15,10 +15,15 @@
 
 ``` $register_providers['Topdesk'] = 14; ```
 
-- Clonar o diretório providers/Topdesk para /usr/share/centreon/www/modules/centreon-open-tickets/providers/Topdesk
+- Copiar o diretório providers/Topdesk para /usr/share/centreon/www/modules/centreon-open-tickets/providers/Topdesk
 
 Com isso o Provider Topdesk ficará disponível no Centreon todo baseado no provider do Otrs.
 
 ### Classe TopdeskProvider
 
+### Verificar Ticket
 
+``` function verificaTicket($id_relacinamento, $horadafalha, $rule_data=array()) ```
+
+- A verificação do ticket é feita comparando o "Objeto" do chamado com o campo notes do service/host do centreon.
+- Se um chamado for encontrado é verificado se a falha já ultrapassou uma hora.
