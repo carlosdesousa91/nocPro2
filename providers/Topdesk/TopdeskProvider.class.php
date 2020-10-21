@@ -924,11 +924,11 @@ class TopdeskProvider extends AbstractProvider {
                     'request'           => $ticket_arguments['Body'],
                     'briefDescription'  => $titulo,
                     //'Queue'             => $ticket_arguments['Queue'],
-                    'operatorGroup'     =>  array('name' => $ticket_arguments['Queue']),
+                    //'operatorGroup'     =>  array('name' => $ticket_arguments['Queue']),
                     //'State'             => $ticket_arguments['State'],
-                    'processingStatus'  =>  array('name' => $ticket_arguments['State']),
+                    //'processingStatus'  =>  array('name' => $ticket_arguments['State']),
                     //'Priority'          => $ticket_arguments['Priority'],
-                    'priority'          =>  array('name' =>  $ticket_arguments['Priority']),
+                    //'priority'          =>  array('name' =>  $ticket_arguments['Priority']),
 					//'TypeID'          => 123,
 					//'Type'              => $ticket_arguments['Type'],					
 					'callType'          => 'Incidente', //o campo type refere-se ao tipo de chamado, incidente, requisição, etc. No contexto do nocpro ele será usada para outro fim e todos os chamado serão do tipo Incidente
@@ -940,9 +940,9 @@ class TopdeskProvider extends AbstractProvider {
 					//'CustomerUser'      => $ticket_arguments['CustomerUser'],
                     //'CustomerUser'      => $email_cliente,
                     //'caller'            =>  array('dynamicName' =>  $email_cliente),
-                    'caller'            =>  array('id' =>  'c3870881-03fa-41b5-a88d-2d65aed12ea8'),
+                    'caller'            =>  array('id' =>  'c3870881-03fa-41b5-a88d-2d65aed12ea8')
                     //'ServiceID'         => $ServiceID
-                    'category'          =>  array('id' => $ServiceID)
+                    //'category'          =>  array('id' => $ServiceID)
                     
             );
 			
