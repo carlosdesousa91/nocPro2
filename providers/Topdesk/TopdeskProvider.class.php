@@ -839,6 +839,7 @@ class TopdeskProvider extends AbstractProvider {
 			            
         
         //$ticket_existente == 1 - ticket não existe
+        $ticket_existente = 2;
 		if($ticket_existente == 1 || is_null($ticket_existente)){
 			
 
