@@ -510,18 +510,18 @@ function verificaTicket($id_relacinamento, $horadafalha, $rule_data=array()){
 function createTicketExemplo($rule_data=array()){
     $argument = array(
         //'Title'           => $ticket_arguments['Subject'],
-        'action'            => $titulo,
-        'request'           => $ticket_arguments['Body'],
-        'briefDescription'  => $titulo,
+        'action'            => 'teste nocpro',
+        'request'           => 'teste nocpro',
+        'briefDescription'  => 'teste nocpro'
         //'Queue'             => $ticket_arguments['Queue'],
-        'operatorGroup'     =>  array('name' => $ticket_arguments['Queue']),
+        //'operatorGroup'     =>  array('name' => $ticket_arguments['Queue']),
         //'State'             => $ticket_arguments['State'],
-        'processingStatus'  =>  array('name' => $ticket_arguments['State']),
+        //'processingStatus'  =>  array('name' => $ticket_arguments['State']),
         //'Priority'          => $ticket_arguments['Priority'],
-        'priority'          =>  array('name' =>  $ticket_arguments['Priority']),
+        //'priority'          =>  array('name' =>  $ticket_arguments['Priority']),
         //'TypeID'          => 123,
         //'Type'              => $ticket_arguments['Type'],					
-        'callType'          => 'Incidente', //o campo type refere-se ao tipo de chamado, incidente, requisição, etc. No contexto do nocpro ele será usada para outro fim e todos os chamado serão do tipo Incidente
+        //'callType'          => 'Incidente', //o campo type refere-se ao tipo de chamado, incidente, requisição, etc. No contexto do nocpro ele será usada para outro fim e todos os chamado serão do tipo Incidente
         //'OwnerID'         => 123,
         //'Owner'             => $ticket_arguments['Owner'],
         //'operador'            => array('name':  $ticket_arguments['Owner']),
@@ -529,9 +529,9 @@ function createTicketExemplo($rule_data=array()){
         //'Responsible'       => $ticket_arguments['Responsible'],
         //'CustomerUser'      => $ticket_arguments['CustomerUser'],
         //'CustomerUser'      => $email_cliente,
-        'caller'            =>  array('dynamicName' =>  $email_cliente),
+        //'caller'            =>  array('dynamicName' =>  $email_cliente),
         //'ServiceID'         => $ServiceID
-        'category'          =>  array('id' => $ServiceID)
+        //'category'          =>  array('id' => $ServiceID)
         
     );
 
