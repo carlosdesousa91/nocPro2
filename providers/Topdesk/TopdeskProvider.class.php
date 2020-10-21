@@ -795,7 +795,7 @@ class TopdeskProvider extends AbstractProvider {
     protected function createTicketTopdesk($ticket_arguments, $ticket_dynamic_fields, $serviceOuHost, $tabRelacionamentoFull) {
         
 		#loga no otrs a cada ticket criado e salva sessão.
-		#$this->loginOtrs();
+		$this->loginOtrs();
 		
 		//verificar se tem ticket pare ele mesmo
         #$ticket_existente = verificaTicket($ticket_dynamic_fields[0]['Value'], $ticket_dynamic_fields[1]['Value']);
