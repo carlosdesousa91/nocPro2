@@ -799,7 +799,7 @@ class TopdeskProvider extends AbstractProvider {
 		
 		//verificar se tem ticket pare ele mesmo
         #$ticket_existente = verificaTicket($ticket_dynamic_fields[0]['Value'], $ticket_dynamic_fields[1]['Value']);
-        $ticket_existente = verificaTicket($ticket_arguments['CustomerUser'], $ticket_dynamic_fields[1]['Value'], $this->rule_data);
+        //$ticket_existente = verificaTicket($ticket_arguments['CustomerUser'], $ticket_dynamic_fields[1]['Value'], $this->rule_data);
 		
 		if ($ticket_existente == 2){
 			
@@ -815,27 +815,7 @@ class TopdeskProvider extends AbstractProvider {
 				
 		}
 		
-		//verifica se existe ticket para relacionamentos
-		if($ticket_existente == 1 && $tabRelacionamentoFull !== null){
-			$ticket_existeAnterior = 1;
-			foreach($tabRelacionamentoFull as $valuetabRelacionamento){
-				$relacionamentos_array = explode("::", $valuetabRelacionamento[0]['ic']);
-				$ticket_existente = verificaTicket($relacionamentos_array[1], $ticket_dynamic_fields[1]['Value'], $this->rule_data);
-				
-				if($ticket_existente !== 1){
-					$ticket_existeAnterior = $ticket_existente;
-					//$ticket_existe = $ticket_existeAnterior;
-					
-					// se a falha equivalente for após ela sobrepoe 
-					if($valuetabRelacionamento[0]['last_hard_state_change'] > $ticket_dynamic_fields[1]['Value']){
-						$ticket_dynamic_fields[1]['Value'] = $valuetabRelacionamento[0]['last_hard_state_change'];
-					}
-				}
-				$ticket_existente = $ticket_existeAnterior;
-								
-				
-			}
-		}
+	
 			            
         
         //$ticket_existente == 1 - ticket não existe
