@@ -508,83 +508,67 @@ function verificaTicket($id_relacinamento, $horadafalha, $rule_data=array()){
 }
 
 function createTicketExemplo($rule_data=array()){
-    $argument = array(
-        //'Title'           => $ticket_arguments['Subject'],
-        'action'            => 'teste nocpro',
-        'request'           => 'teste nocpro',
-        'briefDescription'  => 'teste nocpro',
-        //'Queue'             => $ticket_arguments['Queue'],
-        //'operatorGroup'     =>  array('name' => $ticket_arguments['Queue']),
-        //'State'             => $ticket_arguments['State'],
-        //'processingStatus'  =>  array('name' => $ticket_arguments['State']),
-        //'Priority'          => $ticket_arguments['Priority'],
-        //'priority'          =>  array('name' =>  $ticket_arguments['Priority']),
-        //'TypeID'          => 123,
-        //'Type'              => $ticket_arguments['Type'],					
-        //'callType'          => 'Incidente', //o campo type refere-se ao tipo de chamado, incidente, requisição, etc. No contexto do nocpro ele será usada para outro fim e todos os chamado serão do tipo Incidente
-        //'OwnerID'         => 123,
-        //'Owner'             => $ticket_arguments['Owner'],
-        //'operador'            => array('name':  $ticket_arguments['Owner']),
-        //'ResponsibleID'   => 123,
-        //'Responsible'       => $ticket_arguments['Responsible'],
-        //'CustomerUser'      => $ticket_arguments['CustomerUser'],
-        //'CustomerUser'      => $email_cliente,
-        'caller'            =>  array('id' =>  'c3870881-03fa-41b5-a88d-2d65aed12ea8'),
-        //'ServiceID'         => $ServiceID
-        //'category'          =>  array('id' => $ServiceID)
-        
-    );
-
-    $argument_json = json_encode($argument);
 
     $base_url = 'https://';
     $base_url .= $rule_data['address'];
     $base_url .= $rule_data['path'] . '/api';
     $base_url .= '/incidents';
-        $ch = curl_init($base_url);
-        if ($ch == false) {
-            $this->setWsError("cannot init curl object");
-            return 1;
-        }
-        
-        $Authorization = base64_encode($rule_data['username'] . ":" . $rule_data['password']);
-
-        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
-        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $this->rule_data['timeout']);
-        curl_setopt($ch, CURLOPT_TIMEOUT, $this->rule_data['timeout']);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $argument_json);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-            'Authorization: Basic ' . $Authorization,
-            'Content-Type: application/json',
-            'Accept: application/json',
-            'Content-Length: ' . strlen($argument_json))
-        );
-
-        $result = curl_exec($ch);
-        if ($result == false) {
-            //$this->setWsError(curl_error($ch));
-            curl_close($ch);
-            return 1;
-        }
-                    
-        $decoded_result = json_decode($result, TRUE);
-        if (is_null($decoded_result) || $decoded_result == false) {
-            //$this->setWsError($result);
-            //retorna nehum ticket
-            return 1;
-        }
-        
-        curl_close($ch);
-        
-        if (isset($decoded_result['Error'])) {
-                //$this->setWsError($decoded_result['Error']['ErrorMessage']);
-                //erro autenticação
-                return 2;
-        }
-        
-        return $decoded_result;
+    
+    $Authorization = base64_encode($rule_data['username'] . ":" . $rule_data['password']);
+    
+	$ch = curl_init($base_url);
+	if ($ch == false) {
+		$this->setWsError("cannot init curl object");
+		return 1;
+	}
+    
+    //este array não é usado os campos são passados todos na url
+	$argument = array(
+        'action'            => 'teste nocpro',
+        'request'           => 'teste nocpro',
+        'briefDescription'  => 'teste nocpro',
+        'caller'            =>  array('id' =>  'c3870881-03fa-41b5-a88d-2d65aed12ea8')
+    );
+	$argument_json = json_encode($argument);
+	curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+	curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 60);
+	curl_setopt($ch, CURLOPT_TIMEOUT, 60);
+	curl_setopt($ch, CURLOPT_POSTFIELDS, $argument_json);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+	curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+        'Authorization: Basic ' . $Authorization,
+		'Content-Type: application/json',
+		'Accept: application/json',
+		'Content-Length: ' . strlen($argument_json),
+		'Connection: close', 
+		'Cache-Control: no-cache')
+	);
+	
+	$result = curl_exec($ch);
+	if ($result == false) {
+		//$this->setWsError(curl_error($ch));
+		curl_close($ch);
+		return 1;
+	}
+                
+	$decoded_result = json_decode($result, TRUE);
+	if (is_null($decoded_result) || $decoded_result == false) {
+		//$this->setWsError($result);
+		//retorna nehum ticket
+		return 1;
+	}
+	
+	curl_close($ch);
+	
+	if (isset($decoded_result['Error'])) {
+            //$this->setWsError($decoded_result['Error']['ErrorMessage']);
+			//erro autenticação
+            return 2;
+    }
+    
+    
+	return $decoded_result;
 }
 
 echo json_encode( createTicketExemplo(array('address' => 'rnp.topdesk.net', 'path' => '/tas','username' => 'carlos.sousa', 'password' => '3zvg5-iu2rr-njqo6-mytig-wbnal')
