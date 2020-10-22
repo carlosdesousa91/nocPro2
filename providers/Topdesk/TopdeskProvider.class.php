@@ -70,9 +70,9 @@ class TopdeskProvider extends AbstractProvider {
      */
     protected function _setDefaultValueExtra() {
         $this->default_data['address'] = '127.0.0.1';
-        $this->default_data['path'] = '/otrs';
-        $this->default_data['rest_link'] = 'nph-genericinterface.pl/Webservice';
-        $this->default_data['webservice_name'] = 'centreon';
+        $this->default_data['path'] = '/tas';
+        $this->default_data['rest_link'] = 'api';
+        $this->default_data['webservice_name'] = 'incidents';
         $this->default_data['https'] = 0;
         $this->default_data['timeout'] = 60;
         
@@ -134,11 +134,11 @@ class TopdeskProvider extends AbstractProvider {
      * @return void
      */
     protected function _getConfigContainer1Extra() {
-        $tpl = $this->initSmartyTemplate('providers/Otrs/templates');
+        $tpl = $this->initSmartyTemplate('providers/Topdesk/templates');
         
         $tpl->assign("centreon_open_tickets_path", $this->_centreon_open_tickets_path);
         $tpl->assign("img_brick", "./modules/centreon-open-tickets/images/brick.png");
-        $tpl->assign("header", array("otrs" => _("OTRS")));
+        $tpl->assign("header", array("topdesk" => _("TOPdesk")));
         
         // Form
         $address_html = '<input size="50" name="address" type="text" value="' . $this->_getFormValue('address') . '" />';
