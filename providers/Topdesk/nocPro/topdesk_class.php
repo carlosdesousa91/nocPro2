@@ -748,12 +748,12 @@ function callRestTopdesk($argument, $rule_data=array()){
 	}
     
     //este array não é usado os campos são passados todos na url
-	$argument = array(
-       'action'            => 'teste nocpro',
-       'request'           => 'teste nocpro',
-        'briefDescription'  => 'teste nocpro',
-        'caller'            =>  array('id' =>  'c3870881-03fa-41b5-a88d-2d65aed12ea8')
-    );
+	//$argument = array(
+    //   'action'            => 'teste nocpro',
+    //   'request'           => 'teste nocpro',
+    //    'briefDescription'  => 'teste nocpro',
+    //    'caller'            =>  array('id' =>  'c3870881-03fa-41b5-a88d-2d65aed12ea8')
+    //);
 	$argument_json = json_encode($argument);
 	curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
 	curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 60);
