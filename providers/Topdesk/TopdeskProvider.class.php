@@ -987,7 +987,7 @@ class TopdeskProvider extends AbstractProvider {
 		}else{
 			//$tn = infoTicket($ticket_existente['TicketID'][0]);
             //$this->_otrs_call_response['TicketNumber'] = "ticket já existe::" . $tn['Ticket'][0]['TicketNumber'];
-            $this->_otrs_call_response['TicketNumber'] = json_encode($ticket_existente . $ticket_arguments['CustomerUser'] .$ticket_dynamic_fields[1]['Value'] . $this->rule_data);
+            $this->_otrs_call_response['TicketNumber'] = json_encode($ticket_existente) . $ticket_arguments['CustomerUser'] .$ticket_dynamic_fields[1]['Value'] . json_encode($this->rule_data);
 		}
         return 0;
     }
