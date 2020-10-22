@@ -1009,9 +1009,10 @@ class TopdeskProvider extends AbstractProvider {
 			
 			$argument = array(
 					//'Title'           => $ticket_arguments['Subject'],
-                    'action'            => $titulo,
-                    'request'           => $ticket_arguments['Body'],
-                    'briefDescription'  => $titulo,
+                           'action'            => 'teste nocpro2',
+      'request'           => 'teste nocpro2',
+        'briefDescription'  => 'teste nocpro2',
+        'caller'            =>  array('id' =>  'c3870881-03fa-41b5-a88d-2d65aed12ea8')
                     //'Queue'             => $ticket_arguments['Queue'],
                     //'operatorGroup'     =>  array('name' => $ticket_arguments['Queue']),
                     //'State'             => $ticket_arguments['State'],
@@ -1029,7 +1030,7 @@ class TopdeskProvider extends AbstractProvider {
 					//'CustomerUser'      => $ticket_arguments['CustomerUser'],
                     //'CustomerUser'      => $email_cliente,
                     //'caller'            =>  array('dynamicName' =>  $email_cliente),
-                    'caller'            =>  array('id' =>  'c3870881-03fa-41b5-a88d-2d65aed12ea8')
+                    //'caller'            =>  array('id' =>  'c3870881-03fa-41b5-a88d-2d65aed12ea8')
                     //'ServiceID'         => $ServiceID
                     //'category'          =>  array('id' => $ServiceID)
                     
