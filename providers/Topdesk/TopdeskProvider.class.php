@@ -18,7 +18,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-include '/usr/share/centreon/www/modules/centreon-open-tickets/providers/Otrs/nocPro/topdesk_class.php';
+include '/usr/share/centreon/www/modules/centreon-open-tickets/providers/Topdesk/nocPro/topdesk_class.php';
 
 class TopdeskProvider extends AbstractProvider {
     protected $_otrs_connected = 0;
