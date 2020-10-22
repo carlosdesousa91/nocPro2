@@ -1009,10 +1009,10 @@ class TopdeskProvider extends AbstractProvider {
 			
 			$argument = array(
 					//'Title'           => $ticket_arguments['Subject'],
-                           'action'            => 'teste nocpro2',
-      'request'           => 'teste nocpro2',
-        'briefDescription'  => 'teste nocpro2',
-        'caller'            =>  array('id' =>  'c3870881-03fa-41b5-a88d-2d65aed12ea8')
+                    'action'            => 'teste nocpro2',
+                    'request'           => 'teste nocpro2',
+                    'briefDescription'  => 'teste nocpro2',
+                    'caller'            =>  array('id' =>  'c3870881-03fa-41b5-a88d-2d65aed12ea8')
                     //'Queue'             => $ticket_arguments['Queue'],
                     //'operatorGroup'     =>  array('name' => $ticket_arguments['Queue']),
                     //'State'             => $ticket_arguments['State'],
@@ -1021,7 +1021,7 @@ class TopdeskProvider extends AbstractProvider {
                     //'priority'          =>  array('name' =>  $ticket_arguments['Priority']),
 					//'TypeID'          => 123,
 					//'Type'              => $ticket_arguments['Type'],					
-					'callType'          => 'Incidente', //o campo type refere-se ao tipo de chamado, incidente, requisição, etc. No contexto do nocpro ele será usada para outro fim e todos os chamado serão do tipo Incidente
+					//'callType'          => 'Incidente', //o campo type refere-se ao tipo de chamado, incidente, requisição, etc. No contexto do nocpro ele será usada para outro fim e todos os chamado serão do tipo Incidente
 					//'OwnerID'         => 123,
                     //'Owner'             => $ticket_arguments['Owner'],
                     //'operador'            => array('name':  $ticket_arguments['Owner']),
