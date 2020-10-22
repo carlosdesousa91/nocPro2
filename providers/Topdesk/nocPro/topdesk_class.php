@@ -795,10 +795,11 @@ function callRestTopdesk($argument, $rule_data=array()){
     
 	return $decoded_result;
 }
-echo json_encode( 
-    callRestTopdesk('aaa', 
-array(
-    'address' => 'rnp.topdesk.net', 'path' => '/tas','username' => 'carlos.sousa', 'password' => '3zvg5-iu2rr-njqo6-mytig-wbnal')
-) 
-);
+//echo json_encode( 
+//    callRestTopdesk('aaa', 
+//array(
+//    'address' => 'rnp.topdesk.net', 'path' => '/tas','username' => 'carlos.sousa', 'password' => '3zvg5-iu2rr-njqo6-mytig-wbnal')
+//) 
+//);
+
 //echo json_encode(verificaTicket());
