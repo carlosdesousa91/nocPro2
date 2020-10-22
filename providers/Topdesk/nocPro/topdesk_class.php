@@ -732,4 +732,61 @@ function verificaTicketTopdesk($id_relacinamento, $horadafalha, $rule_data=array
 	
 }
 
+function callRestTopdesk($argument, $rule_data=array()){
+
+    $base_url = 'https://';
+    $base_url .= $rule_data['address'];
+    $base_url .= $rule_data['path'] . '/api';
+    $base_url .= '/incidents';
+    
+    $Authorization = base64_encode($rule_data['username'] . ":" . $rule_data['password']);
+    
+	$ch = curl_init($base_url);
+	if ($ch == false) {
+		$this->setWsError("cannot init curl object");
+		return 1;
+	}
+    
+	$argument_json = json_encode($argument);
+	curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+	curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 60);
+	curl_setopt($ch, CURLOPT_TIMEOUT, 60);
+	curl_setopt($ch, CURLOPT_POSTFIELDS, $argument_json);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+	curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+        'Authorization: Basic ' . $Authorization,
+		'Content-Type: application/json',
+		'Accept: application/json',
+		'Content-Length: ' . strlen($argument_json),
+		'Connection: close', 
+		'Cache-Control: no-cache')
+	);
+	
+	$result = curl_exec($ch);
+	if ($result == false) {
+		//$this->setWsError(curl_error($ch));
+		curl_close($ch);
+		return 1;
+	}
+                
+	$decoded_result = json_decode($result, TRUE);
+	if (is_null($decoded_result) || $decoded_result == false) {
+		//$this->setWsError($result);
+		//retorna nehum ticket
+		return 1;
+	}
+	
+	curl_close($ch);
+	
+	if (isset($decoded_result['Error'])) {
+            //$this->setWsError($decoded_result['Error']['ErrorMessage']);
+			//erro autenticação
+            return 2;
+    }
+    
+    
+	return $decoded_result;
+}
+
 //echo json_encode(verificaTicket());
