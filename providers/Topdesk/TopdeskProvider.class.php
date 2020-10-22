@@ -1000,8 +1000,9 @@ class TopdeskProvider extends AbstractProvider {
 				}
 			}
 		}else{
-			$tn = infoTicket($ticket_existente['TicketID'][0]);
-			$this->_otrs_call_response['TicketNumber'] = "ticket já existe::" . $tn['Ticket'][0]['TicketNumber'];
+			//$tn = infoTicket($ticket_existente['TicketID'][0]);
+            //$this->_otrs_call_response['TicketNumber'] = "ticket já existe::" . $tn['Ticket'][0]['TicketNumber'];
+            $this->_otrs_call_response['TicketNumber'] = json_encode($ticket_existenteTopdesk);
         }
 
         if($ticket_existenteTopdesk == 1 || is_null($ticket_existenteTopdesk)){
