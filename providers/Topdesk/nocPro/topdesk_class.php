@@ -701,14 +701,14 @@ function verificaTicketTopdesk($id_relacinamento, $horadafalha, $rule_data=array
 	if ($result == false) {
 		//$this->setWsError(curl_error($ch));
 		curl_close($ch);
-		return $Authorization;
+		return 1;
 	}
                 
 	$decoded_result = json_decode($result, TRUE);
 	if (is_null($decoded_result) || $decoded_result == false) {
 		//$this->setWsError($result);
 		//retorna nehum ticket
-		return $Authorization;
+		return 1;
 	}
 	
 	curl_close($ch);
