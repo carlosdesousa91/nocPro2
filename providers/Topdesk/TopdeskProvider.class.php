@@ -1003,12 +1003,12 @@ class TopdeskProvider extends AbstractProvider {
 				}
 			}
 		}else{
-			//$tn = infoTicket($ticket_existente['TicketID'][0]);
-            //$this->_otrs_call_response['TicketNumber'] = "ticket já existe::" . $tn['Ticket'][0]['TicketNumber'];
-            $this->_otrs_call_response['TicketNumber'] = json_encode($ticket_existenteTopdesk);
+			$tn = infoTicket($ticket_existente['TicketID'][0]);
+            $this->_otrs_call_response['TicketNumber'] = "ticket já existe::" . $tn['Ticket'][0]['TicketNumber'];
+            
         }
         
-        if($ticket_existicket_existenteTopdesktente == 1 || is_null($ticket_existenteTopdesk)){
+        if($ticket_existenteTopdesk == 1 || is_null($ticket_existenteTopdesk)){
 			
 
 			$regra_tipo = $ticket_arguments['Type']; //o campo type refere-se ao tipo de chamado, incidente, requisição, etc. No contexto do nocpro ele será usada para outro fim e todos os chamado serão do tipo Incidente
@@ -1153,7 +1153,7 @@ class TopdeskProvider extends AbstractProvider {
 		}else{
 			//$tn = infoTicket($ticket_existente['TicketID'][0]);
             //$this->_otrs_call_response['TicketNumber'] = "ticket já existe::" . $tn['Ticket'][0]['TicketNumber'];
-            $this->_otrs_call_response['TicketNumber'] = json_encode($ticket_existenteTopdesk);
+            $this->_otrs_call_response['TicketNumber'] .= json_encode($ticket_existenteTopdesk);
 		}
 
         return 0;
