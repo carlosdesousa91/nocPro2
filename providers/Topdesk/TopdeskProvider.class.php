@@ -1000,7 +1000,7 @@ class TopdeskProvider extends AbstractProvider {
             return -1;
         }
         
-        $argument = array('UserLogin' => $this->rule_data['username'], 'Password' => $this->rule_data['password']);
+        $argument = array('UserLogin' => 'centreon2', 'Password' => 'c3ntr3on');
         if ($this->callRest('Session', $argument) == 1) {
             return -1;
         }
