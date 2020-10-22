@@ -1000,59 +1000,22 @@ class TopdeskProvider extends AbstractProvider {
 				}
 			}
 		}else{
-			//$tn = infoTicket($ticket_existente['TicketID'][0]);
-            //$this->_otrs_call_response['TicketNumber'] = "ticket já existe::" . $tn['Ticket'][0]['TicketNumber'];
-            $this->_otrs_call_response['TicketNumber'] = json_encode($ticket_existenteTopdesk);
+			$tn = infoTicket($ticket_existente['TicketID'][0]);
+            $this->_otrs_call_response['TicketNumber'] = "ticket já existe::" . $tn['Ticket'][0]['TicketNumber'];
+            
         }
 
         if($ticket_existenteTopdesk == 1 || is_null($ticket_existenteTopdesk)){
 			
 			$argument = array(
-					//'Title'           => $ticket_arguments['Subject'],
-                    'action'            => 'teste nocpro2',
-                    'request'           => 'teste nocpro2',
+                    'action'            => $titulo,
+                    'request'           => $ticket_arguments['Body'],
                     'briefDescription'  => 'teste nocpro2',
-                    'caller'            =>  array('id' =>  'c3870881-03fa-41b5-a88d-2d65aed12ea8')
-                    //'Queue'             => $ticket_arguments['Queue'],
-                    //'operatorGroup'     =>  array('name' => $ticket_arguments['Queue']),
-                    //'State'             => $ticket_arguments['State'],
-                    //'processingStatus'  =>  array('name' => $ticket_arguments['State']),
-                    //'Priority'          => $ticket_arguments['Priority'],
-                    //'priority'          =>  array('name' =>  $ticket_arguments['Priority']),
-					//'TypeID'          => 123,
-					//'Type'              => $ticket_arguments['Type'],					
-					//'callType'          => 'Incidente', //o campo type refere-se ao tipo de chamado, incidente, requisição, etc. No contexto do nocpro ele será usada para outro fim e todos os chamado serão do tipo Incidente
-					//'OwnerID'         => 123,
-                    //'Owner'             => $ticket_arguments['Owner'],
-                    //'operador'            => array('name':  $ticket_arguments['Owner']),
-					//'ResponsibleID'   => 123,
-					//'Responsible'       => $ticket_arguments['Responsible'],
-					//'CustomerUser'      => $ticket_arguments['CustomerUser'],
-                    //'CustomerUser'      => $email_cliente,
-                    //'caller'            =>  array('dynamicName' =>  $email_cliente),
-                    //'caller'            =>  array('id' =>  'c3870881-03fa-41b5-a88d-2d65aed12ea8')
-                    //'ServiceID'         => $ServiceID
-                    //'category'          =>  array('id' => $ServiceID)
+                    'caller'            =>  array('id' =>  'c3870881-03fa-41b5-a88d-2d65aed12ea8')                    
                     
             );
 			
-			//$files = array();
-			//$attach_files = $this->getUploadFiles();
-			//foreach ($attach_files as $file) {
-			//	$base64_content = base64_encode(file_get_contents($file['filepath']));
-			//	$files[] = array('Content' => $base64_content, 'Filename' => $file['filename'], 'ContentType' => mime_content_type($file['filepath']));
-			//}
-			//if (count($files) > 0) {
-			//	$argument['Attachment'] = $files;
-			//}
 			
-			//if (count($ticket_dynamic_fields) > 0) {
-			//	$argument['DynamicField'] = $ticket_dynamic_fields;
-			//}
-
-			//if ($this->callRestTopdesk($argument) == 1) {
-			//	return -1;
-            //}
             $topdesk_call_response = callRestTopdesk(
                 $argument,
                 array(
@@ -1063,24 +1026,7 @@ class TopdeskProvider extends AbstractProvider {
                     )
             );
             
-			//associa IC
-			//if($ic_recuperado_id != 1 && $ic_recuperado_id != 2 && $ic_recuperado_id != ""){
-			//	$associacao_return = associaIc($this->_otrs_call_response['TicketID'], $ic_recuperado_id);
-			//}
-			//associa IC filhos/netos
-			/**if($tabRelacionamentoFull !== null){
-				foreach($tabRelacionamentoFull as $valuetabRelacionamento){
-					$relacionamentos_array = explode("::", $valuetabRelacionamento[0]['ic']);
-					if($relacionamentos_array[1] !== null && $relacionamentos_array[1] !== "0000"){
-						$ic_recuperado_id = consultaIc($relacionamentos_array[1], $regra_tipo, $serviceOuHost);
-						$ic_recuperado_id = $ic_recuperado_id['ConfigItemIDs'][0];
-						if($ic_recuperado_id !== 1 && $ic_recuperado_id !== 2 && $ic_recuperado_id !== ""){
-							$associacao_return = associaIc($this->_otrs_call_response['TicketID'], $ic_recuperado_id);
-						}
-					}
-					
-				}
-			}**/
+			
 		}
         
         return 0;
