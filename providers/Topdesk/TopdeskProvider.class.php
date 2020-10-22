@@ -1009,8 +1009,8 @@ class TopdeskProvider extends AbstractProvider {
 			
 			$argument = array(
                     'action'            => $titulo,
-                    'request'           => $ticket_arguments['Body'],
-                    'briefDescription'  => 'teste nocpro2',
+                    'request'           => 'teste nocpro3',
+                    'briefDescription'  => 'teste nocpro3',
                     'caller'            =>  array('id' =>  'c3870881-03fa-41b5-a88d-2d65aed12ea8')                    
                     
             );
