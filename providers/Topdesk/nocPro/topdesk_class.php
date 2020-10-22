@@ -701,14 +701,14 @@ function verificaTicketTopdesk($id_relacinamento, $horadafalha, $rule_data=array
 	if ($result == false) {
 		//$this->setWsError(curl_error($ch));
 		curl_close($ch);
-		return 1;
+		return $Authorization;
 	}
                 
 	$decoded_result = json_decode($result, TRUE);
 	if (is_null($decoded_result) || $decoded_result == false) {
 		//$this->setWsError($result);
 		//retorna nehum ticket
-		return 1;
+		return $Authorization;
 	}
 	
 	curl_close($ch);
@@ -724,8 +724,8 @@ function verificaTicketTopdesk($id_relacinamento, $horadafalha, $rule_data=array
     //$horadafalha_ticket_existente = date('Y-m-d H:i:s', $horadafalha_ticket_existente);
     $horadafalha_menos1Hora = strtotime('-60 minute', strtotime($horadafalha));
     if($horadafalha_ticket_existente > $horadafalha_menos1Hora || is_null($decoded_result[0]['optionalFields1']['date1']) || $decoded_result[0]['optionalFields1']['date1'] == 'null'){
-        $x = $id_relacinamento . $horadafalha . $decoded_result[0]['optionalFields1']['date1'];
-        return $x;
+        
+        return 1;
     }   
     
 	return $decoded_result;
