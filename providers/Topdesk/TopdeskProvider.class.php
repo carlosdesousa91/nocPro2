@@ -1002,7 +1002,156 @@ class TopdeskProvider extends AbstractProvider {
 		}else{
 			$tn = infoTicket($ticket_existente['TicketID'][0]);
 			$this->_otrs_call_response['TicketNumber'] = "ticket já existe::" . $tn['Ticket'][0]['TicketNumber'];
+        }
+
+        if($ticket_existenteTopdesk == 1 || is_null($ticket_existenteTopdesk)){
+			
+
+			$regra_tipo = $ticket_arguments['Type']; //o campo type refere-se ao tipo de chamado, incidente, requisição, etc. No contexto do nocpro ele será usada para outro fim e todos os chamado serão do tipo Incidente
+			
+			//valida se e conectividade ou serviços / se tem ic ou não
+			// CustomerUser campo notes numero do IC
+			if(is_null($ticket_arguments['CustomerUser']) || $ticket_arguments['CustomerUser'] == "" || $ticket_arguments['CustomerUser'] == " "){
+				$email_cliente = $ticket_arguments['From'];
+				$ic_uf = "";
+				//não necessário associar IC
+				$ic_recuperado_id = 2;
+			}else{
+				$ic_recuperado_id = consultaIc($ticket_arguments['CustomerUser'], $regra_tipo, $serviceOuHost);
+				$ic_recuperado_id = $ic_recuperado_id['ConfigItemIDs'][0];
+				if($ic_recuperado_id == 1 || $ic_recuperado_id == 2 || $ic_recuperado_id == ""){
+					$email_cliente = $ticket_arguments['From'];
+					$ic_uf = "";
+				}else{
+					$ticketCliente = ticketCliente($ic_recuperado_id, $regra_tipo);
+					$ic_number = $ticketCliente[0];
+					$ic_name = $ticketCliente[1];
+					$email_cliente = $ticketCliente[2];
+					$ic_uf = $ticketCliente[3];
+					$ic_designacao = $ticketCliente[4];
+				}
+			}
+			
+			//checa tipo de ticket um/backbone/sti
+			if($regra_tipo == "ultimamilha"){
+                $titulo = $ticket_arguments['Subject'];
+                //serviço de conectividade
+				$ServiceID = "989624e9-4b7f-4bef-ab65-aa6135d52299";
+						
+				$ticket_dynamic_fields[2]['Value'] = $ic_uf;
+				//$email_cliente = $email_cliente;
+				
+			}elseif($regra_tipo == "infrapop"){
+				$titulo = $ticket_arguments['Subject'];
+				//Infraestrutura::PoP = 2921
+				$ServiceID = 2921;
+				$ticket_dynamic_fields[2]['Value'] = $ic_uf;
+
+			}elseif($regra_tipo == "backbone" && $serviceOuHost == "Service"){
+				$titulo = $ticket_arguments['Subject'] . " (" . $ic_designacao . ")";
+				//"Serviço de Conectividade::Indisponibilidade::Backbone::Circuito" = 3020
+				$ServiceID = 3020;
+				$email_cliente = $ticket_arguments['From'];
+			}
+			elseif($regra_tipo == "backbone" && $serviceOuHost == "Host"){
+				if(is_null($tabRelacionamento['state'])){  
+					$titulo = "Abertura - Isolamento do " . $ic_name;
+					//"Serviço de Conectividade::Indisponibilidade::Backbone::POP-Isolado" = 3641
+					$ServiceID = 3641;
+					$email_cliente = $ticket_arguments['From'];
+				}else{
+					if($tabRelacionamento['state'] != 0){
+						$titulo = "Abertura - Isolamento do " . $ic_name;
+						//"Serviço de Conectividade::Indisponibilidade::Backbone::POP-Isolado" = 3641
+						$ServiceID = 3641;
+						$email_cliente = $ticket_arguments['From'];
+						
+					}else{
+						$titulo = $ticket_arguments['Subject'];
+						//"Serviço de Conectividade::Indisponibilidade::Backbone::POP-Isolado" = 3641
+						$ServiceID = 3020;
+						$email_cliente = $ticket_arguments['From'];
+					}
+				}
+				
+			}elseif($regra_tipo == "stigti" || $regra_tipo == "stigsc" || $regra_tipo == "sticentreon"){
+				$titulo = $ticket_arguments['Subject'];
+				//"Serviços Avançados" = 1246
+				$ServiceID = 1246;
+				$email_cliente = $ticket_arguments['From'];
+			}
+			
+			$titulo = str_replace("<br/>", " / ", $titulo);
+	
+			$argument = array(
+					//'Title'           => $ticket_arguments['Subject'],
+                    'action'            => $titulo,
+                    'request'           => $ticket_arguments['Body'],
+                    'briefDescription'  => $titulo,
+                    //'Queue'             => $ticket_arguments['Queue'],
+                    //'operatorGroup'     =>  array('name' => $ticket_arguments['Queue']),
+                    //'State'             => $ticket_arguments['State'],
+                    //'processingStatus'  =>  array('name' => $ticket_arguments['State']),
+                    //'Priority'          => $ticket_arguments['Priority'],
+                    //'priority'          =>  array('name' =>  $ticket_arguments['Priority']),
+					//'TypeID'          => 123,
+					//'Type'              => $ticket_arguments['Type'],					
+					'callType'          => 'Incidente', //o campo type refere-se ao tipo de chamado, incidente, requisição, etc. No contexto do nocpro ele será usada para outro fim e todos os chamado serão do tipo Incidente
+					//'OwnerID'         => 123,
+                    //'Owner'             => $ticket_arguments['Owner'],
+                    //'operador'            => array('name':  $ticket_arguments['Owner']),
+					//'ResponsibleID'   => 123,
+					//'Responsible'       => $ticket_arguments['Responsible'],
+					//'CustomerUser'      => $ticket_arguments['CustomerUser'],
+                    //'CustomerUser'      => $email_cliente,
+                    //'caller'            =>  array('dynamicName' =>  $email_cliente),
+                    'caller'            =>  array('id' =>  'c3870881-03fa-41b5-a88d-2d65aed12ea8')
+                    //'ServiceID'         => $ServiceID
+                    //'category'          =>  array('id' => $ServiceID)
+                    
+            );
+			
+			//$files = array();
+			//$attach_files = $this->getUploadFiles();
+			//foreach ($attach_files as $file) {
+			//	$base64_content = base64_encode(file_get_contents($file['filepath']));
+			//	$files[] = array('Content' => $base64_content, 'Filename' => $file['filename'], 'ContentType' => mime_content_type($file['filepath']));
+			//}
+			//if (count($files) > 0) {
+			//	$argument['Attachment'] = $files;
+			//}
+			
+			//if (count($ticket_dynamic_fields) > 0) {
+			//	$argument['DynamicField'] = $ticket_dynamic_fields;
+			//}
+
+			if ($this->callRestTopdesk($argument) == 1) {
+				return -1;
+			}
+			//associa IC
+			//if($ic_recuperado_id != 1 && $ic_recuperado_id != 2 && $ic_recuperado_id != ""){
+			//	$associacao_return = associaIc($this->_otrs_call_response['TicketID'], $ic_recuperado_id);
+			//}
+			//associa IC filhos/netos
+			/**if($tabRelacionamentoFull !== null){
+				foreach($tabRelacionamentoFull as $valuetabRelacionamento){
+					$relacionamentos_array = explode("::", $valuetabRelacionamento[0]['ic']);
+					if($relacionamentos_array[1] !== null && $relacionamentos_array[1] !== "0000"){
+						$ic_recuperado_id = consultaIc($relacionamentos_array[1], $regra_tipo, $serviceOuHost);
+						$ic_recuperado_id = $ic_recuperado_id['ConfigItemIDs'][0];
+						if($ic_recuperado_id !== 1 && $ic_recuperado_id !== 2 && $ic_recuperado_id !== ""){
+							$associacao_return = associaIc($this->_otrs_call_response['TicketID'], $ic_recuperado_id);
+						}
+					}
+					
+				}
+			}**/
+		}else{
+			//$tn = infoTicket($ticket_existente['TicketID'][0]);
+            //$this->_otrs_call_response['TicketNumber'] = "ticket já existe::" . $tn['Ticket'][0]['TicketNumber'];
+            $this->_otrs_call_response['TicketNumber'] .= json_encode($ticket_existenteTopdesk);
 		}
+        
         return 0;
     }
     
@@ -1050,6 +1199,60 @@ class TopdeskProvider extends AbstractProvider {
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+            'Content-Type: application/json',
+            'Accept: application/json',
+            'Content-Length: ' . strlen($argument_json))
+        );
+        $result = curl_exec($ch);
+        if ($result == false) {
+            $this->setWsError(curl_error($ch));
+            curl_close($ch);
+            return 1;
+        }
+                
+        $decoded_result = json_decode($result, TRUE);
+        if (is_null($decoded_result) || $decoded_result == false) {
+            $this->setWsError($result);
+            return 1;
+        }
+        
+        curl_close($ch);
+        
+        if (isset($decoded_result['Error'])) {
+            $this->setWsError($decoded_result['Error']['ErrorMessage']);
+            return 1;
+        }
+        
+        $this->_otrs_call_response = $decoded_result;
+        return 0;
+    }
+
+    protected function callRestTopdesk($argument) {
+        $this->_otrs_call_response = null;
+       
+        $proto = 'http';
+        if (isset($this->rule_data['https']) && $this->rule_data['https'] == 'yes') {
+            $proto = 'https';
+        }
+        
+        $argument_json = json_encode($argument);
+        $base_url = $proto . '://' . $this->rule_data['address'] . $this->rule_data['path'] . '/' . $this->rule_data['rest_link'] . '/' . $this->rule_data['webservice_name'];
+        $ch = curl_init($base_url);
+        if ($ch == false) {
+            $this->setWsError("cannot init curl object");
+            return 1;
+        }
+        
+        $Authorization = base64_encode($rule_data['username'] . ":" . $rule_data['password']);
+
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $this->rule_data['timeout']);
+        curl_setopt($ch, CURLOPT_TIMEOUT, $this->rule_data['timeout']);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $argument_json);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+            'Authorization: Basic ' . $Authorization,
             'Content-Type: application/json',
             'Accept: application/json',
             'Content-Length: ' . strlen($argument_json))
