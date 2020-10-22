@@ -798,7 +798,8 @@ class TopdeskProvider extends AbstractProvider {
 		$this->loginOtrs();
 		
 		//verificar se tem ticket pare ele mesmo
-		$ticket_existente = verificaTicket($ticket_dynamic_fields[0]['Value'], $ticket_dynamic_fields[1]['Value']);
+        $ticket_existente = verificaTicket($ticket_dynamic_fields[0]['Value'], $ticket_dynamic_fields[1]['Value']);
+        $ticket_existente = verificaTicketTopdesk($ticket_arguments['CustomerUser'], $ticket_dynamic_fields[1]['Value'], $this->rule_data);
 		
 		if ($ticket_existente == 2){
 			
@@ -984,8 +985,9 @@ class TopdeskProvider extends AbstractProvider {
 				}
 			}
 		}else{
-			$tn = infoTicket($ticket_existente['TicketID'][0]);
-			$this->_otrs_call_response['TicketNumber'] = "ticket já existe::" . $tn['Ticket'][0]['TicketNumber'];
+			//$tn = infoTicket($ticket_existente['TicketID'][0]);
+            //$this->_otrs_call_response['TicketNumber'] = "ticket já existe::" . $tn['Ticket'][0]['TicketNumber'];
+            $this->_otrs_call_response['TicketNumber'] = json_encode($ticket_existente);
 		}
         return 0;
     }
