@@ -1051,7 +1051,7 @@ class TopdeskProvider extends AbstractProvider {
 			//if ($this->callRestTopdesk($argument) == 1) {
 			//	return -1;
             //}
-            $this->_otrs_call_response = callRestTopdesk(
+            $topdesk_call_response = callRestTopdesk(
                 $argument,
                 array(
                     'address' => $this->rule_data['address'],
