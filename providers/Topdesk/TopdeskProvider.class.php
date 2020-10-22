@@ -1006,83 +1006,6 @@ class TopdeskProvider extends AbstractProvider {
 
         if($ticket_existenteTopdesk == 1 || is_null($ticket_existenteTopdesk)){
 			
-
-			$regra_tipo = $ticket_arguments['Type']; //o campo type refere-se ao tipo de chamado, incidente, requisição, etc. No contexto do nocpro ele será usada para outro fim e todos os chamado serão do tipo Incidente
-			
-			//valida se e conectividade ou serviços / se tem ic ou não
-			// CustomerUser campo notes numero do IC
-			if(is_null($ticket_arguments['CustomerUser']) || $ticket_arguments['CustomerUser'] == "" || $ticket_arguments['CustomerUser'] == " "){
-				$email_cliente = $ticket_arguments['From'];
-				$ic_uf = "";
-				//não necessário associar IC
-				$ic_recuperado_id = 2;
-			}else{
-				$ic_recuperado_id = consultaIc($ticket_arguments['CustomerUser'], $regra_tipo, $serviceOuHost);
-				$ic_recuperado_id = $ic_recuperado_id['ConfigItemIDs'][0];
-				if($ic_recuperado_id == 1 || $ic_recuperado_id == 2 || $ic_recuperado_id == ""){
-					$email_cliente = $ticket_arguments['From'];
-					$ic_uf = "";
-				}else{
-					$ticketCliente = ticketCliente($ic_recuperado_id, $regra_tipo);
-					$ic_number = $ticketCliente[0];
-					$ic_name = $ticketCliente[1];
-					$email_cliente = $ticketCliente[2];
-					$ic_uf = $ticketCliente[3];
-					$ic_designacao = $ticketCliente[4];
-				}
-			}
-			
-			//checa tipo de ticket um/backbone/sti
-			if($regra_tipo == "ultimamilha"){
-                $titulo = $ticket_arguments['Subject'];
-                //serviço de conectividade
-				$ServiceID = "989624e9-4b7f-4bef-ab65-aa6135d52299";
-						
-				$ticket_dynamic_fields[2]['Value'] = $ic_uf;
-				//$email_cliente = $email_cliente;
-				
-			}elseif($regra_tipo == "infrapop"){
-				$titulo = $ticket_arguments['Subject'];
-				//Infraestrutura::PoP = 2921
-				$ServiceID = 2921;
-				$ticket_dynamic_fields[2]['Value'] = $ic_uf;
-
-			}elseif($regra_tipo == "backbone" && $serviceOuHost == "Service"){
-				$titulo = $ticket_arguments['Subject'] . " (" . $ic_designacao . ")";
-				//"Serviço de Conectividade::Indisponibilidade::Backbone::Circuito" = 3020
-				$ServiceID = 3020;
-				$email_cliente = $ticket_arguments['From'];
-			}
-			elseif($regra_tipo == "backbone" && $serviceOuHost == "Host"){
-				if(is_null($tabRelacionamento['state'])){  
-					$titulo = "Abertura - Isolamento do " . $ic_name;
-					//"Serviço de Conectividade::Indisponibilidade::Backbone::POP-Isolado" = 3641
-					$ServiceID = 3641;
-					$email_cliente = $ticket_arguments['From'];
-				}else{
-					if($tabRelacionamento['state'] != 0){
-						$titulo = "Abertura - Isolamento do " . $ic_name;
-						//"Serviço de Conectividade::Indisponibilidade::Backbone::POP-Isolado" = 3641
-						$ServiceID = 3641;
-						$email_cliente = $ticket_arguments['From'];
-						
-					}else{
-						$titulo = $ticket_arguments['Subject'];
-						//"Serviço de Conectividade::Indisponibilidade::Backbone::POP-Isolado" = 3641
-						$ServiceID = 3020;
-						$email_cliente = $ticket_arguments['From'];
-					}
-				}
-				
-			}elseif($regra_tipo == "stigti" || $regra_tipo == "stigsc" || $regra_tipo == "sticentreon"){
-				$titulo = $ticket_arguments['Subject'];
-				//"Serviços Avançados" = 1246
-				$ServiceID = 1246;
-				$email_cliente = $ticket_arguments['From'];
-			}
-			
-			$titulo = str_replace("<br/>", " / ", $titulo);
-	
 			$argument = array(
 					//'Title'           => $ticket_arguments['Subject'],
                     'action'            => $titulo,
@@ -1156,10 +1079,6 @@ class TopdeskProvider extends AbstractProvider {
 					
 				}
 			}**/
-		}else{
-			//$tn = infoTicket($ticket_existente['TicketID'][0]);
-            //$this->_otrs_call_response['TicketNumber'] = "ticket já existe::" . $tn['Ticket'][0]['TicketNumber'];
-            $this->_otrs_call_response['TicketNumber'] = 'json_encode($ticket_existenteTopdesk)';
 		}
         
         return 0;
