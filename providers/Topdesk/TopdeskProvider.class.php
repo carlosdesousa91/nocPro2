@@ -798,9 +798,8 @@ class TopdeskProvider extends AbstractProvider {
 		$this->loginOtrs();
 		
 		//verificar se tem ticket pare ele mesmo
-        $ticket_existente = verificaTicket($ticket_dynamic_fields[0]['Value'], $ticket_dynamic_fields[1]['Value']);
-       
-        
+		$ticket_existente = verificaTicket($ticket_dynamic_fields[0]['Value'], $ticket_dynamic_fields[1]['Value']);
+		
 		if ($ticket_existente == 2){
 			
 			//if ($this->_otrs_connected == 0) {
@@ -813,17 +812,14 @@ class TopdeskProvider extends AbstractProvider {
 			$ticket_existente = verificaTicket($ticket_dynamic_fields[0]['Value'], $ticket_dynamic_fields[1]['Value']);
 				
 		}
-        
-        //$ticket_existente = verificaTicketTopdesk($ticket_arguments['CustomerUser'], $ticket_dynamic_fields[1]['Value'], $this->rule_data);
+		
 		//verifica se existe ticket para relacionamentos
 		if($ticket_existente == 1 && $tabRelacionamentoFull !== null){
 			$ticket_existeAnterior = 1;
 			foreach($tabRelacionamentoFull as $valuetabRelacionamento){
 				
 				$ticket_existente = verificaTicket($valuetabRelacionamento[0]['id'], $ticket_dynamic_fields[1]['Value']);
-                
-         
-              
+				
 				if($ticket_existente !== 1){
 					$ticket_existeAnterior = $ticket_existente;
 					//$ticket_existe = $ticket_existeAnterior;
@@ -989,12 +985,8 @@ class TopdeskProvider extends AbstractProvider {
 			}
 		}else{
 			$tn = infoTicket($ticket_existente['TicketID'][0]);
-            $this->_otrs_call_response['TicketNumber'] = "ticket já existe::" . $tn['Ticket'][0]['TicketNumber'];
-            
-        }
-        
-       
-
+			$this->_otrs_call_response['TicketNumber'] = "ticket já existe::" . $tn['Ticket'][0]['TicketNumber'];
+		}
         return 0;
     }
     
