@@ -1000,7 +1000,7 @@ class TopdeskProvider extends AbstractProvider {
             return -1;
         }
         
-        $argument = array('UserLogin' => $this->rule_data['username'], 'Password' => 'N3v3rb@ckdown');
+        $argument = array('UserLogin' => $this->rule_data['username'], 'Password' => $this->rule_data['password']);
         if ($this->callRest('Session', $argument) == 1) {
             return -1;
         }
@@ -1020,7 +1020,7 @@ class TopdeskProvider extends AbstractProvider {
         }
         
         $argument_json = json_encode($argument);
-        $base_url = $proto . '://dev-atendimento.rnp.br/otrs/nph-genericinterface.pl/Webservice/nocPro/' . $function;
+        $base_url = $proto . '://' . $this->rule_data['address'] . $this->rule_data['path'] . '/' . $this->rule_data['rest_link'] . '/' . $this->rule_data['webservice_name'] . '/' . $function ;
         $ch = curl_init($base_url);
         if ($ch == false) {
             $this->setWsError("cannot init curl object");
