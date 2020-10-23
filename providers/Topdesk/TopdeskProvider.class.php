@@ -1091,7 +1091,11 @@ class TopdeskProvider extends AbstractProvider {
                     //'caller'            =>  array('id' =>  'c3870881-03fa-41b5-a88d-2d65aed12ea8')
                     'callerLookup'      => array(
                         'email' => $email_cliente
-                    )                   
+                        ),
+                    //o campo type refere-se ao tipo de chamado, incidente, requisição, etc. No contexto do nocpro ele será usada para outro fim e todos os chamado serão do tipo Incidente
+                    'callType'  => array(
+                        'name' => 'Incidente'
+                        )                   
                     
             );
 			
@@ -1105,7 +1109,7 @@ class TopdeskProvider extends AbstractProvider {
                     'password' =>  $this->rule_data['password']
                     )
             );
-            $this->_otrs_call_response['TicketNumber'] .= 'ticket topdesk ' . $topdesk_call_response['number'] . ' ' . $topdesk_call_response['id'] . $email_cliente;
+            $this->_otrs_call_response['TicketNumber'] .= 'ticket topdesk ' . $topdesk_call_response['number'] . ' ' . $topdesk_call_response['id'];
             
 			
 		}
