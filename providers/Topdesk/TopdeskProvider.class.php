@@ -1107,6 +1107,9 @@ class TopdeskProvider extends AbstractProvider {
                     ),
                     'object' => array(
                         'name' => $ticket_arguments['CustomerUser']
+                    ),
+                    'sla' => array(
+                        'id' => 'e601eaa1-e595-4388-a0a2-2151975d1db0'
                     )
                     
             );
