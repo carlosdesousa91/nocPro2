@@ -1088,7 +1088,7 @@ class TopdeskProvider extends AbstractProvider {
                     'request'           => $ticket_arguments['Body'],
                     'briefDescription'  => $titulo,
                     //'caller'            =>  array('id' =>  'c3870881-03fa-41b5-a88d-2d65aed12ea8')
-                    'callerLookup'      => (
+                    'callerLookup'      => array(
                         'email' => $email_cliente
                     )                   
                     
