@@ -1034,8 +1034,11 @@ class TopdeskProvider extends AbstractProvider {
 
             //checa tipo de ticket um/backbone/sti
 			if($regra_tipo == "ultimamilha"){
-				$titulo = $ticket_arguments['Subject'];
-				$ServiceID = 2920;
+                $titulo = $ticket_arguments['Subject'];
+                //Serviço de Conectividade = 989624e9-4b7f-4bef-ab65-aa6135d52299
+                //Indisponibilidade = a0a77087-9029-4dcd-a8ab-13a40c8df466
+                $ServiceID = '989624e9-4b7f-4bef-ab65-aa6135d52299';
+                $subcategory = 'a0a77087-9029-4dcd-a8ab-13a40c8df466';
 						
 				$ticket_dynamic_fields[2]['Value'] = $ic_uf;
 				//$email_cliente = $email_cliente;
@@ -1095,7 +1098,13 @@ class TopdeskProvider extends AbstractProvider {
                     //o campo type refere-se ao tipo de chamado, incidente, requisição, etc. No contexto do nocpro ele será usada para outro fim e todos os chamado serão do tipo Incidente
                     'callType'  => array(
                         'name' => 'Incidente'
-                        )                   
+                    ),
+                    'category' => array(
+                        'id' => $ServiceID
+                    ),
+                    'subcategory' => array(
+                        'id' => $subcategory
+                    )                   
                     
             );
 			
