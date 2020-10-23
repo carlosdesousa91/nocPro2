@@ -1037,8 +1037,10 @@ class TopdeskProvider extends AbstractProvider {
                 $titulo = $ticket_arguments['Subject'];
                 //Serviço de Conectividade = 989624e9-4b7f-4bef-ab65-aa6135d52299
                 //Indisponibilidade = a0a77087-9029-4dcd-a8ab-13a40c8df466
+                // sla = Última milha = e601eaa1-e595-4388-a0a2-2151975d1db0
                 $ServiceID = '989624e9-4b7f-4bef-ab65-aa6135d52299';
                 $subcategory = 'a0a77087-9029-4dcd-a8ab-13a40c8df466';
+                $sla = 'e601eaa1-e595-4388-a0a2-2151975d1db0';
 						
 				$ticket_dynamic_fields[2]['Value'] = $ic_uf;
 				//$email_cliente = $email_cliente;
@@ -1109,7 +1111,16 @@ class TopdeskProvider extends AbstractProvider {
                         'name' => $ticket_arguments['CustomerUser']
                     ),
                     'sla' => array(
-                        'id' => 'e601eaa1-e595-4388-a0a2-2151975d1db0'
+                        'id' => $sla
+                    ),
+                    'operator' => array(
+                        'name' => $ticket_arguments['Queue']
+                    ),
+                    'operatorGroup' => array(
+                        'name' => $ticket_arguments['Queue']
+                    ),
+                    'processingStatus' => array(
+                        'name' => $ticket_arguments['State']
                     )
                     
             );
