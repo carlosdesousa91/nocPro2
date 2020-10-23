@@ -1104,7 +1104,10 @@ class TopdeskProvider extends AbstractProvider {
                     ),
                     'subcategory' => array(
                         'id' => $subcategory
-                    )                   
+                    ),
+                    'object' => array(
+                        'name' => $ticket_arguments['CustomerUser']
+                    )
                     
             );
 			
