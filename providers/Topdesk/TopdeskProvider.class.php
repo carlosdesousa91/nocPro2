@@ -1101,7 +1101,7 @@ class TopdeskProvider extends AbstractProvider {
                     'password' =>  $this->rule_data['password']
                     )
             );
-            $this->_otrs_call_response['TicketNumber'] .= 'ticket topdesk ' . $topdesk_call_response[0][id];
+            $this->_otrs_call_response['TicketNumber'] .= 'ticket topdesk ' . $topdesk_call_response[0]['id'] .  $topdesk_call_response['id'];
             
 			
 		}
