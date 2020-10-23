@@ -1114,13 +1114,13 @@ class TopdeskProvider extends AbstractProvider {
                         'id' => $sla
                     ),
                     'operator' => array(
-                        'name' => $ticket_arguments['Queue']
+                        'id' => $ticket_arguments['Queue']
                     ),
                     'operatorGroup' => array(
-                        'name' => $ticket_arguments['Queue']
+                        'id' => $ticket_arguments['Queue']
                     ),
                     'processingStatus' => array(
-                        'name' => $ticket_arguments['State']
+                        'id' => $ticket_arguments['State']
                     )
                     
             );
