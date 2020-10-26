@@ -1087,14 +1087,10 @@ class TopdeskProvider extends AbstractProvider {
 			
             $titulo = str_replace("<br/>", " / ", $titulo);
             
-            $url = 'https://monitoramento.rnp.br/centreon/include/views/graphs/generateGraphs/generateImage.php?username=nocpro&amp;token=nKyCaTwE4S&amp;start=1603641872&amp;end=1603728272&amp;hostname=PoP-PR-CLIENTE-UTFPR_Dois_Vizinhos&amp;service=PoP-PR / UTFPR - Dois Vizinhos / COPEL / 328517';
-            $ch = curl_init($url);
-            curl_setopt($ch, CURLOPT_URL, $url); 
-            curl_setopt($ch, CURLOPT_HEADER, 0);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-            $output = curl_exec($ch);
-            curl_close($ch);
-            $ticket_arguments['Body'] .=  $output ;
+            
+            $urlImg = 'https://monitoramento-hml.rnp.br/centreon/include/views/graphs/generateGraphs/generateImage.php?username=nocpro&token=pou1CDQwpr&start=1603653145&end=1603739545&hostname=MONITORAMENTO-PE-HML&service=Disk-/';
+            $imgBase64 = getImageDataFromUrl($urlImg);
+            $ticket_arguments['Body'] .= '<br/>Histórico:<br/><img src="' . $imgBase64 . '">';
 
 			
 			$argument = array(
