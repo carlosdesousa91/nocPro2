@@ -1091,7 +1091,7 @@ class TopdeskProvider extends AbstractProvider {
 			$argument = array(
                     //'action'            => $titulo,
                     'request'           => $ticket_arguments['Body'],
-                    'request'           => 'corpo do chamdo',
+                    //'request'           => 'corpo do chamdo',
                     'briefDescription'  => $titulo,
                     //'caller'            =>  array('id' =>  'c3870881-03fa-41b5-a88d-2d65aed12ea8')
                     'callerLookup'      => array(
