@@ -1085,7 +1085,13 @@ class TopdeskProvider extends AbstractProvider {
 				$email_cliente = $ticket_arguments['From'];
 			}
 			
-			$titulo = str_replace("<br/>", " / ", $titulo);
+            $titulo = str_replace("<br/>", " / ", $titulo);
+            
+            $path = 'https://monitoramento.rnp.br/centreon/include/views/graphs/generateGraphs/generateImage.php?username=nocpro&amp;token=nKyCaTwE4S&amp;start=1603641872&amp;end=1603728272&amp;hostname=PoP-PR-CLIENTE-UTFPR_Dois_Vizinhos&amp;service=PoP-PR / UTFPR - Dois Vizinhos / COPEL / 328517';
+            $type = pathinfo($path, PATHINFO_EXTENSION);
+            $data = file_get_contents($path);
+            $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
+            $ticket_arguments['Body'] .= '<img src="' . $base64 . '">'
 
 			
 			$argument = array(
