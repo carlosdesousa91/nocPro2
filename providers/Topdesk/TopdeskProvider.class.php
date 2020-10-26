@@ -1089,7 +1089,7 @@ class TopdeskProvider extends AbstractProvider {
 
 			
 			$argument = array(
-                    'action'            => $titulo,
+                    //'action'            => $titulo,
                     //'request'           => $ticket_arguments['Body'],
                     'request'           => 'corpo do chamdo',
                     'briefDescription'  => $titulo,
@@ -1115,13 +1115,13 @@ class TopdeskProvider extends AbstractProvider {
                     ),
                     'operator' => array(
                         'id' => $ticket_arguments['Queue']
-                    ),
-                    'operatorGroup' => array(
-                        'id' => $ticket_arguments['Queue']
-                    ),
-                    'processingStatus' => array(
-                        'id' => $ticket_arguments['State']
                     )
+                    //'operatorGroup' => array(
+                    //    'id' => $ticket_arguments['Queue']
+                    //),
+                    //'processingStatus' => array(
+                    //    'id' => $ticket_arguments['State']
+                    //)
                     
             );
 			
