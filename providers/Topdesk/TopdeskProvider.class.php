@@ -1091,7 +1091,7 @@ class TopdeskProvider extends AbstractProvider {
             $type = pathinfo($path, PATHINFO_EXTENSION);
             $data = file_get_contents($path);
             $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
-            $ticket_arguments['Body'] .= '<img src="' . $base64 . '">';
+            $ticket_arguments['Body'] .= '<img src=\"' . $base64 . '\">';
 
 			
 			$argument = array(
