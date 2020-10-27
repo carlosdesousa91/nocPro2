@@ -33,22 +33,6 @@
 		</div>
 	{/if}
 
-	{assign var="centreon_url" value="monitoramento-hml.rnp.br"}
-	{assign var="centreon_username" value="nocPro"}
-	{assign var="centreon_token" value="655h9MYBUZ"}
-	{assign var="centreon_end" value="`$smarty.now`"}
-	{assign var="centreon_start" value=$centreon_end-86400}
-	{assign var="add_graph" value="1"}
-
-	{if isset($add_graph) && $add_graph == 1}
-		{if $service_selected|@count gt 0}
-			{foreach from=$service_selected item=service}
-				{if $service.num_metrics > 0}
-	<br/>Histórico:<br/>src="https://{$centreon_url}/centreon/include/views/graphs/generateGraphs/generateImage.php?username={$centreon_username}&token={$centreon_token}&start={$centreon_start}&end={$centreon_end}&hostname={$service.host_name}&service={$service.description}" 
-				{/if}
-			{/foreach}
-		{/if}
-	{/if}
 
 	<br/><br/>
 	<b>Atenciosamente,</b><br/>
