@@ -1090,7 +1090,7 @@ class TopdeskProvider extends AbstractProvider {
             
             $urlImg = 'https://monitoramento-hml.rnp.br/centreon/include/views/graphs/generateGraphs/generateImage.php?username=nocpro&token=pou1CDQwpr&start=1603653145&end=1603739545&hostname=MONITORAMENTO-PE-HML&service=Disk-/';
             $imgBase64 = getImageDataFromUrl($urlImg);
-            $ticket_arguments['Body'] .= '<br/>Histórico:<br/><img width="400" src="' . $imgBase64 . '">';
+            $ticket_arguments['Body'] .= '<br/>Histórico:<br/><img width="400" height="100" src="' . $imgBase64 . '">';
 
 			
 			$argument = array(
