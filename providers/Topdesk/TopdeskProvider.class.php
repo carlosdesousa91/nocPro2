@@ -1128,7 +1128,7 @@ class TopdeskProvider extends AbstractProvider {
                         'id' => $ticket_arguments['State']
                     ),
                     'optionalFields1' => array(
-                        'date1' => date('Y-m-d\TH:i:s', strtotime($ticket_dynamic_fields[1]['Value']))
+                        'date1' => date('Y-m-d H:i:s', strtotime($ticket_dynamic_fields[1]['Value']))
                     )
                     
                     
