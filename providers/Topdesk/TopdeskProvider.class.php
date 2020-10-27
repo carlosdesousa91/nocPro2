@@ -1095,7 +1095,7 @@ class TopdeskProvider extends AbstractProvider {
 			
 			$argument = array(
                     //'action'            => $titulo,
-                    'request'           => $ticket_arguments['Body'] . $ticket_dynamic_fields[1]['Value'],
+                    'request'           => $ticket_arguments['Body'] .  date('yyyy-MM-dd\'T\'HH:mm:ss.SSS', strtotime($ticket_dynamic_fields[1]['Value'])),
                     //'request'           => 'corpo do chamdo',
                     'briefDescription'  => $titulo,
                     //'caller'            =>  array('id' =>  'c3870881-03fa-41b5-a88d-2d65aed12ea8')
