@@ -950,7 +950,7 @@ class TopdeskProvider extends AbstractProvider {
         }
         
         $argument_json = json_encode($argument);
-        $base_url = $proto . '://' . $otrs_Address . '/otrs' . '/' . 'nph-genericinterface.pl/Webservice' . '/' . 'nocPro' . '/' . $function ;
+        $base_url = $proto . '://' . $otrs_address . '/otrs' . '/' . 'nph-genericinterface.pl/Webservice' . '/' . 'nocPro' . '/' . $function ;
         $ch = curl_init($base_url);
         if ($ch == false) {
             $this->setWsError("cannot init curl object");
