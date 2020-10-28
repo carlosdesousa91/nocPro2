@@ -940,6 +940,7 @@ class TopdeskProvider extends AbstractProvider {
     }
     
     protected function callRest($function, $argument) {
+        global $otrs_address ;
         $this->_otrs_call_response = null;
        
         $proto = 'http';
