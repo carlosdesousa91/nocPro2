@@ -1,6 +1,6 @@
 <?php
 
-include '/usr/share/centreon/www/modules/centreon-open-tickets/providers/Topdesk/nocPro/access.php';
+include '/usr/share/centreon/www/modules/centreon-open-tickets/providers/Topdesk/nocPro/_access.php';
 
 function recuperaSessao(){
 	$arquivo = fopen("/usr/share/centreon/nocPro/sessao.txt", "r");
@@ -814,4 +814,4 @@ function getImageDataFromUrl($url){
 }
 
 
-echo json_encode( $otrs_Address );
+//echo json_encode( $otrs_Address );
