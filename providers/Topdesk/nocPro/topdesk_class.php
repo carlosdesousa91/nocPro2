@@ -814,4 +814,4 @@ function getImageDataFromUrl($url){
 }
 
 
-//echo json_encode(verificaTicket());
+echo json_encode($otrs_Address);
