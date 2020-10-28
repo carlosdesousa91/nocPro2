@@ -820,4 +820,4 @@ function teste(){
 	return $x;
 }
 
-echo( teste() .  $otrs_address);
+echo($otrs_address);
