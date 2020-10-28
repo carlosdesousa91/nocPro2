@@ -928,7 +928,7 @@ class TopdeskProvider extends AbstractProvider {
             return -1;
         }
         
-        $argument = array('UserLogin' => 'centreon2', 'Password' => 'c3ntr3on');
+        $argument = array('UserLogin' => $otrs_api_user, 'Password' => $otrs_api_senha);
         if ($this->callRest('Session', $argument) == 1) {
             return -1;
         }
