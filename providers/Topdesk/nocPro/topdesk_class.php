@@ -818,3 +818,9 @@ function getImageDataFromUrl($url){
     $base64 = 'data:image/' . $extension . ';base64,' . base64_encode($response);
     return $base64;
 }
+function teste(){
+	global $otrs_address, $otrs_api_user, $otrs_api_senha;
+	$x = $otrs_address . $otrs_api_user . $otrs_api_senha;
+	return $x;
+}
+echo(teste());
