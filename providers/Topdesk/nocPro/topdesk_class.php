@@ -1,4 +1,7 @@
 <?php
+
+include '/usr/share/centreon/www/modules/centreon-open-tickets/providers/Topdesk/nocPro/access.php';
+
 function recuperaSessao(){
 	$arquivo = fopen("/usr/share/centreon/nocPro/sessao.txt", "r");
 	$linha = fgets($arquivo);
@@ -14,7 +17,7 @@ function salvaSessao($sessao_id){
 }
 	
 function verificaTicket($id_relacinamento, $horadafalha){
-	$base_url = 'https://dev-atendimento.rnp.br/otrs/nph-genericinterface.pl/Webservice/nocPro/Ticket';
+	$base_url = 'https://' . $otrs_Address . '/otrs/nph-genericinterface.pl/Webservice/nocPro/Ticket';
 	$ch = curl_init($base_url);
 	if ($ch == false) {
 		$this->setWsError("cannot init curl object");
@@ -78,7 +81,7 @@ function verificaTicket($id_relacinamento, $horadafalha){
 }
 
 function infoTicket($ticketId){
-	$base_url = 'https://dev-atendimento.rnp.br/otrs/nph-genericinterface.pl/Webservice/nocPro/Ticket/' . $ticketId;
+	$base_url = 'https://' . $otrs_Address . '/otrs/nph-genericinterface.pl/Webservice/nocPro/Ticket/' . $ticketId;
 	$ch = curl_init($base_url);
 	if ($ch == false) {
 		$this->setWsError("cannot init curl object");
@@ -130,7 +133,7 @@ function infoTicket($ticketId){
 }
 
 function consultaIc($service_note_centreon, $regra_tipo, $serviceOuHost){
-	$base_url = 'https://dev-atendimento.rnp.br/otrs/nph-genericinterface.pl/Webservice/nocPro/ConfigItem/Search/';
+	$base_url = 'https://' . $otrs_Address . '/otrs/nph-genericinterface.pl/Webservice/nocPro/ConfigItem/Search/';
 	$ch = curl_init($base_url);
 	if ($ch == false) {
 		$this->setWsError("cannot init curl object");
@@ -199,7 +202,7 @@ function consultaIc($service_note_centreon, $regra_tipo, $serviceOuHost){
 }
 
 function recuperaAssociacao($ic_recuperado_id){
-	$base_url = 'https://dev-atendimento.rnp.br/otrs/nph-genericinterface.pl/Webservice/nocPro/Ticket/LinkList/';
+	$base_url = 'https://' . $otrs_Address . '/otrs/nph-genericinterface.pl/Webservice/nocPro/Ticket/LinkList/';
 	$ch = curl_init($base_url);
 	if ($ch == false) {
 		$this->setWsError("cannot init curl object");
@@ -263,7 +266,7 @@ function recuperaAssociacao($ic_recuperado_id){
 }
 	
 function infoIc($ic_local_recuperado_data_id_key){
-	$base_url = 'https://dev-atendimento.rnp.br/otrs/nph-genericinterface.pl/Webservice/nocPro/ConfigItem/' . $ic_local_recuperado_data_id_key;
+	$base_url = 'https://' . $otrs_Address . '/otrs/nph-genericinterface.pl/Webservice/nocPro/ConfigItem/' . $ic_local_recuperado_data_id_key;
 	$ch = curl_init($base_url);
 	if ($ch == false) {
 		$this->setWsError("cannot init curl object");
@@ -327,7 +330,7 @@ function infoIc($ic_local_recuperado_data_id_key){
 }
 
 function associaIc($TicketAberto_value, $ic_recuperado_id){
-	$base_url = 'https://dev-atendimento.rnp.br/otrs/nph-genericinterface.pl/Webservice/nocPro/Ticket/LinkAdd/';
+	$base_url = 'https://' . $otrs_Address . '/otrs/nph-genericinterface.pl/Webservice/nocPro/Ticket/LinkAdd/';
 	$ch = curl_init($base_url);
 	if ($ch == false) {
 		$this->setWsError("cannot init curl object");
