@@ -919,6 +919,7 @@ class TopdeskProvider extends AbstractProvider {
     }
     
     protected function loginOtrs() {
+        global $otrs_api_user, $otrs_api_senha;
         if ($this->_otrs_connected == 1) {
             return 0;
         }
