@@ -808,18 +808,18 @@ class TopdeskProvider extends AbstractProvider {
                 )
             );
 
-		if ($ticket_existente == 2){
+		//if ($ticket_existente == 2){
 			
 			//if ($this->_otrs_connected == 0) {
 			//	if ($this->loginOtrs() == -1) {
 			//		return -1;
 			//	}
 			//}
-			$this->loginOtrs();	
+		//	$this->loginOtrs();	
 			//$this->_otrs_session = criaSessao();
-			$ticket_existente = verificaTicket($ticket_dynamic_fields[0]['Value'], $ticket_dynamic_fields[1]['Value']);
+		//	$ticket_existente = verificaTicket($ticket_dynamic_fields[0]['Value'], $ticket_dynamic_fields[1]['Value']);
 				
-		}
+		//}
 		
 		//verifica se existe ticket para relacionamentos
 		if($ticket_existente == 1 && $tabRelacionamentoFull !== null){
@@ -852,158 +852,7 @@ class TopdeskProvider extends AbstractProvider {
 		}
 			            
         
-        //$ticket_existente == 1 - ticket não existe
-		if($ticket_existente == 1 || is_null($ticket_existente)){
-			
-
-			$regra_tipo = $ticket_arguments['Type']; //o campo type refere-se ao tipo de chamado, incidente, requisição, etc. No contexto do nocpro ele será usada para outro fim e todos os chamado serão do tipo Incidente
-			
-			//valida se e conectividade ou serviços / se tem ic ou não
-			// CustomerUser campo notes numero do IC
-			if(is_null($ticket_arguments['CustomerUser']) || $ticket_arguments['CustomerUser'] == "" || $ticket_arguments['CustomerUser'] == " "){
-				$email_cliente = $ticket_arguments['From'];
-				$ic_uf = "";
-				//não necessário associar IC
-				$ic_recuperado_id = 2;
-			}else{
-				$ic_recuperado_id = consultaIc($ticket_arguments['CustomerUser'], $regra_tipo, $serviceOuHost);
-				$ic_recuperado_id = $ic_recuperado_id['ConfigItemIDs'][0];
-				if($ic_recuperado_id == 1 || $ic_recuperado_id == 2 || $ic_recuperado_id == ""){
-					$email_cliente = $ticket_arguments['From'];
-					$ic_uf = "";
-				}else{
-					$ticketCliente = ticketCliente($ic_recuperado_id, $regra_tipo);
-					$ic_number = $ticketCliente[0];
-					$ic_name = $ticketCliente[1];
-					$email_cliente = $ticketCliente[2];
-					$ic_uf = $ticketCliente[3];
-					$ic_designacao = $ticketCliente[4];
-				}
-			}
-			
-			//checa tipo de ticket um/backbone/sti
-			if($regra_tipo == "ultimamilha"){
-				$titulo = $ticket_arguments['Subject'];
-				$ServiceID = 2920;
-						
-				$ticket_dynamic_fields[2]['Value'] = $ic_uf;
-				//$email_cliente = $email_cliente;
-				
-			}elseif($regra_tipo == "infrapop"){
-				$titulo = $ticket_arguments['Subject'];
-				//Infraestrutura::PoP = 2921
-				$ServiceID = 2921;
-				$ticket_dynamic_fields[2]['Value'] = $ic_uf;
-
-			}elseif($regra_tipo == "backbone" && $serviceOuHost == "Service"){
-				$titulo = $ticket_arguments['Subject'] . " (" . $ic_designacao . ")";
-				//"Serviço de Conectividade::Indisponibilidade::Backbone::Circuito" = 3020
-				$ServiceID = 3020;
-				$email_cliente = $ticket_arguments['From'];
-			}
-			elseif($regra_tipo == "backbone" && $serviceOuHost == "Host"){
-				if(is_null($tabRelacionamento['state'])){  
-					$titulo = "Abertura - Isolamento do " . $ic_name;
-					//"Serviço de Conectividade::Indisponibilidade::Backbone::POP-Isolado" = 3641
-					$ServiceID = 3641;
-					$email_cliente = $ticket_arguments['From'];
-				}else{
-					if($tabRelacionamento['state'] != 0){
-						$titulo = "Abertura - Isolamento do " . $ic_name;
-						//"Serviço de Conectividade::Indisponibilidade::Backbone::POP-Isolado" = 3641
-						$ServiceID = 3641;
-						$email_cliente = $ticket_arguments['From'];
-						
-					}else{
-						$titulo = $ticket_arguments['Subject'];
-						//"Serviço de Conectividade::Indisponibilidade::Backbone::POP-Isolado" = 3641
-						$ServiceID = 3020;
-						$email_cliente = $ticket_arguments['From'];
-					}
-				}
-				
-			}elseif($regra_tipo == "stigti" || $regra_tipo == "stigsc" || $regra_tipo == "sticentreon"){
-				$titulo = $ticket_arguments['Subject'];
-				//"Serviços Avançados" = 1246
-				$ServiceID = 1246;
-				$email_cliente = $ticket_arguments['From'];
-			}
-			
-			$titulo = str_replace("<br/>", " / ", $titulo);
-	
-			$argument = array(
-				//'SessionID' => $this->_otrs_session, 
-				'SessionID' => recuperaSessao(),
-				'Ticket' => array(
-					//'Title'             => $ticket_arguments['Subject'],
-					'Title'             => $titulo,
-					//'QueueID'         => xxx,
-					'Queue'             => $ticket_arguments['Queue'],
-					//'StateID'         => xxx,
-					'State'             => $ticket_arguments['State'],
-					//'PriorityID'      => xxx,
-					'Priority'          => $ticket_arguments['Priority'],
-					//'TypeID'          => 123,
-					//'Type'              => $ticket_arguments['Type'],					
-					'Type'              => 'Incidente', //o campo type refere-se ao tipo de chamado, incidente, requisição, etc. No contexto do nocpro ele será usada para outro fim e todos os chamado serão do tipo Incidente
-					//'OwnerID'         => 123,
-					'Owner'             => $ticket_arguments['Owner'],
-					//'ResponsibleID'   => 123,
-					'Responsible'       => $ticket_arguments['Responsible'],
-					//'CustomerUser'      => $ticket_arguments['CustomerUser'],
-					'CustomerUser'      => $email_cliente,
-					'ServiceID'			=> $ServiceID,
-				),
-				'Article' => array(
-					//'From' => $ticket_arguments['From'], // Must be an email
-					'From' => $email_cliente, // Must be an email
-					//'Subject' => $ticket_arguments['Subject'],
-					'Subject' => $titulo,
-					'Body' => $ticket_arguments['Body'],
-					'ContentType' => $ticket_arguments['ContentType'],
-				),
-			);
-			
-			$files = array();
-			$attach_files = $this->getUploadFiles();
-			foreach ($attach_files as $file) {
-				$base64_content = base64_encode(file_get_contents($file['filepath']));
-				$files[] = array('Content' => $base64_content, 'Filename' => $file['filename'], 'ContentType' => mime_content_type($file['filepath']));
-			}
-			if (count($files) > 0) {
-				$argument['Attachment'] = $files;
-			}
-			
-			if (count($ticket_dynamic_fields) > 0) {
-				$argument['DynamicField'] = $ticket_dynamic_fields;
-			}
-
-			if ($this->callRest('Ticket/Create/', $argument) == 1) {
-				return -1;
-			}
-			//associa IC
-			if($ic_recuperado_id != 1 && $ic_recuperado_id != 2 && $ic_recuperado_id != ""){
-				$associacao_return = associaIc($this->_otrs_call_response['TicketID'], $ic_recuperado_id);
-			}
-			//associa IC filhos/netos
-			if($tabRelacionamentoFull !== null){
-				foreach($tabRelacionamentoFull as $valuetabRelacionamento){
-					$relacionamentos_array = explode("::", $valuetabRelacionamento[0]['ic']);
-					if($relacionamentos_array[1] !== null && $relacionamentos_array[1] !== "0000"){
-						$ic_recuperado_id = consultaIc($relacionamentos_array[1], $regra_tipo, $serviceOuHost);
-						$ic_recuperado_id = $ic_recuperado_id['ConfigItemIDs'][0];
-						if($ic_recuperado_id !== 1 && $ic_recuperado_id !== 2 && $ic_recuperado_id !== ""){
-							$associacao_return = associaIc($this->_otrs_call_response['TicketID'], $ic_recuperado_id);
-						}
-					}
-					
-				}
-			}
-		}else{
-			$tn = infoTicket($ticket_existente['TicketID'][0]);
-            $this->_otrs_call_response['TicketNumber'] = "ticket já existe::" . $tn['Ticket'][0]['TicketNumber'];
-            
-        }
+       
 
         if($ticket_existenteTopdesk == 1 || is_null($ticket_existenteTopdesk)){
 
