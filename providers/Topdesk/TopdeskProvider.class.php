@@ -905,7 +905,7 @@ class TopdeskProvider extends AbstractProvider {
                     'password' =>  $this->rule_data['password']
                     )
             );
-            $this->_otrs_call_response['TicketNumber'] = json_encode($tabRelacionamentoFull);
+            $this->_otrs_call_response['TicketNumber'] = $topdesk_call_response['number'] . "::" . $topdesk_call_response['id'] . $tabRelacionamentoFull[0]['ic'] . $tabRelacionamentoFull[1]['ic'];
             
 			
         }
