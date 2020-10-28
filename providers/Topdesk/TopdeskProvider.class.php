@@ -798,7 +798,7 @@ class TopdeskProvider extends AbstractProvider {
 		$this->loginOtrs();
 		
 		//verificar se tem ticket pare ele mesmo
-		$ticket_existente = verificaTicket($ticket_dynamic_fields[0]['Value'], $ticket_dynamic_fields[1]['Value']);
+		//$ticket_existente = verificaTicket($ticket_dynamic_fields[0]['Value'], $ticket_dynamic_fields[1]['Value']);
 		$ticket_existenteTopdesk = verificaTicketTopdesk($ticket_arguments['CustomerUser'], $ticket_dynamic_fields[1]['Value'], 
             array(
                 'address' => $this->rule_data['address'],
