@@ -813,7 +813,7 @@ function getImageDataFromUrl($url){
     return $base64;
 }
 function teste(){
-	global $otrs_address ;
+	
 	$x = $otrs_address ;
 	return $x;
 }
