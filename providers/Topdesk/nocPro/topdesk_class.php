@@ -812,6 +812,8 @@ function getImageDataFromUrl($url){
     $base64 = 'data:image/' . $extension . ';base64,' . base64_encode($response);
     return $base64;
 }
+function teste(){
+	echo($otrs_address . $otrs_api_user);
+}
 
-
-echo json_encode( $otrs_Address );
+echo json_encode( teste() );
