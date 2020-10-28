@@ -27,3 +27,5 @@ Com isso o Provider Topdesk ficará disponível no Centreon todo baseado no prov
 
 - A verificação do ticket é feita comparando o "Objeto" do chamado com o campo notes do service/host do centreon.
 - Se um chamado for encontrado é verificado se a falha já ultrapassou uma hora.
+
+###

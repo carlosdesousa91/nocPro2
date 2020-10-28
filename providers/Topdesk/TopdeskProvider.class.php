@@ -736,7 +736,7 @@ class TopdeskProvider extends AbstractProvider {
 			foreach($tabRelacionamentoFull as $valuetabRelacionamento){
 				
                 //$ticket_existente = verificaTicket($valuetabRelacionamento[0]['id'], $ticket_dynamic_fields[1]['Value']);
-                $relacionamentos_array = explode("::", $valuetabRelacionamento[0]['ic']);
+                $relacionamentos_array = explode("::", $valuetabRelacionamento[1]['ic']);
 				$ticket_existenteTopdesk = verificaTicketTopdesk($relacionamentos_array[1], $ticket_dynamic_fields[1]['Value'], 
                 array(
                     'address' => $this->rule_data['address'],

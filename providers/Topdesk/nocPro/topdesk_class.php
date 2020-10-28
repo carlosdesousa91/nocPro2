@@ -1,5 +1,6 @@
 <?php
 
+// arquivo usado para passar senha e acesso.
 include '/usr/share/centreon/www/modules/centreon-open-tickets/providers/Topdesk/nocPro/_access.php';
 
 function recuperaSessao(){
