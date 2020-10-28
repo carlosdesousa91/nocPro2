@@ -1147,7 +1147,12 @@ class TopdeskProvider extends AbstractProvider {
             $this->_otrs_call_response['TicketNumber'] .= 'ticket topdesk ' . $topdesk_call_response['number'] . ' ' . $topdesk_call_response['id'];
             
 			
-		}
+        }
+        else{
+			$tn = infoTicket($ticket_existente['TicketID'][0]);
+            $this->_otrs_call_response['TicketNumber'] .= "ticket já existe::" . $ticket_existenteTopdesk[0]['number'];
+            
+        }
         
         return 0;
     }
