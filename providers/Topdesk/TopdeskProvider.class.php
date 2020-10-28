@@ -736,7 +736,7 @@ class TopdeskProvider extends AbstractProvider {
 			foreach($tabRelacionamentoFull as $valuetabRelacionamento){
 				
                 //$ticket_existente = verificaTicket($valuetabRelacionamento[0]['id'], $ticket_dynamic_fields[1]['Value']);
-                $relacionamentos_array = explode("::", $valuetabRelacionamento[1]['ic']);
+                $relacionamentos_array = explode("::", $valuetabRelacionamento[0]['ic']);
 				$ticket_existenteTopdesk = verificaTicketTopdesk($relacionamentos_array[1], $ticket_dynamic_fields[1]['Value'], 
                 array(
                     'address' => $this->rule_data['address'],
@@ -905,13 +905,13 @@ class TopdeskProvider extends AbstractProvider {
                     'password' =>  $this->rule_data['password']
                     )
             );
-            $this->_otrs_call_response['TicketNumber'] = $topdesk_call_response['number'] . "::" . $topdesk_call_response['id'];
+            $this->_otrs_call_response['TicketNumber'] = $topdesk_call_response['number'] . "::" . $topdesk_call_response['id'] . json_encode($tabRelacionamentoFull);
             
 			
         }
         else{
 			
-            $this->_otrs_call_response['TicketNumber'] = "ticket já existe::" . $ticket_existenteTopdesk[0]['number'] . "::" . $ticket_existenteTopdesk[0]['id'];
+            $this->_otrs_call_response['TicketNumber'] = "ticket já existe::" . $ticket_existenteTopdesk[0]['number'] . "::" . $ticket_existenteTopdesk[0]['id'] ;
             
         }
         
