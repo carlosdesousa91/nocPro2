@@ -615,7 +615,7 @@ class TopdeskProvider extends AbstractProvider {
 						$this->_otrs_call_response['TicketNumber'] = "O principal está indisponível, consulte a topologia.<br/>Principal: " . $tabRelacionamento['name'];
 						//$result['ticket_error_message'] = "O principal está indisponível, consulte a topologia.<br/>Principal: " . $tabRelacionamento['name'];
 					}else{
-						$code = $this->createTicketOtrs($ticket_arguments, $ticket_dynamic_fields, $serviceOuHost, null);
+						$code = $this->createTicketTopdesk($ticket_arguments, $ticket_dynamic_fields, $serviceOuHost, null);
 						if ($code == -1) {
 							$result['ticket_error_message'] = $this->ws_error;
 							return $result;
@@ -637,7 +637,7 @@ class TopdeskProvider extends AbstractProvider {
 					}
 					
 					$ticket_arguments['CustomerUser'] = $relacionamentos_array[1];
-					$code = $this->createTicketOtrs($ticket_arguments, $ticket_dynamic_fields, $serviceOuHost, $tabRelacionamentoFull);
+					$code = $this->createTicketTopdesk($ticket_arguments, $ticket_dynamic_fields, $serviceOuHost, $tabRelacionamentoFull);
 					if ($code == -1) {
 						$result['ticket_error_message'] = $this->ws_error;
 						return $result;
@@ -646,7 +646,7 @@ class TopdeskProvider extends AbstractProvider {
 			
 				}else{
 				
-					$code = $this->createTicketOtrs($ticket_arguments, $ticket_dynamic_fields, $serviceOuHost, null);
+					$code = $this->createTicketTopdesk($ticket_arguments, $ticket_dynamic_fields, $serviceOuHost, null);
 					if ($code == -1) {
 						$result['ticket_error_message'] = $this->ws_error;
 						return $result;
@@ -792,7 +792,7 @@ class TopdeskProvider extends AbstractProvider {
         return 0;
     }
     
-    protected function createTicketOtrs($ticket_arguments, $ticket_dynamic_fields, $serviceOuHost, $tabRelacionamentoFull) {
+    protected function createTicketTopdesk($ticket_arguments, $ticket_dynamic_fields, $serviceOuHost, $tabRelacionamentoFull) {
         
 		#loga no otrs a cada ticket criado e salva sessão.
 		$this->loginOtrs();
