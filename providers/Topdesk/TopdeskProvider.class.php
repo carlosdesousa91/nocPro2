@@ -999,7 +999,7 @@ class TopdeskProvider extends AbstractProvider {
         }
         else{
 			
-            $this->_otrs_call_response['TicketNumber'] = "ticket já existe::" . $ticket_existenteTopdesk[0]['number'] . " " . $topdesk_call_response[0]['id'];
+            $this->_otrs_call_response['TicketNumber'] = "ticket já existe::" . $ticket_existenteTopdesk[0]['number'] . "::" . $ticket_existenteTopdesk[0]['id'];
             
         }
         
