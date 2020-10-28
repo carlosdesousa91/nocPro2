@@ -822,11 +822,11 @@ class TopdeskProvider extends AbstractProvider {
 		//}
 		
 		//verifica se existe ticket para relacionamentos
-		if($ticket_existente == 1 && $tabRelacionamentoFull !== null){
+		if($ticket_existenteTopdesk == 1 && $tabRelacionamentoFull !== null){
 			$ticket_existeAnterior = 1;
 			foreach($tabRelacionamentoFull as $valuetabRelacionamento){
 				
-                $ticket_existente = verificaTicket($valuetabRelacionamento[0]['id'], $ticket_dynamic_fields[1]['Value']);
+                //$ticket_existente = verificaTicket($valuetabRelacionamento[0]['id'], $ticket_dynamic_fields[1]['Value']);
                 $relacionamentos_array = explode("::", $valuetabRelacionamento[0]['ic']);
 				$ticket_existenteTopdesk = verificaTicketTopdesk($relacionamentos_array[1], $ticket_dynamic_fields[1]['Value'], 
                 array(
@@ -836,8 +836,8 @@ class TopdeskProvider extends AbstractProvider {
                     'password' =>  $this->rule_data['password']
                     )
                 );
-				if($ticket_existente !== 1){
-					$ticket_existeAnterior = $ticket_existente;
+				if($ticket_existenteTopdesk !== 1){
+					$ticket_existeAnterior = $ticket_existenteTopdesk;
 					//$ticket_existe = $ticket_existeAnterior;
 					
 					// se a falha equivalente for após ela sobrepoe 
@@ -845,7 +845,7 @@ class TopdeskProvider extends AbstractProvider {
 						$ticket_dynamic_fields[1]['Value'] = $valuetabRelacionamento[0]['last_hard_state_change'];
 					}
 				}
-				$ticket_existente = $ticket_existeAnterior;
+				$ticket_existenteTopdesk = $ticket_existeAnterior;
 								
 				
 			}
