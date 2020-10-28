@@ -814,8 +814,7 @@ function getImageDataFromUrl($url){
 }
 function teste(){
 	
-	global $otrs_address ;
-
+	
 	$x = $otrs_address ;
 	return $x;
 }
