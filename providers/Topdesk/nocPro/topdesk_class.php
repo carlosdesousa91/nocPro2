@@ -813,7 +813,8 @@ function getImageDataFromUrl($url){
     return $base64;
 }
 function teste(){
-	echo($otrs_address . $otrs_api_user);
+	$x = $otrs_address . $otrs_api_user;
+	return $x;
 }
 
 echo json_encode( teste() );
