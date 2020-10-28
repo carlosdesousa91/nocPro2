@@ -814,8 +814,10 @@ function getImageDataFromUrl($url){
 }
 function teste(){
 	
+	global $otrs_address ;
+
 	$x = $otrs_address ;
 	return $x;
 }
 
-echo json_encode( teste() );
+echo json_encode( teste() .  $otrs_address);
