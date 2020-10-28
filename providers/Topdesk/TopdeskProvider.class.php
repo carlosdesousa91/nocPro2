@@ -993,13 +993,13 @@ class TopdeskProvider extends AbstractProvider {
                     'password' =>  $this->rule_data['password']
                     )
             );
-            $this->_otrs_call_response['TicketNumber'] = $topdesk_call_response['number'] . '::' . $topdesk_call_response['id'];
+            $this->_otrs_call_response['TicketNumber'] = $topdesk_call_response['number'] . "::" . $topdesk_call_response['id'];
             
 			
         }
         else{
 			
-            $this->_otrs_call_response['TicketNumber'] = "ticket já existe::" . $ticket_existenteTopdesk[0]['number'] . '::' . $topdesk_call_response['id'];
+            $this->_otrs_call_response['TicketNumber'] = "ticket já existe::" . $ticket_existenteTopdesk[0]['number'] . "::" . $topdesk_call_response[0]['id'];
             
         }
         
