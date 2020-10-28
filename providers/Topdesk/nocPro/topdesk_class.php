@@ -17,6 +17,7 @@ function salvaSessao($sessao_id){
 }
 	
 function verificaTicket($id_relacinamento, $horadafalha){
+	global $otrs_address ;
 	$base_url = 'https://' . $otrs_Address . '/otrs/nph-genericinterface.pl/Webservice/nocPro/Ticket';
 	$ch = curl_init($base_url);
 	if ($ch == false) {
@@ -81,6 +82,7 @@ function verificaTicket($id_relacinamento, $horadafalha){
 }
 
 function infoTicket($ticketId){
+	global $otrs_address ;
 	$base_url = 'https://' . $otrs_Address . '/otrs/nph-genericinterface.pl/Webservice/nocPro/Ticket/' . $ticketId;
 	$ch = curl_init($base_url);
 	if ($ch == false) {
@@ -133,6 +135,7 @@ function infoTicket($ticketId){
 }
 
 function consultaIc($service_note_centreon, $regra_tipo, $serviceOuHost){
+	global $otrs_address ;
 	$base_url = 'https://' . $otrs_Address . '/otrs/nph-genericinterface.pl/Webservice/nocPro/ConfigItem/Search/';
 	$ch = curl_init($base_url);
 	if ($ch == false) {
@@ -202,6 +205,7 @@ function consultaIc($service_note_centreon, $regra_tipo, $serviceOuHost){
 }
 
 function recuperaAssociacao($ic_recuperado_id){
+	global $otrs_address ;
 	$base_url = 'https://' . $otrs_Address . '/otrs/nph-genericinterface.pl/Webservice/nocPro/Ticket/LinkList/';
 	$ch = curl_init($base_url);
 	if ($ch == false) {
@@ -266,6 +270,7 @@ function recuperaAssociacao($ic_recuperado_id){
 }
 	
 function infoIc($ic_local_recuperado_data_id_key){
+	global $otrs_address ;
 	$base_url = 'https://' . $otrs_Address . '/otrs/nph-genericinterface.pl/Webservice/nocPro/ConfigItem/' . $ic_local_recuperado_data_id_key;
 	$ch = curl_init($base_url);
 	if ($ch == false) {
@@ -330,6 +335,7 @@ function infoIc($ic_local_recuperado_data_id_key){
 }
 
 function associaIc($TicketAberto_value, $ic_recuperado_id){
+	global $otrs_address ;
 	$base_url = 'https://' . $otrs_Address . '/otrs/nph-genericinterface.pl/Webservice/nocPro/Ticket/LinkAdd/';
 	$ch = curl_init($base_url);
 	if ($ch == false) {
@@ -812,11 +818,3 @@ function getImageDataFromUrl($url){
     $base64 = 'data:image/' . $extension . ';base64,' . base64_encode($response);
     return $base64;
 }
-function teste(){
-	
-	
-	$x = $otrs_address ;
-	return $x;
-}
-
-echo(teste() . $otrs_address);
