@@ -19,6 +19,7 @@
  * limitations under the License.
  */
 include '/usr/share/centreon/www/modules/centreon-open-tickets/providers/Topdesk/nocPro/topdesk_class.php';
+include '/usr/share/centreon/www/modules/centreon-open-tickets/providers/Topdesk/nocPro/access.php';
 
 class TopdeskProvider extends AbstractProvider {
     protected $_otrs_connected = 0;
@@ -947,7 +948,7 @@ class TopdeskProvider extends AbstractProvider {
         }
         
         $argument_json = json_encode($argument);
-        $base_url = $proto . '://' . 'dev-atendimento.rnp.br' . '/otrs' . '/' . 'nph-genericinterface.pl/Webservice' . '/' . 'nocPro' . '/' . $function ;
+        $base_url = $proto . '://' . $otrs_Address . '/otrs' . '/' . 'nph-genericinterface.pl/Webservice' . '/' . 'nocPro' . '/' . $function ;
         $ch = curl_init($base_url);
         if ($ch == false) {
             $this->setWsError("cannot init curl object");
