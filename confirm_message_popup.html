@@ -1,0 +1,33 @@
+<table class="table">
+	<tr>
+	<td class="FormHeader" colspan="2"><h3 style="color: #00bfb3;">{$title}</h3></td>
+	</tr>
+	{if $ticket_is_ok == 1}
+	<tr><td class="FormRowField" style="padding-left:15px;">Ticket(s):
+
+	{foreach from=$ticket_id item=chamado}
+
+        {assign var="stringFull" value='_'|explode:$chamado}
+        
+	{assign var="prefixo" value='::'|explode:$stringFull[0]}
+
+        {if $prefixo[0] == "ticket já existe"}
+     
+
+	{$prefixo[0]} <a href="https://rnp.topdesk.net/tas/secure/contained/incident?action=show&unid={$prefixo[2]}"> :{$prefixo[1]}</a>.
+
+	{else}
+        
+	<a href="https://rnp.topdesk.net/tas/secure/contained/incident?action=show&unid={$prefixo[1]}">{$prefixo[0]}</a>.
+
+	{/if}
+
+	{/foreach}
+
+
+
+	</td></tr>
+	{else}
+	<tr><td class="FormRowField" style="padding-left:15px;">Error to open the ticket: {$ticket_error_message}.</td></tr>
+	{/if}
+	</table>
