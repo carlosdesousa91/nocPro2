@@ -680,95 +680,6 @@ class TopdeskProvider extends AbstractProvider {
         $this->ws_error = $error;
     }
     
-    protected function listQueueOtrs() {
-        if ($this->_otrs_connected == 0) {
-            if ($this->loginOtrs() == -1) {
-                return -1;
-            }
-        }
-        
-        $argument = array('SessionID' => $this->_otrs_session);
-        if ($this->callRest('QueueGet', $argument) == 1) {
-            return -1;
-        }
-        
-        return 0;
-    }
-    
-    protected function listPriorityOtrs() {
-        if ($this->_otrs_connected == 0) {
-            if ($this->loginOtrs() == -1) {
-                return -1;
-            }
-        }
-        
-        $argument = array('SessionID' => $this->_otrs_session);
-        if ($this->callRest('PriorityGet', $argument) == 1) {
-            return -1;
-        }        
-        
-        return 0;
-    }
-    
-    protected function listStateOtrs() {
-        if ($this->_otrs_connected == 0) {
-            if ($this->loginOtrs() == -1) {
-                return -1;
-            }
-        }
-        
-        $argument = array('SessionID' => $this->_otrs_session);
-        if ($this->callRest('StateGet', $argument) == 1) {
-            return -1;
-        }        
-        
-        return 0;
-    }
-    
-    protected function listTypeOtrs() {
-        if ($this->_otrs_connected == 0) {
-            if ($this->loginOtrs() == -1) {
-                return -1;
-            }
-        }
-        
-        $argument = array('SessionID' => $this->_otrs_session);
-        if ($this->callRest('TypeGet', $argument) == 1) {
-            return -1;
-        }        
-        
-        return 0;
-    }
-    
-    protected function listCustomerUserOtrs() {
-        if ($this->_otrs_connected == 0) {
-            if ($this->loginOtrs() == -1) {
-                return -1;
-            }
-        }
-        
-        $argument = array('SessionID' => $this->_otrs_session);
-        if ($this->callRest('CustomerUserGet', $argument) == 1) {
-            return -1;
-        }        
-        
-        return 0;
-    }
-    
-    protected function listUserOtrs() {
-        if ($this->_otrs_connected == 0) {
-            if ($this->loginOtrs() == -1) {
-                return -1;
-            }
-        }
-        
-        $argument = array('SessionID' => $this->_otrs_session);
-        if ($this->callRest('UserGet', $argument) == 1) {
-            return -1;
-        }        
-        
-        return 0;
-    }
     
     protected function closeTicketOtrs($ticket_number) {
         if ($this->_otrs_connected == 0) {
@@ -794,9 +705,6 @@ class TopdeskProvider extends AbstractProvider {
     
     protected function createTicketTopdesk($ticket_arguments, $ticket_dynamic_fields, $serviceOuHost, $tabRelacionamentoFull) {
         
-		#loga no otrs a cada ticket criado e salva sessão.
-		$this->loginOtrs();
-		
 		//verificar se tem ticket pare ele mesmo
 		//$ticket_existente = verificaTicket($ticket_dynamic_fields[0]['Value'], $ticket_dynamic_fields[1]['Value']);
 		$ticket_existenteTopdesk = verificaTicketTopdesk($ticket_arguments['CustomerUser'], $ticket_dynamic_fields[1]['Value'], 
@@ -855,6 +763,9 @@ class TopdeskProvider extends AbstractProvider {
        
 
         if($ticket_existenteTopdesk == 1 || is_null($ticket_existenteTopdesk)){
+
+            #loga no otrs para recuperar informações do IC.
+		    $this->loginOtrs();
 
             $regra_tipo = $ticket_arguments['Type']; //o campo type refere-se ao tipo de chamado, incidente, requisição, etc. No contexto do nocpro ele será usada para outro fim e todos os chamado serão do tipo Incidente
 			
