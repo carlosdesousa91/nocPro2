@@ -861,42 +861,11 @@ class TopdeskProvider extends AbstractProvider {
 
 			
 			$argument = array(
-                    //'action'            => $titulo,
-                    'request'           => $ticket_arguments['Body'], /** .  date('Y-m-d\TH:i:s.u', strtotime($ticket_dynamic_fields[1]['Value'])),*/
-                    //'request'           => 'corpo do chamdo',
+                    'action'            => $titulo,
+
                     'briefDescription'  => $titulo,
-                    //'caller'            =>  array('id' =>  'c3870881-03fa-41b5-a88d-2d65aed12ea8')
-                    'callerLookup'      => array(
-                        'email' => $email_cliente
-                        ),
-                    //o campo type refere-se ao tipo de chamado, incidente, requisição, etc. No contexto do nocpro ele será usada para outro fim e todos os chamado serão do tipo Incidente
-                    'callType'  => array(
-                        'name' => 'Incidente'
-                    ),
-                    'category' => array(
-                        'id' => $ServiceID
-                    ),
-                    'subcategory' => array(
-                        'id' => $subcategory
-                    ),
-                    'object' => array(
-                        'name' => $ticket_arguments['CustomerUser']
-                    ),
-                    'sla' => array(
-                        'id' => $sla
-                    ),
-                    'operator' => array(
-                        'id' => $ticket_arguments['Queue']
-                    ),
-                    'operatorGroup' => array(
-                        'id' => $ticket_arguments['Queue']
-                    ),
-                    'processingStatus' => array(
-                        'id' => $ticket_arguments['State']
-                    ),
-                    'optionalFields1' => array(
-                        'date1' => date('Y-m-d\TH:i:s.uP', strtotime($ticket_dynamic_fields[1]['Value']))
-                    )
+                    'caller'            =>  array('id' =>  'c3870881-03fa-41b5-a88d-2d65aed12ea8')
+                    
                     
                     
             );
