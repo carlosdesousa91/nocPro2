@@ -884,19 +884,19 @@ class TopdeskProvider extends AbstractProvider {
                     ),
                     'sla' => array(
                         'id' => $sla
-                    )/**,
-                    'operator' => array(
+                    ),
+                    /**'operator' => array(
                         'id' => $ticket_arguments['Queue']
                     ),
                     'operatorGroup' => array(
                         'id' => $ticket_arguments['Queue']
-                    ),
+                    ),*/
                     'processingStatus' => array(
                         'id' => $ticket_arguments['State']
                     ),
                     'optionalFields1' => array(
                         'date1' => date('Y-m-d\TH:i:s.uP', strtotime($ticket_dynamic_fields[1]['Value']))
-                    ) */
+                    ) 
                     
                     
             );
