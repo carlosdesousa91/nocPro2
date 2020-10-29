@@ -885,12 +885,12 @@ class TopdeskProvider extends AbstractProvider {
                     'sla' => array(
                         'id' => $sla
                     ),
-                    /**'operator' => array(
+                    'operator' => array(
                         'id' => $ticket_arguments['Queue']
                     ),
                     'operatorGroup' => array(
                         'id' => $ticket_arguments['Queue']
-                    ),*/
+                    ),
                     'processingStatus' => array(
                         'id' => $ticket_arguments['State']
                     ),
