@@ -865,7 +865,7 @@ class TopdeskProvider extends AbstractProvider {
                     'request'           => $ticket_arguments['Body'] . $email_cliente, /** .  date('Y-m-d\TH:i:s.u', strtotime($ticket_dynamic_fields[1]['Value'])),*/
                     //'request'           => 'corpo do chamdo',
                     'briefDescription'  => $titulo,
-                    //'caller'            =>  array('id' =>  'c3870881-03fa-41b5-a88d-2d65aed12ea8'),
+                    'caller'            =>  array('id' =>  'c3870881-03fa-41b5-a88d-2d65aed12ea8'),
                     //'callerLookup'      => array(
                     //    'email' => $email_cliente
                     //    ),
