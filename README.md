@@ -68,7 +68,7 @@ copiar conteúdo do arquivo body_um.html para esse campo.
 
  - criar o arquivo '/usr/share/centreon/www/modules/centreon-open-tickets/providers/Topdesk/nocPro/_access.php' se necessário coletar os dados dos ics vindos do OTRS.
 
-``` <?php $otrs_Address = ''; $otrs_api_user = ''; $otrs_api_senha = ''; ?> ```
+``` <?php $otrs_address = ''; $otrs_api_user = ''; $otrs_api_senha = ''; ?> ```
 
 ### ACK / Pop-up
 
