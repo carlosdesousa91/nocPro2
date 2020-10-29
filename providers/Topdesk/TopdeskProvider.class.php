@@ -93,7 +93,7 @@ class TopdeskProvider extends AbstractProvider {
     protected function _setDefaultValueMain($body_html = 0) {
         parent::_setDefaultValueMain(1);
         
-        $this->default_data['url'] = 'http://{$address}/index.pl?Action=AgentTicketZoom;TicketNumber={$ticket_id}';        
+        $this->default_data['url'] = 'https://{$address}/tas/secure/contained/incident?action=show&unid={$ticket_id}';        
         $this->default_data['clones']['groupList'] = array(
             array('Id' => 'otrs_queue', 'Label' => _('Otrs queue'), 'Type' => self::OTRS_QUEUE_TYPE, 'Filter' => '', 'Mandatory' => '1'),
             array('Id' => 'otrs_priority', 'Label' => _('Otrs priority'), 'Type' => self::OTRS_PRIORITY_TYPE, 'Filter' => '', 'Mandatory' => '1'),
@@ -813,9 +813,15 @@ class TopdeskProvider extends AbstractProvider {
 				$ticket_dynamic_fields[2]['Value'] = $ic_uf;
 
 			}elseif($regra_tipo == "backbone" && $serviceOuHost == "Service"){
-				$titulo = $ticket_arguments['Subject'] . " (" . $ic_designacao . ")";
-				//"Serviço de Conectividade::Indisponibilidade::Backbone::Circuito" = 3020
-				$ServiceID = 3020;
+                $titulo = $ticket_arguments['Subject'] . " (" . $ic_designacao . ")";
+                
+				 //Serviço de Conectividade = 989624e9-4b7f-4bef-ab65-aa6135d52299
+                //Indisponibilidade = a0a77087-9029-4dcd-a8ab-13a40c8df466
+                // sla = Backbone = e601eaa1-e595-4388-a0a2-2151975d1db0
+                $ServiceID = '989624e9-4b7f-4bef-ab65-aa6135d52299';
+                $subcategory = 'a0a77087-9029-4dcd-a8ab-13a40c8df466';
+                $sla = '38e6fe93-1a21-4cf1-a2d5-a206eaedc21b';
+
 				$email_cliente = $ticket_arguments['From'];
 			}
 			elseif($regra_tipo == "backbone" && $serviceOuHost == "Host"){

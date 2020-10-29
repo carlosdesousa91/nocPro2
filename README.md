@@ -52,7 +52,7 @@ Com isso o Provider Topdesk ficará disponível no Centreon todo baseado no prov
 		HoradaFalha: {if $host_selected|@count gt 0}{foreach from=$host_selected item=host}{$host.last_hard_state_change|date_format:'%Y-%m-%d %H:%M:%S'}{/foreach}{/if}{if $service_selected|@count gt 0}{foreach from=$service_selected item=service}{$service.last_hard_state_change|date_format:'%Y-%m-%d %H:%M:%S'}{/foreach}{/if}
 		PoP: uf
 		Conexao: {if $host_selected|@count gt 0}{foreach from=$host_selected item=host}Host{/foreach}{/if}{if $service_selected|@count gt 0}{foreach from=$service_selected item=service}Enlace{/foreach}{/if}		
-		URL: http://{$address}/otrs/index.pl?Action=AgentTicketZoom;TicketNumber={$ticket_id}
+		URL: https://{$address}/tas/secure/contained/incident?action=show&unid={$ticket_id}
 
 ###### Confirm message popup:
 
@@ -67,5 +67,5 @@ copiar conteúdo do arquivo body_um.html para esse campo.
  - na guia "Advanced"  deixa o campo "guia Formatting popup" em branco. 
 
  - criar o arquivo '/usr/share/centreon/www/modules/centreon-open-tickets/providers/Topdesk/nocPro/_access.php' se necessário coletar os dados dos ics vindos do OTRS.
- 
+
 ``` <?php $otrs_Address = ''; $otrs_api_user = ''; $otrs_api_senha = ''; ?> ```

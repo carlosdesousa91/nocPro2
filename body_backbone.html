@@ -1,0 +1,48 @@
+<html>
+	<body>
+	Prezados,<br/><br/>
+
+	{if $host_selected|@count gt 0}{foreach from=$host_selected item=host}O PoP encontra-se isolado devido a(s) queda(s) do(s) host(s) abaixo:{/foreach}{/if}
+
+	{if $service_selected|@count gt 0}{foreach from=$service_selected item=service}O(s) enlace(s) abaixo encontra(m)-se indisponível(eis):{/foreach}{/if}
+
+	<br/>
+
+	{include file="file:$centreon_open_tickets_path/providers/Abstract/templates/display_selected_lists.ihtml" separator="<br/>"}
+
+
+	
+	{if $host_selected|@count gt 0}
+		
+			{foreach from=$host_selected item=host}
+				<b >Host: </b> {$host.name}<br/>
+				<b >Enlaces afetados: </b> {$host.alias}<br/>
+				<b >Status: </b> {$host.state_str}<br/>
+				<b >Duration: </b> {$host.last_hard_state_change_duration}<br/>
+				<b >Output: </b> {$host.output|substr:0:255}<br/>
+			{/foreach}
+		</div>
+	{/if}
+
+	{if $service_selected|@count gt 0}
+		
+  			{foreach from=$service_selected item=service}
+				<b>Host: </b> {$service.host_name}<br/>
+				<b>Enlace: </b> {$service.description}<br/>
+				{if isset($service.display_name)}
+					<b>Dependentes: </b> {$service.display_name}<br/>
+				{/if}
+				<b>Status: </b> {$service.state_str}<br/>
+				<b>Duration: </b> {$service.last_hard_state_change_duration}<br/>
+				<b>Output: </b> {$service.output|substr:0:255} <br/>
+			{/foreach}
+		</div>
+	{/if}
+
+
+	<br/><br/>
+	<b>Atenciosamente,</b><br/>
+	{$user.name|replace:'_':' '}<br/>
+	{$user.email} <br/>
+	RNP – Rede Nacional de Ensino e Pesquisa <br/>
+	http://www.rnp.br
