@@ -879,18 +879,18 @@ class TopdeskProvider extends AbstractProvider {
                     'subcategory' => array(
                         'id' => $subcategory
                     ),
-                    'object' => array(
-                        'name' => $ticket_arguments['CustomerUser']
-                    ),
+                    //'object' => array(
+                    //    'name' => $ticket_arguments['CustomerUser']
+                    //),
                     'sla' => array(
                         'id' => $sla
                     ),
-                    'operator' => array(
+                    /**'operator' => array(
                         'id' => $ticket_arguments['Queue']
                     ),
                     'operatorGroup' => array(
                         'id' => $ticket_arguments['Queue']
-                    ),
+                    ),**/
                     'processingStatus' => array(
                         'id' => $ticket_arguments['State']
                     ),
