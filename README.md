@@ -69,3 +69,15 @@ copiar conteúdo do arquivo body_um.html para esse campo.
  - criar o arquivo '/usr/share/centreon/www/modules/centreon-open-tickets/providers/Topdesk/nocPro/_access.php' se necessário coletar os dados dos ics vindos do OTRS.
 
 ``` <?php $otrs_Address = ''; $otrs_api_user = ''; $otrs_api_senha = ''; ?> ```
+
+### ACK / Pop-up
+
+no arquivo /usr/share/centreon/www/modules/centreon-open-tickets/providers/Abstract/AbstractProvider.class.php atualizar o function saveHistory.
+
+#### inserir número do ticket no ack automatico
+
+no arquivo /usr/share/centreon/www/modules/centreon-open-tickets/views/rules/ajax/actions/submitTicket.php passar a posição do array.
+
+criar as variáveis $index_host e $index_service para contar os chamados e passar no array do ticket.
+
+criar o laço com os services filhos e netos para receberem o ack.
