@@ -817,10 +817,10 @@ class TopdeskProvider extends AbstractProvider {
                 
 				 //Serviço de Conectividade = 989624e9-4b7f-4bef-ab65-aa6135d52299
                 //Indisponibilidade = a0a77087-9029-4dcd-a8ab-13a40c8df466
-                // sla = Backbone = e601eaa1-e595-4388-a0a2-2151975d1db0
+                // sla = Backbone = 2e589a5e-4d5d-4cf5-ba19-6a95b7ce892b
                 $ServiceID = '989624e9-4b7f-4bef-ab65-aa6135d52299';
                 $subcategory = 'a0a77087-9029-4dcd-a8ab-13a40c8df466';
-                $sla = '38e6fe93-1a21-4cf1-a2d5-a206eaedc21b';
+                $sla = '2e589a5e-4d5d-4cf5-ba19-6a95b7ce892b';
 
 				$email_cliente = $ticket_arguments['From'];
 			}
@@ -917,7 +917,7 @@ class TopdeskProvider extends AbstractProvider {
             }else{
                 $this->_otrs_call_response['TicketNumber'] = $topdesk_call_response['number'] . "::" . $topdesk_call_response['id'];
             }
-            			
+
         }
         else{
 			
