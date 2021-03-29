@@ -798,10 +798,10 @@ class TopdeskProvider extends AbstractProvider {
                 $titulo = $ticket_arguments['Subject'];
                 //Serviço de Conectividade = 989624e9-4b7f-4bef-ab65-aa6135d52299
                 //Indisponibilidade = a0a77087-9029-4dcd-a8ab-13a40c8df466
-                // sla = Última milha = e601eaa1-e595-4388-a0a2-2151975d1db0
+                // sla = Última milha = c146e805-37dd-4a36-a061-e61cbd40b7c3
                 $ServiceID = '989624e9-4b7f-4bef-ab65-aa6135d52299';
                 $subcategory = 'a0a77087-9029-4dcd-a8ab-13a40c8df466';
-                $sla = 'e601eaa1-e595-4388-a0a2-2151975d1db0';
+                $sla = 'c146e805-37dd-4a36-a061-e61cbd40b7c3';
 						
 				$ticket_dynamic_fields[2]['Value'] = $ic_uf;
 				//$email_cliente = $email_cliente;
@@ -911,9 +911,13 @@ class TopdeskProvider extends AbstractProvider {
                     'password' =>  $this->rule_data['password']
                     )
             );
-            $this->_otrs_call_response['TicketNumber'] = $topdesk_call_response['number'] . "::" . $topdesk_call_response['id'];
-            
-			
+
+            if (json_decode($topdesk_call_response, FALSE) || is_null($topdesk_call_response['id'])){
+                $this->_otrs_call_response['TicketNumber'] = json_encode($topdesk_call_response);
+            }else{
+                $this->_otrs_call_response['TicketNumber'] = $topdesk_call_response['number'] . "::" . $topdesk_call_response['id'];
+            }
+            			
         }
         else{
 			
