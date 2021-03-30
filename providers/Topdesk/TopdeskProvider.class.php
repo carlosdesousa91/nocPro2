@@ -791,12 +791,19 @@ class TopdeskProvider extends AbstractProvider {
                     return 0;
 
 				}else{
+                    
 					$ticketCliente = ticketCliente($ic_recuperado_id, $regra_tipo);
-					$ic_number = $ticketCliente[0];
-					$ic_name = $ticketCliente[1];
-					$email_cliente = $ticketCliente[2];
-					$ic_uf = $ticketCliente[3];
-					$ic_designacao = $ticketCliente[4];
+                    
+                    $this->_otrs_call_response['TicketNumber'] = json_encode($ticketCliente);
+                    return 0;
+                    
+
+					//$ticketCliente = ticketCliente($ic_recuperado_id, $regra_tipo);
+					//$ic_number = $ticketCliente[0];
+					//$ic_name = $ticketCliente[1];
+					//$email_cliente = $ticketCliente[2];
+					//$ic_uf = $ticketCliente[3];
+					//$ic_designacao = $ticketCliente[4];
 				}
 			}
 
