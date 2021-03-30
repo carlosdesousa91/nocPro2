@@ -15,6 +15,10 @@ function salvaSessao($sessao_id){
 	$arquivo = fopen("/usr/share/centreon/nocPro/sessao.txt", "w");
 	fwrite($arquivo, $sessao_id);
     fclose($arquivo);
+
+	$arquivo2 = fopen("/usr/share/centreon/nocPro/sessaoteste.txt", "w");
+	fwrite($arquivo2, "teste");
+    fclose($arquivo2);
 }
 	
 function verificaTicket($id_relacinamento, $horadafalha){
