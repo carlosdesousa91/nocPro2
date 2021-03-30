@@ -204,7 +204,8 @@ function consultaIc($service_note_centreon, $regra_tipo, $serviceOuHost){
         }
         
 	//$this->_otrs_call_response = $decoded_result;
-	return $decoded_result;
+	return recuperaSessao();
+	//return $decoded_result;
 }
 
 function recuperaAssociacao($ic_recuperado_id){
