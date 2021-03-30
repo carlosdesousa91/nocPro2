@@ -200,9 +200,8 @@ function consultaIc($service_note_centreon, $regra_tipo, $serviceOuHost){
             //$this->setWsError($decoded_result['Error']['ErrorMessage']);
 			//erro autenticação
             //return 2;
-			//return $decoded_result;
-			$var_sessao = recuperaSessao();
-			return $var_sessao;
+			return $decoded_result;
+
         }
         
 	//$this->_otrs_call_response = $decoded_result;
