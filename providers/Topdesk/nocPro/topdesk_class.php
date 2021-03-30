@@ -199,8 +199,8 @@ function consultaIc($service_note_centreon, $regra_tipo, $serviceOuHost){
 	if (isset($decoded_result['Error'])) {
             //$this->setWsError($decoded_result['Error']['ErrorMessage']);
 			//erro autenticação
-            //return 2;
-			return json_encode($decoded_result['Error']['ErrorMessage']);
+            return 2;
+			//return json_encode($decoded_result['Error']['ErrorMessage']);
         }
         
 	//$this->_otrs_call_response = $decoded_result;
