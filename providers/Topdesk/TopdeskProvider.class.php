@@ -783,6 +783,10 @@ class TopdeskProvider extends AbstractProvider {
 				if($ic_recuperado_id == 1 || $ic_recuperado_id == 2 || $ic_recuperado_id == ""){
 					$email_cliente = $ticket_arguments['From'];
 					$ic_uf = "";
+
+                    $this->_otrs_call_response['TicketNumber'] = $ic_recuperado_id;
+                    return 0;
+
 				}else{
 					$ticketCliente = ticketCliente($ic_recuperado_id, $regra_tipo);
 					$ic_number = $ticketCliente[0];
