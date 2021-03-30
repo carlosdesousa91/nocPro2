@@ -794,7 +794,7 @@ class TopdeskProvider extends AbstractProvider {
                     
 					$ticketCliente = ticketCliente($ic_recuperado_id, $regra_tipo);
                     
-                    $this->_otrs_call_response['TicketNumber'] = json_encode($ticketCliente);
+                    $this->_otrs_call_response['TicketNumber'] = json_encode($ic_recuperado_id);
                     return 0;
                     
 
