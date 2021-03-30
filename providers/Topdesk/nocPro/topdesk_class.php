@@ -190,7 +190,8 @@ function consultaIc($service_note_centreon, $regra_tipo, $serviceOuHost){
 	if (is_null($decoded_result) || $decoded_result == false) {
 		//$this->setWsError($result);
 		//sem retorno
-		return 1;
+		//return 1;
+		return $result;
 	}
 	
 	curl_close($ch);
@@ -198,7 +199,8 @@ function consultaIc($service_note_centreon, $regra_tipo, $serviceOuHost){
 	if (isset($decoded_result['Error'])) {
             //$this->setWsError($decoded_result['Error']['ErrorMessage']);
 			//erro autenticação
-            return 2;
+            //return 2;
+			return $decoded_result['Error']['ErrorMessage'];
         }
         
 	//$this->_otrs_call_response = $decoded_result;

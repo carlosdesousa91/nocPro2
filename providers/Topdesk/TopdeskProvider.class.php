@@ -779,12 +779,15 @@ class TopdeskProvider extends AbstractProvider {
 				$ic_recuperado_id = 2;
 			}else{
 				$ic_recuperado_id = consultaIc($ticket_arguments['CustomerUser'], $regra_tipo, $serviceOuHost);
-				$ic_recuperado_id = $ic_recuperado_id['ConfigItemIDs'][0];
-				if($ic_recuperado_id == 1 || $ic_recuperado_id == 2 || $ic_recuperado_id == ""){
+                
+				//$ic_recuperado_id = $ic_recuperado_id['ConfigItemIDs'][0];
+				//if($ic_recuperado_id == 1 || $ic_recuperado_id == 2 || $ic_recuperado_id == ""){
+                if(is_null($ic_recuperado_id['ConfigItemIDs'][0]) || $ic_recuperado_id == ""){
+				
 					$email_cliente = $ticket_arguments['From'];
 					$ic_uf = "";
 
-                    $this->_otrs_call_response['TicketNumber'] = $this->_otrs_call_response['SessionID'];
+                    $this->_otrs_call_response['TicketNumber'] = json_encode($ic_recuperado_id);
                     return 0;
 
 				}else{
