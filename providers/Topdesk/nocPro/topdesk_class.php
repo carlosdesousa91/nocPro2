@@ -201,7 +201,8 @@ function consultaIc($service_note_centreon, $regra_tipo, $serviceOuHost){
 			//erro autenticação
             //return 2;
 			//return $decoded_result;
-			return recuperaSessao();
+			$var_sessao = recuperaSessao();
+			return $var_sessao;
         }
         
 	//$this->_otrs_call_response = $decoded_result;
