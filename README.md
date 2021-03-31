@@ -70,6 +70,14 @@ copiar conteúdo do arquivo body_um.html para esse campo.
 
 ``` <?php $otrs_address = ''; $otrs_api_user = ''; $otrs_api_senha = ''; ?> ```
 
+#### criar "Rule" "nocPro2_Backbone"(regra para Backbone):
+
+Criar regra baseada na regra de última milha anterando os pontos necessários.
+
+#### criar "Rules" "nocPro2_GTI", "nocPro2_GSC" e outras:
+
+Criar regras baseadas na regra de última milha anterando os pontos necessários.
+
 ### ACK / Pop-up
 
 no arquivo /usr/share/centreon/www/modules/centreon-open-tickets/providers/Abstract/AbstractProvider.class.php atualizar o function saveHistory.

@@ -830,7 +830,7 @@ class TopdeskProvider extends AbstractProvider {
 			}elseif($regra_tipo == "backbone" && $serviceOuHost == "Service"){
                 $titulo = $ticket_arguments['Subject'] . " (" . $ic_designacao . ")";
                 
-				 //Serviço de Conectividade = 989624e9-4b7f-4bef-ab65-aa6135d52299
+				//Serviço de Conectividade = 989624e9-4b7f-4bef-ab65-aa6135d52299
                 //Indisponibilidade = a0a77087-9029-4dcd-a8ab-13a40c8df466
                 // sla = Backbone = 2e589a5e-4d5d-4cf5-ba19-6a95b7ce892b
                 $ServiceID = '989624e9-4b7f-4bef-ab65-aa6135d52299';
@@ -862,8 +862,13 @@ class TopdeskProvider extends AbstractProvider {
 				
 			}elseif($regra_tipo == "stigti" || $regra_tipo == "stigsc" || $regra_tipo == "sticentreon"){
 				$titulo = $ticket_arguments['Subject'];
-				//"Serviços Avançados" = 1246
-				$ServiceID = 1246;
+				//Serviços avançados = 989624e9-4b7f-4bef-ab65-aa6135d52299
+                //Indisponibilidade = a0a77087-9029-4dcd-a8ab-13a40c8df466
+                // sla = Backbone = 2e589a5e-4d5d-4cf5-ba19-6a95b7ce892b
+                $ServiceID = null;
+                $subcategory = null;
+                $sla = null;
+
 				$email_cliente = $ticket_arguments['From'];
 			}
 			
