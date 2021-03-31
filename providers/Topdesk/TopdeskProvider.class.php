@@ -862,11 +862,11 @@ class TopdeskProvider extends AbstractProvider {
 				
 			}elseif($regra_tipo == "stigti" || $regra_tipo == "stigsc" || $regra_tipo == "sticentreon"){
 				$titulo = $ticket_arguments['Subject'];
-				//Serviços avançados = 989624e9-4b7f-4bef-ab65-aa6135d52299
-                //Indisponibilidade = a0a77087-9029-4dcd-a8ab-13a40c8df466
+				//Infraestrutura = a0c472d6-fa00-47d7-9003-b386aa564ab4
+                //Servidor = c3a90c32-07cc-48a7-85b7-11ead8ba3888
                 // sla = Backbone = 2e589a5e-4d5d-4cf5-ba19-6a95b7ce892b
-                $ServiceID = null;
-                $subcategory = null;
+                $ServiceID = 'a0c472d6-fa00-47d7-9003-b386aa564ab4';
+                $subcategory = 'c3a90c32-07cc-48a7-85b7-11ead8ba3888';
                 $sla = null;
 
 				$email_cliente = $ticket_arguments['From'];
