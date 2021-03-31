@@ -916,8 +916,10 @@ class TopdeskProvider extends AbstractProvider {
                     ),
                     'optionalFields1' => array(
                         'date1' => date('Y-m-d\TH:i:s.uP', strtotime($ticket_dynamic_fields[1]['Value']))
-                    ) 
-                    
+                    ),
+                    'entryType' => array(
+                         'name' => 'Monitoramento'
+                     )
                     
             );
 			
