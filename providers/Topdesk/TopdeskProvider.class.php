@@ -818,7 +818,7 @@ class TopdeskProvider extends AbstractProvider {
 			if($regra_tipo == "ultimamilha"){
 
                 // quando o IC não está cadastrado no OTRS abrir o chamado com o cliente do operador.
-                if(is_null($email_cliente)){
+                if(is_null($email_cliente) || $email_cliente == ""){
                     $email_cliente = $ticket_arguments['From'];
                 }
 
