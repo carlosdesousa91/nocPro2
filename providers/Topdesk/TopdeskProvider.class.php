@@ -816,6 +816,12 @@ class TopdeskProvider extends AbstractProvider {
 
             //checa tipo de ticket um/backbone/sti
 			if($regra_tipo == "ultimamilha"){
+
+                // quando o IC não está cadastrado no OTRS abrir o chamado com o cliente do operador.
+                if(is_null($email_cliente)){
+                    $email_cliente = $ticket_arguments['From'];
+                }
+
                 $titulo = $ticket_arguments['Subject'];
                 //Serviço de Conectividade = 989624e9-4b7f-4bef-ab65-aa6135d52299
                 //Indisponibilidade = a0a77087-9029-4dcd-a8ab-13a40c8df466
