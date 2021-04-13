@@ -791,10 +791,10 @@ class TopdeskProvider extends AbstractProvider {
                     return 0;
                 
                 // quando o IC não está cadastrado no OTRS abrir o chamado com o cliente do operador.
-				}elseif($ic_recuperado_id = 1){
+				//}elseif($ic_recuperado_id = 1){
 
-                    $email_cliente = $ticket_arguments['From'];
-                    $ic_uf = "";                   
+                 //   $email_cliente = $ticket_arguments['From'];
+                 //   $ic_uf = "";                   
 
                 }else{
                     

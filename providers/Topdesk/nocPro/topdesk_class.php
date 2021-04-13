@@ -190,8 +190,8 @@ function consultaIc($service_note_centreon, $regra_tipo, $serviceOuHost){
 	if (is_null($decoded_result) || $decoded_result == false) {
 		//$this->setWsError($result);
 		//sem retorno
-		return 1;
-		//return $result;
+		//return 1;
+		return $result;
 	}
 	
 	curl_close($ch);
