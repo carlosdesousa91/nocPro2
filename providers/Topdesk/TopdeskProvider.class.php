@@ -886,6 +886,7 @@ class TopdeskProvider extends AbstractProvider {
 			
             $titulo = str_replace("<br/>", " ", $titulo);
             $titulo = str_replace(" Enlace ", " / ", $titulo);
+            $titulo = str_replace("Abrir chamado na Operadora", " ", $titulo);
             
             // imagem precisa ser redimencioanda topdesk suporta apenas 450x450
             /**$urlImg = 'https://monitoramento-hml.rnp.br/centreon/include/views/graphs/generateGraphs/generateImage.php?username=nocpro&token=pou1CDQwpr&start=1603653145&end=1603739545&hostname=MONITORAMENTO-PE-HML&service=Disk-/';
