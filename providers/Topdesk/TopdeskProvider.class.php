@@ -844,10 +844,10 @@ class TopdeskProvider extends AbstractProvider {
                 
 				//Serviço de Conectividade = 989624e9-4b7f-4bef-ab65-aa6135d52299
                 //Indisponibilidade = a0a77087-9029-4dcd-a8ab-13a40c8df466
-                // sla = Backbone = fc8dfc4b-405a-4864-ab8a-01462096fedc
+                // sla = Backbone = f4346ed2-bd0f-4ea5-a8cc-6f90f705e434
                 $ServiceID = '989624e9-4b7f-4bef-ab65-aa6135d52299';
                 $subcategory = 'a0a77087-9029-4dcd-a8ab-13a40c8df466';
-                $sla = 'fc8dfc4b-405a-4864-ab8a-01462096fedc';
+                $sla = 'f4346ed2-bd0f-4ea5-a8cc-6f90f705e434';
 
 				$email_cliente = $ticket_arguments['From'];
 			}
