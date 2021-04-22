@@ -825,10 +825,10 @@ class TopdeskProvider extends AbstractProvider {
                 $titulo = $ticket_arguments['Subject'];
                 //Serviço de Conectividade = 989624e9-4b7f-4bef-ab65-aa6135d52299
                 //Indisponibilidade = a0a77087-9029-4dcd-a8ab-13a40c8df466
-                // sla = Última milha = 357f6107-f7a0-4b1b-a15e-450f434b4fee
+                // sla = Última milha = 23be402a-7e6a-409e-b529-c025d06ddb50
                 $ServiceID = '989624e9-4b7f-4bef-ab65-aa6135d52299';
                 $subcategory = 'a0a77087-9029-4dcd-a8ab-13a40c8df466';
-                $sla = '357f6107-f7a0-4b1b-a15e-450f434b4fee';
+                $sla = '23be402a-7e6a-409e-b529-c025d06ddb50';
 						
 				$ticket_dynamic_fields[2]['Value'] = $ic_uf;
 				//$email_cliente = $email_cliente;
