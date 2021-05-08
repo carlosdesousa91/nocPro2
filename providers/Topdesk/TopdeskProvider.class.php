@@ -825,10 +825,10 @@ class TopdeskProvider extends AbstractProvider {
                 $titulo = $ticket_arguments['Subject'];
                 //Serviço de Conectividade = 989624e9-4b7f-4bef-ab65-aa6135d52299
                 //Indisponibilidade = a0a77087-9029-4dcd-a8ab-13a40c8df466
-                // sla = Última milha = 28fdf7d9-bf09-47b8-8277-3fd7f6a95342
+                // sla = Última milha = 51dd171e-a08f-4820-b5c2-9a6e796ac6ba
                 $ServiceID = '989624e9-4b7f-4bef-ab65-aa6135d52299';
                 $subcategory = 'a0a77087-9029-4dcd-a8ab-13a40c8df466';
-                $sla = '28fdf7d9-bf09-47b8-8277-3fd7f6a95342';
+                $sla = '51dd171e-a08f-4820-b5c2-9a6e796ac6ba';
 						
 				$ticket_dynamic_fields[2]['Value'] = $ic_uf;
 				//$email_cliente = $email_cliente;
@@ -844,10 +844,10 @@ class TopdeskProvider extends AbstractProvider {
                 
 				//Serviço de Conectividade = 989624e9-4b7f-4bef-ab65-aa6135d52299
                 //Indisponibilidade = a0a77087-9029-4dcd-a8ab-13a40c8df466
-                // sla = Backbone = 08e03541-5d55-4eb4-b7cc-af2a1f1ce1da
+                // sla = Backbone = cf6b5764-649e-49b9-abee-5277f1b84c3f
                 $ServiceID = '989624e9-4b7f-4bef-ab65-aa6135d52299';
                 $subcategory = 'a0a77087-9029-4dcd-a8ab-13a40c8df466';
-                $sla = '08e03541-5d55-4eb4-b7cc-af2a1f1ce1da';
+                $sla = 'cf6b5764-649e-49b9-abee-5277f1b84c3f';
 
 				$email_cliente = $ticket_arguments['From'];
 			}
