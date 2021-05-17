@@ -886,7 +886,7 @@ class TopdeskProvider extends AbstractProvider {
 			
             $titulo = str_replace("<br/>", " ", $titulo);
             //$titulo = str_replace(" Enlace ", " / ", $titulo);
-            //$titulo = str_replace("Abrir chamado na Operadora", " ", $titulo);
+            $titulo = str_replace("Abrir chamado na Operadora", " ", $titulo);
 
             if (strlen($titulo) > 80){
                 $titulo = substr($titulo,0,80);
