@@ -779,6 +779,14 @@ class TopdeskProvider extends AbstractProvider {
 				$ic_recuperado_id = 2;
 			}else{
 				$ic_recuperado_id = consultaIc($ticket_arguments['CustomerUser'], $regra_tipo, $serviceOuHost);
+                $ic_recuperado_id_td = consultaIcTopdesk($ticket_arguments['CustomerUser'], $regra_tipo, $serviceOuHost,
+                array(
+                    'address' => $this->rule_data['address'],
+                    'path' =>  $this->rule_data['path'],
+                    'username' =>  $this->rule_data['username'], 
+                    'password' =>  $this->rule_data['password']
+                    )
+                );
                 
 				//$ic_recuperado_id = $ic_recuperado_id['ConfigItemIDs'][0];
 				//if($ic_recuperado_id == 1 || $ic_recuperado_id == 2 || $ic_recuperado_id == ""){
@@ -810,7 +818,8 @@ class TopdeskProvider extends AbstractProvider {
 					$ic_name = $ticketCliente[1];
 					$email_cliente = $ticketCliente[2];
 					$ic_uf = $ticketCliente[3];
-					$ic_designacao = $ticketCliente[4];
+					#$ic_designacao = $ticketCliente[4];
+                    $ic_designacao = $ic_recuperado_id_td['designacao'];
 				}
 			}
 

@@ -822,3 +822,64 @@ function getImageDataFromUrl($url){
     $base64 = 'data:image/' . $extension . ';base64,' . base64_encode($response);
     return $base64;
 }
+
+function consultaIcTopdesk($service_note_centreon, $regra_tipo, $serviceOuHost, $rule_data=array()){
+
+	$base_url = 'https://';
+    $base_url .= $rule_data['address'];
+    $base_url .= $rule_data['path'] . '/api';
+    $base_url .= "/assetmgmt/assets?fields=specification,name,designacao&$filter=name eq '" . $service_note_centreon . "'";
+        
+    $Authorization = base64_encode($rule_data['username'] . ":" . $rule_data['password']);
+	
+	$ch = curl_init($base_url);
+	if ($ch == false) {
+		$this->setWsError("cannot init curl object");
+		return 1;
+	}
+	$argument = array(
+			
+
+	);
+	$argument_json = json_encode($argument);
+	curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
+	curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 60);
+	curl_setopt($ch, CURLOPT_TIMEOUT, 60);
+	curl_setopt($ch, CURLOPT_POSTFIELDS, $argument_json);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+	curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+		'Authorization: Basic ' . $Authorization,
+		'Content-Type: application/json',
+		'Accept: application/json',
+		'Content-Length: ' . strlen($argument_json),
+		'Connection: close', 
+		'Cache-Control: no-cache')
+	);
+
+	$result = curl_exec($ch);
+	if ($result == false) {
+		//$this->setWsError(curl_error($ch));
+		curl_close($ch);
+		return 1;
+	}
+				
+	$decoded_result = json_decode($result, TRUE);
+	if (is_null($decoded_result) || $decoded_result == false) {
+		//$this->setWsError($result);
+		//retorna nehum ticket
+		return 1;
+	}
+
+	curl_close($ch);
+
+	if (isset($decoded_result['Error'])) {
+			//$this->setWsError($decoded_result['Error']['ErrorMessage']);
+			//erro autenticação
+			return 2;
+	}
+
+	return $decoded_result['dataSet'];
+}
+
+
