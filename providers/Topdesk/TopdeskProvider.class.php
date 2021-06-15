@@ -819,7 +819,7 @@ class TopdeskProvider extends AbstractProvider {
 					$email_cliente = $ticketCliente[2];
 					$ic_uf = $ticketCliente[3];
 					#$ic_designacao = $ticketCliente[4];
-                    $ic_designacao = $ic_recuperado_id_td['designacao'];
+                    $ic_designacao = json_encode($ic_recuperado_id_td);
 				}
 			}
 
