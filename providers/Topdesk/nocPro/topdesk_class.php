@@ -828,7 +828,7 @@ function consultaIcTopdesk($service_note_centreon, $regra_tipo, $serviceOuHost, 
 	$base_url = 'https://';
     $base_url .= $rule_data['address'];
     $base_url .= $rule_data['path'] . '/api';
-    $base_url .= "/assetmgmt/assets?fields=specification,name,designacao&$" . "filter=name eq '" . $service_note_centreon . "'";
+    $base_url .= '/assetmgmt/assets?fields=specification,name,designacao&$' . 'filter=name eq \'' . $service_note_centreon . '\'';
         
     $Authorization = base64_encode($rule_data['username'] . ":" . $rule_data['password']);
 	
@@ -881,5 +881,6 @@ function consultaIcTopdesk($service_note_centreon, $regra_tipo, $serviceOuHost, 
 
 	return $decoded_result;
 }
+
 
 
