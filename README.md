@@ -48,7 +48,7 @@ Com isso o Provider Topdesk ficará disponível no Centreon todo baseado no prov
 	Custumer user: {if $host_selected|@count gt 0}{foreach from=$host_selected item=host}{$host.notes}{/foreach}{/if}{if $service_selected|@count gt 0}{foreach from=$service_selected item=service}{$service.notes}{/foreach}{/if}
 	Content Type: text/html; charset=utf8
 	#Campos dinamicos (devem ser criado na ordem abaixo):
-		nocproserviceid: {if $host_selected|@count gt 0}{foreach from=$host_selected item=host}{$host.host_id}{/foreach}{/if}{if $service_selected|@count gt 0}{foreach from=$service_selected item=service}{$service.service_id}{/foreach}{/if}
+		nocproserviceid: {if $host_selected|@count gt 0}{foreach from=$host_selected item=host}{$host.host_id}{/foreach}{/if}{if $service_selected|@count gt 0}{foreach from=$service_selected item=service}{$service.host_id}_{$service.service_id}{/foreach}{/if}
 		HoradaFalha: {if $host_selected|@count gt 0}{foreach from=$host_selected item=host}{$host.last_hard_state_change|date_format:'%Y-%m-%d %H:%M:%S'}{/foreach}{/if}{if $service_selected|@count gt 0}{foreach from=$service_selected item=service}{$service.last_hard_state_change|date_format:'%Y-%m-%d %H:%M:%S'}{/foreach}{/if}
 		PoP: uf
 		Conexao: {if $host_selected|@count gt 0}{foreach from=$host_selected item=host}Host{/foreach}{/if}{if $service_selected|@count gt 0}{foreach from=$service_selected item=service}Enlace{/foreach}{/if}		

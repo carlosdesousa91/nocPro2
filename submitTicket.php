@@ -120,7 +120,13 @@ $selected = $rule->loadSelection($db_storage, $get_information['form']['cmd'], $
 
 try {
     $contact_infos = get_contact_information();
-    $resultat['result'] = $centreon_provider->submitTicket($db_storage, $contact_infos, $selected['host_selected'], $selected['service_selected']);
+    $resultat['result'] = $centreon_provider->submitTicket(
+		$db_storage,
+		$contact_infos,
+		$selected['host_selected'],
+		$selected['service_selected']
+	);
+	
     if ($resultat['result']['ticket_is_ok'] == 1) {
         do_chain_rules($centreon_provider->getChainRuleList(), $db_storage, $contact_infos, $selected);
 
@@ -131,13 +137,39 @@ try {
         if (method_exists($external_cmd, $method_external_name) == false) {
             $method_external_name = 'setProcessCommand';
         }
+		
         $index_host = 0;
         foreach ($selected['host_selected'] as $value) {
             $command = "CHANGE_CUSTOM_HOST_VAR;%s;%s;%s";
-            call_user_func_array(array($external_cmd, $method_external_name), array(sprintf($command, $value['name'], $centreon_provider->getMacroTicketId(), $resultat['result']['ticket_id']), $value['instance_id']));
+            call_user_func_array(
+				array($external_cmd, $method_external_name),
+				array(
+					sprintf(
+						$command,
+						$value['name'],
+						$centreon_provider->getMacroTicketId(),
+						$resultat['result']['ticket_id']
+					),
+					$value['instance_id']
+				)
+			);
             if ($centreon_provider->doAck()) {
                 $command = "ACKNOWLEDGE_HOST_PROBLEM;%s;%s;%s;%s;%s;%s";
-                call_user_func_array(array($external_cmd, $method_external_name), array(sprintf($command, $value['name'], 2, 0, 1, $contact_infos['alias'], '#' . $resultat['result']['ticket_id'][$index_host]), $value['instance_id']));
+                call_user_func_array(
+					array($external_cmd, $method_external_name),
+					array(
+						sprintf(
+							$command,
+							$value['name'],
+							2,
+							0,
+							1,
+							$contact_infos['alias'],
+							'#' . $resultat['result']['ticket_id'][$index_host]
+						),
+						$value['instance_id']
+					)
+				);
             }
         $index_host++;
         }
@@ -156,23 +188,62 @@ try {
                                 $row = $res->fetch();
 
                                 $command = "CHANGE_CUSTOM_SVC_VAR;%s;%s;%s;%s";
-                                call_user_func_array(array($external_cmd, $method_external_name), array(sprintf($command, $row['host_name'], $row['description'], $centreon_provider->getMacroTicketId(), $resultat['result']['ticket_id']), $row['instance_id']));
+                                call_user_func_array(
+									array($external_cmd, $method_external_name),
+									array(
+										sprintf(
+											$command,
+											$row['host_name'],
+											$row['description'],
+											$centreon_provider->getMacroTicketId(),
+											$resultat['result']['ticket_id']
+											),
+											$row['instance_id']
+										)
+									);
                                 if ($centreon_provider->doAck() && ( strpos($resultat['result']['ticket_id'][$index_service],"O principal está indisponível") === false ) ) {
-  //se o ack é falso inclui tn
-// strpos só funcionar vom false, verificar depois
-$ticketTn = explode("::", $ticketArray[0]);
- if((strpos($ticketTn[0], "ticket já existe")) !== false){
-        $ticketTn[0] = $ticketTn[1];
- }
+									  //se o ack é falso inclui tn
+									// strpos só funcionar vom false, verificar depois
+									$ticketTn = explode("::", $ticketArray[0]);
+									 if((strpos($ticketTn[0], "ticket já existe")) !== false){
+											$ticketTn[0] = $ticketTn[1];
+									 }
 
-                                        $command = "ACKNOWLEDGE_SVC_PROBLEM;%s;%s;%s;%s;%s;%s;%s";
-                                call_user_func_array(array($external_cmd, $method_external_name), array(sprintf($command, $row['host_name'], $row['description'], 2, 0, 1, $contact_infos['alias'],  $ticketTn[0] ), $row['instance_id']));
+                                    $command = "ACKNOWLEDGE_SVC_PROBLEM;%s;%s;%s;%s;%s;%s;%s";
+									call_user_func_array(
+										array($external_cmd, $method_external_name),
+										array(
+											sprintf(
+												$command,
+												$row['host_name'],
+												$row['description'],
+												2,
+												0,
+												1,
+												$contact_infos['alias'],
+												$ticketTn[1] 
+											),
+											$row['instance_id']
+										)
+									);
                                 }
                         }
               }
 
             $command = "CHANGE_CUSTOM_SVC_VAR;%s;%s;%s;%s";
-            call_user_func_array(array($external_cmd, $method_external_name), array(sprintf($command, $value['host_name'], $value['description'], $centreon_provider->getMacroTicketId(), $resultat['result']['ticket_id']), $value['instance_id']));
+            call_user_func_array(
+				array($external_cmd, $method_external_name),
+				array(
+					sprintf(
+						$command,
+						$value['host_name'],
+						$value['description'],
+						$centreon_provider->getMacroTicketId(),
+						$resultat['result']['ticket_id']
+					),
+					$value['instance_id']
+				)
+			);
             if ($centreon_provider->doAck() && ( strpos($resultat['result']['ticket_id'][$index_service],"O principal está indisponível") === false )) {
    //se o ack é falso inclui tn
 // strpos só funcionar vom false, verificar depois
@@ -182,7 +253,22 @@ $ticketTn = explode("::", $ticketArray[0]);
  }
 
                 $command = "ACKNOWLEDGE_SVC_PROBLEM;%s;%s;%s;%s;%s;%s;%s";
-                call_user_func_array(array($external_cmd, $method_external_name), array(sprintf($command, $value['host_name'], $value['description'], 2, 0, 1, $contact_infos['alias'], $ticketTn[0] ), $value['instance_id']));
+                call_user_func_array(
+					array($external_cmd, $method_external_name),
+					array(
+						sprintf(
+							$command,
+							$value['host_name'],
+							$value['description'],
+							2,
+							0,
+							1,
+							$contact_infos['alias'],
+							$ticketTn[1]
+						),
+						$value['instance_id']
+					)
+				);
             }
         $index_service++;
         }
