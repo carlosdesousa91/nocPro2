@@ -221,7 +221,7 @@ try {
 												0,
 												1,
 												$contact_infos['alias'],
-												json_encode($ticketTn)
+												$ticketArray[0]
 											),
 											$row['instance_id']
 										)
@@ -264,7 +264,7 @@ $ticketTn = explode("::", $ticketArray[0]);
 							0,
 							1,
 							$contact_infos['alias'],
-							json_encode($ticketTn)
+							$ticketArray[0]
 						),
 						$value['instance_id']
 					)
