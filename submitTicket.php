@@ -221,7 +221,7 @@ try {
 												0,
 												1,
 												$contact_infos['alias'],
-												$ticketTn[0] 
+												$ticketTn
 											),
 											$row['instance_id']
 										)
@@ -264,7 +264,7 @@ $ticketTn = explode("::", $ticketArray[0]);
 							0,
 							1,
 							$contact_infos['alias'],
-							$ticketTn[0]
+							$ticketTn
 						),
 						$value['instance_id']
 					)
