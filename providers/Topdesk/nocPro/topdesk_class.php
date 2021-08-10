@@ -575,7 +575,7 @@ function filhosNetos($ativo_id, $db_storage, $serviceOuHost){
 **/	
 function netos($ativo_id, $db_storage, $serviceOuHost){
 
-	$ativo_id = "'%principal::" . $ativo_id . "%'";
+	$ativo_id_notes = "'%principal::" . $ativo_id . "'";
 	if ($serviceOuHost == "Host"){
 		$query = "SELECT 
 		
@@ -587,7 +587,7 @@ function netos($ativo_id, $db_storage, $serviceOuHost){
 
 		FROM hosts
 
-		where notes like" . $ativo_id;
+		where notes like" . $ativo_id_notes;
 	}else{
 		$query = "select 
 		service_id as id,
@@ -599,7 +599,7 @@ function netos($ativo_id, $db_storage, $serviceOuHost){
 
 		from services 
 		
-		where notes like" . $ativo_id;
+		where notes like" . $ativo_id_notes;
 		
 		
 	}
