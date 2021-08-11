@@ -789,6 +789,16 @@ class TopdeskProvider extends AbstractProvider {
                     'password' =>  $this->rule_data['password']
                     )
                 );
+                //recupera dados dos parents
+                $ic_parents_td = consultaICsAssociadosTopdesk($ic_recuperado_id_td[0]['unid'],
+                array(
+                    'address' => $this->rule_data['address'],
+                    'path' =>  $this->rule_data['path'],
+                    'username' =>  $this->rule_data['username'], 
+                    'password' =>  $this->rule_data['password']
+                    )
+                );
+
                 
 				//$ic_recuperado_id = $ic_recuperado_id['ConfigItemIDs'][0];
 				//if($ic_recuperado_id == 1 || $ic_recuperado_id == 2 || $ic_recuperado_id == ""){
@@ -809,6 +819,14 @@ class TopdeskProvider extends AbstractProvider {
                 }else{
                     
 					$ticketCliente = ticketCliente($ic_recuperado_id['ConfigItemIDs'][0], $regra_tipo);
+                    $ticketCliente_td_email = ticketCliente_td($ic_parents_td,
+                    array(
+                        'address' => $this->rule_data['address'],
+                        'path' =>  $this->rule_data['path'],
+                        'username' =>  $this->rule_data['username'], 
+                        'password' =>  $this->rule_data['password']
+                        )
+                    );
                     
                     //decomentar para testar retorno dos ICs
                     //$this->_otrs_call_response['TicketNumber'] = json_encode($ticketCliente);

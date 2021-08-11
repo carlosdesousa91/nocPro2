@@ -828,7 +828,7 @@ function consultaIcTopdesk($service_note_centreon, $regra_tipo, $serviceOuHost, 
 	$base_url = 'https://';
     $base_url .= $rule_data['address'];
     $base_url .= $rule_data['path'] . '/api';
-    $base_url .= '/assetmgmt/assets?fields=specification,name,designacao&$' . 'filter=name%20eq%20\'' . $service_note_centreon . '\'';
+    $base_url .= '/assetmgmt/assets?fields=specification,name,designacao,email&$' . 'filter=name%20eq%20\'' . $service_note_centreon . '\'';
         
     $Authorization = base64_encode($rule_data['username'] . ":" . $rule_data['password']);
 	
@@ -882,5 +882,85 @@ function consultaIcTopdesk($service_note_centreon, $regra_tipo, $serviceOuHost, 
 	return $decoded_result['dataSet'];
 }
 
+function consultaICsAssociadosTopdesk($ic_id, $rule_data=array()){
+
+	$base_url = 'https://';
+    $base_url .= $rule_data['address'];
+    $base_url .= $rule_data['path'] . '/api';
+    $base_url .= '/assetmgmt/assetLinks?sourceId=' . $ic_id;
+        
+    $Authorization = base64_encode($rule_data['username'] . ":" . $rule_data['password']);
+	
+	$ch = curl_init($base_url);
+	if ($ch == false) {
+		$this->setWsError("cannot init curl object");
+		return 1;
+	}
+	$argument = array(
+			
+
+	);
+
+	$argument_json = json_encode($argument);
+	curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
+	curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 60);
+	curl_setopt($ch, CURLOPT_TIMEOUT, 60);
+	curl_setopt($ch, CURLOPT_POSTFIELDS, $argument_json);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+	curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+		'Authorization: Basic ' . $Authorization,
+		'Content-Type: application/json',
+		'Accept: application/json',
+		'Content-Length: ' . strlen($argument_json),
+		'Connection: close', 
+		'Cache-Control: no-cache')
+	);
+
+	$result = curl_exec($ch);
+	if ($result == false) {
+		//$this->setWsError(curl_error($ch));
+		curl_close($ch);
+		return 1;
+	}
+				
+	$decoded_result = json_decode($result, TRUE);
+	
+	if (is_null($decoded_result) || $decoded_result == false) {
+		//$this->setWsError($result);
+		//retorna nehum ticket
+		return 1;
+	}
+
+	curl_close($ch);
+
+	if (isset($decoded_result['Error'])) {
+			//$this->setWsError($decoded_result['Error']['ErrorMessage']);
+			//erro autenticação
+			return 2;
+	}
+
+	return $decoded_result;
+}
+
+function ticketCliente_td($ic_parents_td,$rule_data=array()){
+
+	$parent_id = 0;
+
+	foreach($ic_parents_td as $value_ic_parents_td){
+
+		if ($value_ic_parents_td["linkType"] == "parent"){
+			$parent_id = $value_ic_parents_td["assetId"];
+		}
+
+	}
+
+	$parent_campos = consultaIcTopdesk($parent_id, 0, 0, $rule_data);
+
+	$parent_email = $parent_campos[0]['email'];
+
+	return $parent_email;
+
+}
 
 
