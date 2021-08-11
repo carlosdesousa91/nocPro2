@@ -836,7 +836,8 @@ class TopdeskProvider extends AbstractProvider {
 					//$ticketCliente = ticketCliente($ic_recuperado_id, $regra_tipo);
 					$ic_number = $ticketCliente[0];
 					$ic_name = $ticketCliente[1];
-					$email_cliente = $ticketCliente[2];
+					//$email_cliente = $ticketCliente[2];
+                    $email_cliente = $ticketCliente_td_email;
 					$ic_uf = $ticketCliente[3];
 					//$ic_designacao = $ticketCliente[4];
                     $ic_designacao = $ic_recuperado_id_td[0]['designacao'];
