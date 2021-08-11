@@ -957,10 +957,10 @@ function ticketCliente_td($ic_parents_td,$rule_data=array()){
 
 	$parent_campos = consultaIcTopdesk($parent_name, 0, 0,
 	array(
-		'address' => $this->rule_data['address'],
-		'path' =>  $this->rule_data['path'],
-		'username' =>  $this->rule_data['username'], 
-		'password' =>  $this->rule_data['password']
+		'address' => $rule_data['address'],
+		'path' =>  $rule_data['path'],
+		'username' =>  $rule_data['username'], 
+		'password' =>  $rule_data['password']
 	)
 	);
 
