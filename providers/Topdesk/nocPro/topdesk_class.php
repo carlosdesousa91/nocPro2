@@ -955,12 +955,12 @@ function ticketCliente_td($ic_parents_td,$rule_data=array()){
 
 	}
 
-	$parent_campos = consultaIcTopdesk($parent_id, 0, 0, $rule_data);
+	$parent_campos = consultaIcTopdesk($parent_id, 0, 0, $rule_data=array());
 
 	//$parent_email = $parent_campos[0]['email'];
 
 	//return $parent_email;
-	return $parent_id;
+	return $parent_campos;
 
 }
 
