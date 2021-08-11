@@ -851,7 +851,7 @@ class TopdeskProvider extends AbstractProvider {
                     $email_cliente = $ticket_arguments['From'];
                 }
 
-                $titulo = $ticket_arguments['Subject'] . $ticketCliente_td_email;
+                $titulo = $ticket_arguments['Subject'];
                 //Serviço de Conectividade = 989624e9-4b7f-4bef-ab65-aa6135d52299
                 //Indisponibilidade = a0a77087-9029-4dcd-a8ab-13a40c8df466
                 // sla = Última milha = d682a47f-3160-4001-b9ab-56814bd3e864
