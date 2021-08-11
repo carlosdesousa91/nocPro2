@@ -950,12 +950,12 @@ function ticketCliente_td($ic_parents_td,$rule_data=array()){
 	foreach($ic_parents_td as $value_ic_parents_td){
 
 		if ($value_ic_parents_td["linkType"] == "parent"){
-			$parent_id = $value_ic_parents_td["assetId"];
+			$parent_name = $value_ic_parents_td["name"];
 		}
 
 	}
 
-	$parent_campos = consultaIcTopdesk($parent_id, 0, 0, $rule_data=array());
+	$parent_campos = consultaIcTopdesk($parent_name, 0, 0, $rule_data=array());
 
 	//$parent_email = $parent_campos[0]['email'];
 
