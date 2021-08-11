@@ -957,9 +957,10 @@ function ticketCliente_td($ic_parents_td,$rule_data=array()){
 
 	$parent_campos = consultaIcTopdesk($parent_id, 0, 0, $rule_data);
 
-	$parent_email = $parent_campos[0]['email'];
+	//$parent_email = $parent_campos[0]['email'];
 
-	return $parent_email;
+	//return $parent_email;
+	return $parent_campos;
 
 }
 
