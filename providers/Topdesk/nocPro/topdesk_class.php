@@ -960,7 +960,7 @@ function ticketCliente_td($ic_parents_td,$rule_data=array()){
 	//$parent_email = $parent_campos[0]['email'];
 
 	//return $parent_email;
-	return $parent_campos;
+	return $parent_id;
 
 }
 
