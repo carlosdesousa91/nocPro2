@@ -766,7 +766,7 @@ class TopdeskProvider extends AbstractProvider {
         if($ticket_existenteTopdesk == 1 || is_null($ticket_existenteTopdesk)){
 
             #loga no otrs para recuperar informações do IC.
-		    $this->loginOtrs();
+		    // descontinuado $this->loginOtrs();
 
             $regra_tipo = $ticket_arguments['Type']; //o campo type refere-se ao tipo de chamado, incidente, requisição, etc. No contexto do nocpro ele será usada para outro fim e todos os chamado serão do tipo Incidente
 			
@@ -780,7 +780,7 @@ class TopdeskProvider extends AbstractProvider {
                 //defini IC padrão do tipo Centreon
                 $ticket_arguments['CustomerUser'] = "CENTREON_" . $ticket_dynamic_fields[0]['Value'];
 			}else{
-				$ic_recuperado_id = consultaIc($ticket_arguments['CustomerUser'], $regra_tipo, $serviceOuHost);
+				// descontinuado $ic_recuperado_id = consultaIc($ticket_arguments['CustomerUser'], $regra_tipo, $serviceOuHost);
                 $ic_recuperado_id_td = consultaIcTopdesk($ticket_arguments['CustomerUser'], $regra_tipo, $serviceOuHost,
                 array(
                     'address' => $this->rule_data['address'],
@@ -802,12 +802,12 @@ class TopdeskProvider extends AbstractProvider {
                 
 				//$ic_recuperado_id = $ic_recuperado_id['ConfigItemIDs'][0];
 				//if($ic_recuperado_id == 1 || $ic_recuperado_id == 2 || $ic_recuperado_id == ""){
-                if(is_null($ic_recuperado_id['ConfigItemIDs'][0]) || $ic_recuperado_id == ""){
+                if(is_null($ic_recuperado_id_td[0]['unid']) || $ic_recuperado_id_td == ""){
 				
 					$email_cliente = $ticket_arguments['From'];
 					$ic_uf = "";
 
-                    $this->_otrs_call_response['TicketNumber'] = json_encode($ic_recuperado_id);
+                    $this->_otrs_call_response['TicketNumber'] = json_encode($ic_recuperado_id_td);
                     return 0;
                 
                 // quando o IC não está cadastrado no OTRS abrir o chamado com o cliente do operador.
