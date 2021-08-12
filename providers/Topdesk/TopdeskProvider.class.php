@@ -818,7 +818,7 @@ class TopdeskProvider extends AbstractProvider {
 
                 }else{
                     
-					$ticketCliente = ticketCliente($ic_recuperado_id['ConfigItemIDs'][0], $regra_tipo);
+					// descontinuado $ticketCliente = ticketCliente($ic_recuperado_id['ConfigItemIDs'][0], $regra_tipo);
                     $ticketCliente_td_email = ticketCliente_td($ic_parents_td,
                     array(
                         'address' => $this->rule_data['address'],
@@ -834,11 +834,12 @@ class TopdeskProvider extends AbstractProvider {
                     
 
 					//$ticketCliente = ticketCliente($ic_recuperado_id, $regra_tipo);
-					$ic_number = $ticketCliente[0];
-					$ic_name = $ticketCliente[1];
+					// descontinuado $ic_number = $ticketCliente[0];
+					// descontinuado $ic_name = $ticketCliente[1];
 					//$email_cliente = $ticketCliente[2];
                     $email_cliente = $ticketCliente_td_email;
-					$ic_uf = $ticketCliente[3];
+					// descontinuado $ic_uf = $ticketCliente[3];
+                    
 					//$ic_designacao = $ticketCliente[4];
                     $ic_designacao = $ic_recuperado_id_td[0]['designacao'];
 				}
@@ -860,14 +861,14 @@ class TopdeskProvider extends AbstractProvider {
                 $subcategory = 'a0a77087-9029-4dcd-a8ab-13a40c8df466';
                 $sla = 'd682a47f-3160-4001-b9ab-56814bd3e864';
 						
-				$ticket_dynamic_fields[2]['Value'] = $ic_uf;
+				// descontinuado $ticket_dynamic_fields[2]['Value'] = $ic_uf;
 				//$email_cliente = $email_cliente;
 				
 			}elseif($regra_tipo == "infrapop"){
 				$titulo = $ticket_arguments['Subject'];
 				//Infraestrutura::PoP = 2921
 				$ServiceID = 2921;
-				$ticket_dynamic_fields[2]['Value'] = $ic_uf;
+				// descontinuado $ticket_dynamic_fields[2]['Value'] = $ic_uf;
 
 			}elseif($regra_tipo == "backbone" && $serviceOuHost == "Service"){
                 $titulo = $ticket_arguments['Subject'] . " (" . $ic_designacao . ")";
@@ -882,25 +883,16 @@ class TopdeskProvider extends AbstractProvider {
 				$email_cliente = $ticket_arguments['From'];
 			}
 			elseif($regra_tipo == "backbone" && $serviceOuHost == "Host"){
-				if(is_null($tabRelacionamento['state'])){  
-					$titulo = "Abertura - Isolamento do " . $ic_name;
-					//"Serviço de Conectividade::Indisponibilidade::Backbone::POP-Isolado" = 3641
-					$ServiceID = 3641;
-					$email_cliente = $ticket_arguments['From'];
-				}else{
-					if($tabRelacionamento['state'] != 0){
-						$titulo = "Abertura - Isolamento do " . $ic_name;
-						//"Serviço de Conectividade::Indisponibilidade::Backbone::POP-Isolado" = 3641
-						$ServiceID = 3641;
-						$email_cliente = $ticket_arguments['From'];
-						
-					}else{
-						$titulo = $ticket_arguments['Subject'];
-						//"Serviço de Conectividade::Indisponibilidade::Backbone::POP-Isolado" = 3641
-						$ServiceID = 3020;
-						$email_cliente = $ticket_arguments['From'];
-					}
-				}
+                $titulo = $ticket_arguments['Subject'];
+                
+				//Serviço de Conectividade = 989624e9-4b7f-4bef-ab65-aa6135d52299
+                //Indisponibilidade = a0a77087-9029-4dcd-a8ab-13a40c8df466
+                // sla = Backbone = 89ca953a-5643-4a63-b2ef-46434e0fa2b4
+                $ServiceID = '989624e9-4b7f-4bef-ab65-aa6135d52299';
+                $subcategory = 'a0a77087-9029-4dcd-a8ab-13a40c8df466';
+                $sla = '89ca953a-5643-4a63-b2ef-46434e0fa2b4';
+
+				$email_cliente = $ticket_arguments['From'];
 				
 			}elseif($regra_tipo == "stigti" || $regra_tipo == "stigsc" || $regra_tipo == "sticentreon"){
 				$titulo = $ticket_arguments['Subject'];
