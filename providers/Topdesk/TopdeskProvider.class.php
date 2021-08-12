@@ -497,7 +497,11 @@ class TopdeskProvider extends AbstractProvider {
 			
 		
 		foreach ($item_problems as $fieldProblem => $valueProblem) {
-			
+            
+            $result = array('ticket_id' => null, 'ticket_error_message' => null,
+            'ticket_is_ok' => 0, 'ticket_time' => time());
+
+			//state 0 = ok
 			if($valueProblem['state'] != 0){
 
 				//recupera services afetados pelo host
@@ -555,8 +559,7 @@ class TopdeskProvider extends AbstractProvider {
 				}
 				//$service_id = $valueServiceProblem;
 			
-				$result = array('ticket_id' => null, 'ticket_error_message' => null,
-								'ticket_is_ok' => 0, 'ticket_time' => time());
+
 				
 				$tpl = $this->initSmartyTemplate();
 
