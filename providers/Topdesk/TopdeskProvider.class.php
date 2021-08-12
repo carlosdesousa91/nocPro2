@@ -779,6 +779,10 @@ class TopdeskProvider extends AbstractProvider {
 				$ic_recuperado_id = 2;
                 //defini IC padrão do tipo Centreon
                 $ticket_arguments['CustomerUser'] = "CENTREON_" . $ticket_dynamic_fields[0]['Value'];
+                //verificar depois para usar ICs de hosts
+                if($serviceOuHost == "Host"){
+                    $ticket_arguments['CustomerUser'] = null;
+                }
 			}else{
 				// descontinuado $ic_recuperado_id = consultaIc($ticket_arguments['CustomerUser'], $regra_tipo, $serviceOuHost);
                 $ic_recuperado_id_td = consultaIcTopdesk($ticket_arguments['CustomerUser'], $regra_tipo, $serviceOuHost,
