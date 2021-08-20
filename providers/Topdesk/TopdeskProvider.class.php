@@ -902,6 +902,7 @@ class TopdeskProvider extends AbstractProvider {
 				$email_cliente = $ticket_arguments['From'];
 				
 			}elseif($regra_tipo == "stigti" || $regra_tipo == "stigsc" || $regra_tipo == "sticentreon"){
+
 				$titulo = $ticket_arguments['Subject'];
 				//Infraestrutura = a0c472d6-fa00-47d7-9003-b386aa564ab4
                 //Servidor = c3a90c32-07cc-48a7-85b7-11ead8ba3888
@@ -911,7 +912,63 @@ class TopdeskProvider extends AbstractProvider {
                 $sla = null;
 
 				$email_cliente = $ticket_arguments['From'];
-			}
+			}else{
+
+                $ic_recuperado_id_td = consultaIcTopdesk($ticket_arguments['CustomerUser'], $regra_tipo, $serviceOuHost,
+                array(
+                    'address' => $this->rule_data['address'],
+                    'path' =>  $this->rule_data['path'],
+                    'username' =>  $this->rule_data['username'], 
+                    'password' =>  $this->rule_data['password']
+                    )
+                );
+                //recupera dados dos parents
+                $ic_parents_td = consultaICsAssociadosTopdesk($ic_recuperado_id_td[0]['unid'],
+                array(
+                    'address' => $this->rule_data['address'],
+                    'path' =>  $this->rule_data['path'],
+                    'username' =>  $this->rule_data['username'], 
+                    'password' =>  $this->rule_data['password']
+                    )
+                );
+                foreach($ic_parents_td as $value_ic_parents_td){
+
+                    if ($value_ic_parents_td["linkType"] == "parent"){
+                        $parent_name = $value_ic_parents_td["name"];
+                        $parent_assetId = $value_ic_parents_td["assetId"];
+                    }
+            
+                }
+                $ic_avo_td = consultaICsAssociadosTopdesk($parent_assetId,
+                array(
+                    'address' => $this->rule_data['address'],
+                    'path' =>  $this->rule_data['path'],
+                    'username' =>  $this->rule_data['username'], 
+                    'password' =>  $this->rule_data['password']
+                    )
+                );
+                foreach($ic_avo_td as $value_ic_avo_td){
+
+                    if ($value_ic_avo_td["linkType"] == "parent"){
+                        $avo_name = $value_ic_avo_td["name"];
+                        $avo_assetId = $value_ic_avo_td["assetId"];
+                    }
+            
+                }
+                $ticket_arguments['Body'] = splitBody($ticket_arguments['Body'], $parent_name, $avo_name);
+
+				$titulo = $ticket_arguments['Subject'];
+				//Infraestrutura = a0c472d6-fa00-47d7-9003-b386aa564ab4
+                //Servidor = c3a90c32-07cc-48a7-85b7-11ead8ba3888
+                // sla = Backbone = 2e589a5e-4d5d-4cf5-ba19-6a95b7ce892b
+                $ServiceID = 'a0c472d6-fa00-47d7-9003-b386aa564ab4';
+                $subcategory = 'c3a90c32-07cc-48a7-85b7-11ead8ba3888';
+                $sla = null;
+
+				$email_cliente = $ticket_arguments['From'];
+
+            }
+
 			
             $titulo = str_replace("<br/>", " ", $titulo);
             //$titulo = str_replace(" Enlace ", " / ", $titulo);

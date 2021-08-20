@@ -971,4 +971,10 @@ function ticketCliente_td($ic_parents_td,$rule_data=array()){
 
 }
 
+function splitBody($body,$parent,$avo){
+	$body_new = explode("evento:", $body);
+	$body_new = $body_new[0] . "evento:<br/><b>Servidor:</b>" . $parent . "<br/><b>Sistema:</b>" . $avo . $body_new[1];
+	return $body_new;
+}
+
 
