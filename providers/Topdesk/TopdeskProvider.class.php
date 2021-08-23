@@ -955,7 +955,24 @@ class TopdeskProvider extends AbstractProvider {
                     }
             
                 }
-                $ticket_arguments['Body'] = splitBody($ticket_arguments['Body'], $parent_name, $avo_name);
+                $ic_bisa_td = consultaICsAssociadosTopdesk($avo_assetId,
+                array(
+                    'address' => $this->rule_data['address'],
+                    'path' =>  $this->rule_data['path'],
+                    'username' =>  $this->rule_data['username'], 
+                    'password' =>  $this->rule_data['password']
+                    )
+                );
+                foreach($ic_bisa_td as $value_ic_bisa_td){
+
+                    if ($value_ic_bisa_td["linkType"] == "parent"){
+                        $bisa_name = $value_ic_bisa_td["name"];
+                        $bisa_assetId = $value_ic_bisa_td["assetId"];
+                    }
+            
+                }
+                //incliur associados no corpo do chamado
+                $ticket_arguments['Body'] = splitBody($ticket_arguments['Body'], $parent_name, $avo_name, $bisa_name);
 
 				$titulo = $ticket_arguments['Subject'];
 				//Infraestrutura = a0c472d6-fa00-47d7-9003-b386aa564ab4
