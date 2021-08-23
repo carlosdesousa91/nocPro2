@@ -974,10 +974,10 @@ class TopdeskProvider extends AbstractProvider {
                 //incliur associados no corpo do chamado
                 if($serviceOuHost == "Host"){
                     $ticket_arguments['Body'] = splitBody($ticket_arguments['Body'], $parent_name, $avo_name);
-                    $titulo = $avo_name . "-" . $ticket_arguments['Subject'];
+                    $titulo = $avo_name . " - " . $ticket_arguments['Subject'];
                 }else{
                     $ticket_arguments['Body'] = splitBody($ticket_arguments['Body'], $avo_name, $bisa_name);
-                    $titulo = $bisa_name . "-" . $ticket_arguments['Subject'];
+                    $titulo = $bisa_name . " - " . $ticket_arguments['Subject'];
                 }
 
 				//$titulo = $ticket_arguments['Subject'];
