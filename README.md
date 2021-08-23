@@ -89,3 +89,28 @@ no arquivo /usr/share/centreon/www/modules/centreon-open-tickets/views/rules/aja
 criar as variáveis $index_host e $index_service para contar os chamados e passar no array do ticket.
 
 criar o laço com os services filhos e netos para receberem o ack.
+
+#NOCPro relacionamentos de Ativos
+
+##Funcionamento
+
+- O NOCPro identificará os ativos Pais, Avós e Bisavós dos services(Services).
+- O NOCPro identificará os ativos Pais e Avós dos Hosts(Centreon).
+- Quando o chamado for aberto para um service(CPU, Ping, etc) o NOCPro incluirá no corpo do chamado as informações abaixo, sendo o Sistema o bisavô e o Servidor o avô:
+``` 
+Sistema: ESR - Site Público
+ Servidor: ESR-SITE PÚBLICO-PRD
+```
+- Quando o chamado for aberto para um Host(200.130......., etc) o NOCPro incluirá no corpo do chamado as informações abaixo, sendo o Sistema o avô e o Servidor o pai:
+``` 
+Sistema: ESR - Site Público
+ Servidor: ESR-SITE PÚBLICO-PRD
+```
+##exemplo de relacionamento:
+ 
+- Quando um chamado for aberto para o CENTREON_4543 ou para um de seus filhos(CENTREON_4543_29565, CENTREON_4543_29576, etc) o NOCPro identificará o ESR-SITE PÚBLICO-PRD(Servidor) e o ESR - Site Público(Sistema).
+
+#Procedimento
+
+- Para a automação reconhecer os relacionamento é necessário somente vincular os Servidores como pais  dos seus respectivos Centreon - Hosts no Topdesk.
+
