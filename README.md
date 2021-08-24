@@ -99,12 +99,12 @@ criar o laço com os services filhos e netos para receberem o ack.
 - Quando o chamado for aberto para um service(CPU, Ping, etc) o NOCPro incluirá no corpo do chamado as informações abaixo, sendo o Sistema o bisavô e o Servidor o avô:
 ``` 
 Sistema: ESR - Site Público
- Servidor: ESR-SITE PÚBLICO-PRD
+Servidor: ESR-SITE PÚBLICO-PRD
 ```
 - Quando o chamado for aberto para um Host(200.130......., etc) o NOCPro incluirá no corpo do chamado as informações abaixo, sendo o Sistema o avô e o Servidor o pai:
 ``` 
 Sistema: ESR - Site Público
- Servidor: ESR-SITE PÚBLICO-PRD
+Servidor: ESR-SITE PÚBLICO-PRD
 ```
 ##exemplo de relacionamento:
  
