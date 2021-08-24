@@ -648,7 +648,23 @@ class TopdeskProvider extends AbstractProvider {
 					}
 					$ticketsPopUp[] =  $this->_otrs_call_response['TicketNumber'] . "_" . $stringNetosAck;
 			
-				}else{
+				}elseif(strpos($ticket_arguments['CustomerUser'], "acionamento") !== false){
+
+					$relacionamentos_array = explode("::", $valueProblem['notes']);
+					$relacionamentos_ids = explode(",", $relacionamentos_array[3]);
+					if(is_null($relacionamentos_ids)){
+						$relacionamentos_ids = array($relacionamentos_array[3]);
+					}
+								
+					foreach ($relacionamentos_ids as $valuerelacionamentos_ids) {
+						$tabRelacionamento = relacionamentoFalhasEquivalentes($valuerelacionamentos_ids, $db_storage, $serviceOuHost);
+						$tabRelacionamentoFull[] = array($tabRelacionamento);
+					}
+
+                    $ticketsPopUp[] = Json_encode($tabRelacionamentoFull);
+                    $this->_otrs_call_response['TicketNumber'] = Json_encode($tabRelacionamentoFull);
+
+                }else{
 				
 					$code = $this->createTicketTopdesk($ticket_arguments, $ticket_dynamic_fields, $serviceOuHost, null);
 					if ($code == -1) {
