@@ -90,9 +90,9 @@ criar as variáveis $index_host e $index_service para contar os chamados e passa
 
 criar o laço com os services filhos e netos para receberem o ack.
 
-#NOCPro relacionamentos de Ativos
+# NOCPro relacionamentos de Ativos
 
-##Funcionamento
+## Funcionamento
 
 - O NOCPro identificará os ativos Pais, Avós e Bisavós dos services(Services).
 - O NOCPro identificará os ativos Pais e Avós dos Hosts(Centreon).
@@ -106,11 +106,28 @@ Servidor: ESR-SITE PÚBLICO-PRD
 Sistema: ESR - Site Público
 Servidor: ESR-SITE PÚBLICO-PRD
 ```
-##exemplo de relacionamento:
+## exemplo de relacionamento:
  
 - Quando um chamado for aberto para o CENTREON_4543 ou para um de seus filhos(CENTREON_4543_29565, CENTREON_4543_29576, etc) o NOCPro identificará o ESR-SITE PÚBLICO-PRD(Servidor) e o ESR - Site Público(Sistema).
 
-#Procedimento
+## Procedimento
 
 - Para a automação reconhecer os relacionamento é necessário somente vincular os Servidores como pais  dos seus respectivos Centreon - Hosts no Topdesk.
 
+# Erros Comuns
+
+### No topdesk existem mais de um "Solicitante" com o e-mail padrão do ativo do PoP. O ativo do PoP deve possuir um e-mail exclusivo.
+```"message":"Multiple callers were found with the provided lookup value"```
+- Solução: Solicitar ao Service desk alteração do e-mail do Solicitante duplicado ou que peçam ao PoP um e-mail exclusivo.
+
+### O operador deve ser cadastrado como solicitante no Topdesk. Quando o NOCPro não localiza um solicitante padrão para o chamado ele incluir o operador que está abrindo o chamado.
+```message":"No caller could be found with the provided lookup value"```
+- Solução: Realizar acesso no topdesk no portal de autoatendimento e validar se o e-mail está cadastrado corretamente.
+
+### O IC não foi cadastrado ainda no Topdesk, a rotina de atualização é feita uma vez no dia.
+```message":"The value 'CENTREON_4760_34668' for the field 'name' cannot be found."``` Ou
+```message":"The value 'CENTREON."```
+- Solução: Solicitar a importação manual dos ICs(tratamento para esse erro em desenvolvimento)
+
+### ICK automático não funciona.
+- Solução: Testar ACK manual, se não funcionar acionar equipe de infraestrutura da GTI.
