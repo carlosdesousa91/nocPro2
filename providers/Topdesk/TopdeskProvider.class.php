@@ -647,7 +647,7 @@ class TopdeskProvider extends AbstractProvider {
 						return $result;
 					}
 					$ticketsPopUp[] =  $this->_otrs_call_response['TicketNumber'] . "_" . $stringNetosAck;
-			
+                //remover esse elseif
 				}elseif(strpos($ticket_arguments['CustomerUser'], "acionamento") !== false){
 
 					$relacionamentos_array = explode("::", $valueProblem['notes']);
@@ -659,6 +659,9 @@ class TopdeskProvider extends AbstractProvider {
 					foreach ($relacionamentos_ids as $valuerelacionamentos_ids) {
 						$tabRelacionamento = relacionamentoFalhasEquivalentes($valuerelacionamentos_ids, $db_storage, $serviceOuHost);
 						$tabRelacionamentoFull[] = array($tabRelacionamento);
+                        if($tabRelacionamento['state'] != 0 ){
+
+                        }
 					}
 
                     $ticketsPopUp[] = Json_encode($tabRelacionamentoFull);
@@ -787,89 +790,66 @@ class TopdeskProvider extends AbstractProvider {
             #loga no otrs para recuperar informações do IC.
 		    // descontinuado $this->loginOtrs();
 
-            $regra_tipo = $ticket_arguments['Type']; //o campo type refere-se ao tipo de chamado, incidente, requisição, etc. No contexto do nocpro ele será usada para outro fim e todos os chamado serão do tipo Incidente
+            $regra_tipo = $ticket_arguments['Type']; 
+            //o campo type refere-se ao tipo de chamado, incidente, requisição, etc. 
+            //No contexto do nocpro ele será usada para outro fim e todos os chamado serão do tipo Incidente. stigsc, stigti,ultimamilha, backbone
+
 			
 			//valida se e conectividade ou serviços / se tem ic ou não
 			// CustomerUser campo notes numero do IC
 			if(is_null($ticket_arguments['CustomerUser']) || $ticket_arguments['CustomerUser'] == "" || $ticket_arguments['CustomerUser'] == " "){
-				$email_cliente = $ticket_arguments['From'];
-				$ic_uf = "";
-				//não necessário associar IC
-				$ic_recuperado_id = 2;
                 //defini IC padrão do tipo Centreon
                 $ticket_arguments['CustomerUser'] = "CENTREON_" . $ticket_dynamic_fields[0]['Value'];
                 //verificar depois para usar ICs de hosts
                 if($serviceOuHost == "Host"){
                     $ticket_arguments['CustomerUser'] = null;
                 }
-			}else{
-				// descontinuado $ic_recuperado_id = consultaIc($ticket_arguments['CustomerUser'], $regra_tipo, $serviceOuHost);
-                $ic_recuperado_id_td = consultaIcTopdesk($ticket_arguments['CustomerUser'], $regra_tipo, $serviceOuHost,
-                array(
-                    'address' => $this->rule_data['address'],
-                    'path' =>  $this->rule_data['path'],
-                    'username' =>  $this->rule_data['username'], 
-                    'password' =>  $this->rule_data['password']
-                    )
-                );
-                //recupera dados dos parents
-                $ic_parents_td = consultaICsAssociadosTopdesk($ic_recuperado_id_td[0]['unid'],
-                array(
-                    'address' => $this->rule_data['address'],
-                    'path' =>  $this->rule_data['path'],
-                    'username' =>  $this->rule_data['username'], 
-                    'password' =>  $this->rule_data['password']
-                    )
-                );
-
-                
-				//$ic_recuperado_id = $ic_recuperado_id['ConfigItemIDs'][0];
-				//if($ic_recuperado_id == 1 || $ic_recuperado_id == 2 || $ic_recuperado_id == ""){
-                if(is_null($ic_recuperado_id_td[0]['unid']) || $ic_recuperado_id_td == ""){
-				
-					$email_cliente = $ticket_arguments['From'];
-					$ic_uf = "";
-
-                    $this->_otrs_call_response['TicketNumber'] = json_encode($ic_recuperado_id_td);
-                    return 0;
-                
-                // quando o IC não está cadastrado no OTRS abrir o chamado com o cliente do operador.
-				//}elseif($ic_recuperado_id = 1){
-
-                 //   $email_cliente = $ticket_arguments['From'];
-                 //   $ic_uf = "";                   
-
-                }else{
-                    
-					// descontinuado $ticketCliente = ticketCliente($ic_recuperado_id['ConfigItemIDs'][0], $regra_tipo);
-                    $ticketCliente_td_email = ticketCliente_td($ic_parents_td,
-                    array(
-                        'address' => $this->rule_data['address'],
-                        'path' =>  $this->rule_data['path'],
-                        'username' =>  $this->rule_data['username'], 
-                        'password' =>  $this->rule_data['password']
-                        )
-                    );
-                    
-                    //decomentar para testar retorno dos ICs
-                    //$this->_otrs_call_response['TicketNumber'] = json_encode($ticketCliente);
-                    //return 0;
-                    
-
-					//$ticketCliente = ticketCliente($ic_recuperado_id, $regra_tipo);
-					// descontinuado $ic_number = $ticketCliente[0];
-					// descontinuado $ic_name = $ticketCliente[1];
-					//$email_cliente = $ticketCliente[2];
-                    $email_cliente = $ticketCliente_td_email;
-					// descontinuado $ic_uf = $ticketCliente[3];
-                    
-					//$ic_designacao = $ticketCliente[4];
-                    $ic_designacao = $ic_recuperado_id_td[0]['designacao'];
-				}
 			}
+
+            //ACIONAMENTOS
+            $ic_recuperado_td = consultaIcTopdesk($ticket_arguments['CustomerUser'], $regra_tipo, $serviceOuHost,
+            array(
+                'address' => $this->rule_data['address'],
+                'path' =>  $this->rule_data['path'],
+                'username' =>  $this->rule_data['username'], 
+                'password' =>  $this->rule_data['password']
+                )
+            );
+            //recupera dados dos parents
+            $ic_parents_td = consultaICsAssociadosTopdesk($ic_recuperado_td[0]['unid'],
+            array(
+                'address' => $this->rule_data['address'],
+                'path' =>  $this->rule_data['path'],
+                'username' =>  $this->rule_data['username'], 
+                'password' =>  $this->rule_data['password']
+                )
+            );
+            if(is_null($ic_recuperado_td[0]['unid']) || $ic_recuperado_td == ""){
+				
+                $email_cliente = $ticket_arguments['From'];
+                $ticket_arguments['CustomerUser'] = null;
+
+
+               //$this->_otrs_call_response['TicketNumber'] = json_encode($ic_recuperado_td);
+                //return 0;
+            
+            }
+            //FIM ACIONAMENTOS
+            
 
             //checa tipo de ticket um/backbone/sti
 			if($regra_tipo == "ultimamilha"){
+
+                $ticketCliente_td_email = ticketCliente_td($ic_parents_td,
+                array(
+                    'address' => $this->rule_data['address'],
+                    'path' =>  $this->rule_data['path'],
+                    'username' =>  $this->rule_data['username'], 
+                    'password' =>  $this->rule_data['password']
+                    )
+                );                
+
+                $email_cliente = $ticketCliente_td_email;  
 
                 // quando o IC não está cadastrado no OTRS abrir o chamado com o cliente do operador.
                 if(is_null($email_cliente) || $email_cliente == ""){
@@ -894,6 +874,9 @@ class TopdeskProvider extends AbstractProvider {
 				// descontinuado $ticket_dynamic_fields[2]['Value'] = $ic_uf;
 
 			}elseif($regra_tipo == "backbone" && $serviceOuHost == "Service"){
+
+                $ic_designacao = $ic_recuperado_td[0]['designacao'];
+
                 $titulo = $ticket_arguments['Subject'] . " (" . $ic_designacao . ")";
                 
 				//Serviço de Conectividade = 989624e9-4b7f-4bef-ab65-aa6135d52299
@@ -930,7 +913,7 @@ class TopdeskProvider extends AbstractProvider {
 				$email_cliente = $ticket_arguments['From'];
 			}else{
 
-                $ic_recuperado_id_td = consultaIcTopdesk($ticket_arguments['CustomerUser'], $regra_tipo, $serviceOuHost,
+                $ic_recuperado_td = consultaIcTopdesk($ticket_arguments['CustomerUser'], $regra_tipo, $serviceOuHost,
                 array(
                     'address' => $this->rule_data['address'],
                     'path' =>  $this->rule_data['path'],
@@ -939,7 +922,7 @@ class TopdeskProvider extends AbstractProvider {
                     )
                 );
                 //recupera dados dos parents
-                $ic_parents_td = consultaICsAssociadosTopdesk($ic_recuperado_id_td[0]['unid'],
+                $ic_parents_td = consultaICsAssociadosTopdesk($ic_recuperado_td[0]['unid'],
                 array(
                     'address' => $this->rule_data['address'],
                     'path' =>  $this->rule_data['path'],
