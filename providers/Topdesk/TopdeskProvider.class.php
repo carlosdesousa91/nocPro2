@@ -829,7 +829,7 @@ class TopdeskProvider extends AbstractProvider {
                 $email_cliente = $ticket_arguments['From'];
                 $ticket_arguments['CustomerUser'] = null;
                //$this->_otrs_call_response['TicketNumber'] = json_encode($ic_recuperado_td);
-                //return 0;
+               //return 0;
             
             }
             //ACIONAMENTOS
@@ -851,14 +851,14 @@ class TopdeskProvider extends AbstractProvider {
                 )
             );
             //incliur acionamentos no corpo do chamado
-            $action_acionamentos = '<b>Acionamentos:</b><br/>' .
-            $ic_child_td['cnt-informacoes'] . '<br/>' .
-            $ic_child_td['cnt-horario-de-acionamento'] . '<br/>' .
-            $ic_child_td['cnt-plantonistas'] . '<br/>' .
-            '<b>contatos:</b><br/>' .
-            $ic_child_td['nome-completo'] . '<br/>' .
-            $ic_child_td['conectividade-email'] . '<br/>' .
-            $ic_child_td['conectividade-telefone']
+            $action_acionamentos = "<b>Acionamentos:</b><br/>";
+            $action_acionamentos .= $ic_child_td['cnt-informacoes'] . "<br/>";
+            $action_acionamentos .= $ic_child_td['cnt-horario-de-acionamento'] . "<br/>";
+            $action_acionamentos .= $ic_child_td['cnt-plantonistas'] . "<br/>";
+            $action_acionamentos .= "<b>contatos:</b><br/>";
+            $action_acionamentos .= $ic_child_td['nome-completo'] . "<br/>";
+            $action_acionamentos .= $ic_child_td['conectividade-email'] . "<br/>";
+            $action_acionamentos .= $ic_child_td['conectividade-telefone'];
             //FIM ACIONAMENTOS
             
 
