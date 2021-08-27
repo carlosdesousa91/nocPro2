@@ -828,7 +828,9 @@ function consultaIcTopdesk($service_note_centreon, $regra_tipo, $serviceOuHost, 
 	$base_url = 'https://';
     $base_url .= $rule_data['address'];
     $base_url .= $rule_data['path'] . '/api';
-    $base_url .= '/assetmgmt/assets?fields=specification,name,designacao,email&$' . 'filter=name%20eq%20\'' . $service_note_centreon . '\'';
+    $base_url .= '/assetmgmt/assets?fields=' . 
+	'specification,name,designacao,email,cnt-informacoes,cnt-horario-de-acionamento,cnt-plantonistas,nome-completo,conectividade-email,conectividade-telefone&$' .
+	'filter=name%20eq%20\'' . $service_note_centreon . '\'';
         
     $Authorization = base64_encode($rule_data['username'] . ":" . $rule_data['password']);
 	

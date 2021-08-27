@@ -17,6 +17,8 @@
 
 - Copiar o diretório providers/Topdesk para /usr/share/centreon/www/modules/centreon-open-tickets/providers/Topdesk
 
+- confirmar se nome da classe instanciada do arquivo abstract é o mesmo do nome do arquivo. TopdeskProvider.class.php
+
 Com isso o Provider Topdesk ficará disponível no Centreon todo baseado no provider do Otrs.
 
 ### Classe TopdeskProvider

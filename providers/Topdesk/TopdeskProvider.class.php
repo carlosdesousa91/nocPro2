@@ -806,7 +806,7 @@ class TopdeskProvider extends AbstractProvider {
                 }
 			}
 
-            //ACIONAMENTOS
+            //RECUPERAR DADOS DO IC e do PAI
             $ic_recuperado_td = consultaIcTopdesk($ticket_arguments['CustomerUser'], $regra_tipo, $serviceOuHost,
             array(
                 'address' => $this->rule_data['address'],
@@ -828,12 +828,37 @@ class TopdeskProvider extends AbstractProvider {
 				
                 $email_cliente = $ticket_arguments['From'];
                 $ticket_arguments['CustomerUser'] = null;
-
-
                //$this->_otrs_call_response['TicketNumber'] = json_encode($ic_recuperado_td);
                 //return 0;
             
             }
+            //ACIONAMENTOS
+            //recupera id e nome do filho
+            foreach($ic_parents_td as $value_ic_parents_td){
+
+                if ($value_ic_parents_td["linkType"] == "child"){
+                    $child_name = $value_ic_parents_td["name"];
+                    $child_assetId = $value_ic_parents_td["assetId"];
+                }
+        
+            }
+            $ic_child_td = consultaIcTopdesk($child_name, $regra_tipo, $serviceOuHost,
+            array(
+                'address' => $this->rule_data['address'],
+                'path' =>  $this->rule_data['path'],
+                'username' =>  $this->rule_data['username'], 
+                'password' =>  $this->rule_data['password']
+                )
+            );
+            //incliur acionamentos no corpo do chamado
+            $action_acionamentos = '<b>Acionamentos:</b><br/>' .
+            $ic_child_td['cnt-informacoes'] . '<br/>' .
+            $ic_child_td['cnt-horario-de-acionamento'] . '<br/>' .
+            $ic_child_td['cnt-plantonistas'] . '<br/>' .
+            '<b>contatos:</b><br/>' .
+            $ic_child_td['nome-completo'] . '<br/>' .
+            $ic_child_td['conectividade-email'] . '<br/>' .
+            $ic_child_td['conectividade-telefone']
             //FIM ACIONAMENTOS
             
 
@@ -1007,7 +1032,7 @@ class TopdeskProvider extends AbstractProvider {
 
 			
 			$argument = array(
-                    //'action'            => $titulo,
+                    'action'            => $action_acionamentos,
                     'request'           => $ticket_arguments['Body'], /** .  date('Y-m-d\TH:i:s.u', strtotime($ticket_dynamic_fields[1]['Value'])),*/
                     //'request'           => 'corpo do chamdo',
                     'briefDescription'  => $titulo,
