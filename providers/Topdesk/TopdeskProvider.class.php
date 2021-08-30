@@ -853,19 +853,37 @@ class TopdeskProvider extends AbstractProvider {
                 )
             );
             //incliur acionamentos no corpo do chamado
-            $action_acionamentos = "<b>Acionamentos:</b><br/>";
+            $action_acionamentos = "<b>Horário de acionamento:</b><br/>";
             $action_acionamentos .= $ic_child_td[0]['cnt-informacoes'] . "<br/>";
             $action_acionamentos .= $ic_child_td[0]['cnt-horario-de-acionamento'] . "<br/>";
             $action_acionamentos .= $ic_child_td[0]['cnt-plantonistas'] . "<br/>";
-            $action_acionamentos .= "<b>contatos:</b><br/>";
+            $action_acionamentos .= "<b>contato I:</b><br/>";
             $action_acionamentos .= $ic_child_td[0]['nome-completo'] . "<br/>";
             $action_acionamentos .= $ic_child_td[0]['conectividade-email'] . "<br/>";
-            $action_acionamentos .= $ic_child_td[0]['conectividade-telefone']. "<br/><br/>";
+            $action_acionamentos .= $ic_child_td[0]['conectividade-telefone'] . "<br/>";
+            $action_acionamentos .= "<b>contato II:</b><br/>";
+            $action_acionamentos .= $ic_child_td[0]['conectividade-2-nome-completo'] . "<br/>";
+            $action_acionamentos .= $ic_child_td[0]['conectividade-2-email'] . "<br/>";
+            $action_acionamentos .= $ic_child_td[0]['conectividade-2-telefone'] . "<br/>";
+            $action_acionamentos .= "<b>contato III:</b><br/>";
+            $action_acionamentos .= $ic_child_td[0]['conectividade-3-nome-completo'] . "<br/>";
+            $action_acionamentos .= $ic_child_td[0]['conectividade-3-email'] . "<br/>";
+            $action_acionamentos .= $ic_child_td[0]['conectividade-3-telefone'] . "<br/>";
+            $action_acionamentos .= "<b>contato IV:</b><br/>";
+            $action_acionamentos .= $ic_child_td[0]['conectividade-4-nome-completo'] . "<br/>";
+            $action_acionamentos .= $ic_child_td[0]['conectividade-4-email'] . "<br/>";
+            $action_acionamentos .= $ic_child_td[0]['conectividade-4-telefone'] . "<br/>";
+            $action_acionamentos .= "<b>contato V:</b><br/>";
+            $action_acionamentos .= $ic_child_td[0]['conectividade-5-nome-completo'] . "<br/>";
+            $action_acionamentos .= $ic_child_td[0]['conectividade-5-email'] . "<br/>";
+            $action_acionamentos .= $ic_child_td[0]['conectividade-5-telefone'] . "<br/><br/>";
             //FIM ACIONAMENTOS
             
 
             //checa tipo de ticket um/backbone/sti
 			if($regra_tipo == "ultimamilha"){
+                //acionamentos desativado
+                $action_acionamentos = null;
 
                 $ticketCliente_td_email = ticketCliente_td($ic_parents_td,
                 array(
@@ -895,12 +913,17 @@ class TopdeskProvider extends AbstractProvider {
 				//$email_cliente = $email_cliente;
 				
 			}elseif($regra_tipo == "infrapop"){
+                //acionamentos desativado
+                $action_acionamentos = null;
+
 				$titulo = $ticket_arguments['Subject'];
 				//Infraestrutura::PoP = 2921
 				$ServiceID = 2921;
 				// descontinuado $ticket_dynamic_fields[2]['Value'] = $ic_uf;
 
 			}elseif($regra_tipo == "backbone" && $serviceOuHost == "Service"){
+                //acionamentos desativado
+                $action_acionamentos = null;
 
                 $ic_designacao = $ic_recuperado_td[0]['designacao'];
 
@@ -914,8 +937,10 @@ class TopdeskProvider extends AbstractProvider {
                 $sla = '89ca953a-5643-4a63-b2ef-46434e0fa2b4';
 
 				$email_cliente = $ticket_arguments['From'];
-			}
-			elseif($regra_tipo == "backbone" && $serviceOuHost == "Host"){
+			}elseif($regra_tipo == "backbone" && $serviceOuHost == "Host"){
+                //acionamentos desativado
+                $action_acionamentos = null;
+
                 $titulo = $ticket_arguments['Subject'];
                 
 				//Serviço de Conectividade = 989624e9-4b7f-4bef-ab65-aa6135d52299
@@ -928,6 +953,8 @@ class TopdeskProvider extends AbstractProvider {
 				$email_cliente = $ticket_arguments['From'];
 				
 			}elseif($regra_tipo == "stigti" || $regra_tipo == "stigsc" || $regra_tipo == "sticentreon"){
+                //acionamentos desativado
+                $action_acionamentos = null;
 
 				$titulo = $ticket_arguments['Subject'];
 				//Infraestrutura = a0c472d6-fa00-47d7-9003-b386aa564ab4
@@ -1034,7 +1061,7 @@ class TopdeskProvider extends AbstractProvider {
 
 			
 			$argument = array(
-                    //'action'            => $action_acionamentos,
+                    'action'            => $action_acionamentos,
                     'request'           => $ticket_arguments['Body'], /** .  date('Y-m-d\TH:i:s.u', strtotime($ticket_dynamic_fields[1]['Value'])),*/
                     //'request'           => 'corpo do chamdo',
                     'briefDescription'  => $titulo,

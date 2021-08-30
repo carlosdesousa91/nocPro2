@@ -829,6 +829,10 @@ function consultaIcTopdesk($service_note_centreon, $regra_tipo, $serviceOuHost, 
     $base_url .= $rule_data['address'];
     $base_url .= $rule_data['path'] . '/api';
     $base_url .= '/assetmgmt/assets?fields=';
+	$base_url .= 'conectividade-2-nome-completo,conectividade-2-email,conectividade-2-telefone,';
+	$base_url .= 'conectividade-3-nome-completo,conectividade-3-email,conectividade-3-telefone,';
+	$base_url .= 'conectividade-4-nome-completo,conectividade-4-email,conectividade-4-telefone,';
+	$base_url .= 'conectividade-5-nome-completo,conectividade-5-email,conectividade-5-telefone,';
 	$base_url .= 'specification,name,designacao,email,cnt-informacoes,cnt-horario-de-acionamento,cnt-plantonistas,nome-completo,conectividade-email,conectividade-telefone&$';
 	$base_url .= 'filter=name%20eq%20\'' . $service_note_centreon . '\'';
         
