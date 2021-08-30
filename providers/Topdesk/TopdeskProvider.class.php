@@ -842,6 +842,8 @@ class TopdeskProvider extends AbstractProvider {
                 }
         
             }
+            //tratar espaços para url
+            $child_name = str_replace(" ", "%20", $child_name);
             $ic_child_td = consultaIcTopdesk($child_name, $regra_tipo, $serviceOuHost,
             array(
                 'address' => $this->rule_data['address'],
@@ -852,13 +854,13 @@ class TopdeskProvider extends AbstractProvider {
             );
             //incliur acionamentos no corpo do chamado
             $action_acionamentos = "<b>Acionamentos:</b><br/>";
-            $action_acionamentos .= $ic_child_td['cnt-informacoes'] . "<br/>";
-            $action_acionamentos .= $ic_child_td['cnt-horario-de-acionamento'] . "<br/>";
-            $action_acionamentos .= $ic_child_td['cnt-plantonistas'] . "<br/>";
+            $action_acionamentos .= $ic_child_td[0]['cnt-informacoes'] . "<br/>";
+            $action_acionamentos .= $ic_child_td[0]['cnt-horario-de-acionamento'] . "<br/>";
+            $action_acionamentos .= $ic_child_td[0]['cnt-plantonistas'] . "<br/>";
             $action_acionamentos .= "<b>contatos:</b><br/>";
-            $action_acionamentos .= $ic_child_td['nome-completo'] . "<br/>";
-            $action_acionamentos .= $ic_child_td['conectividade-email'] . "<br/>";
-            $action_acionamentos .= $ic_child_td['conectividade-telefone'];
+            $action_acionamentos .= $ic_child_td[0]['nome-completo'] . "<br/>";
+            $action_acionamentos .= $ic_child_td[0]['conectividade-email'] . "<br/>";
+            $action_acionamentos .= $ic_child_td[0]['conectividade-telefone']. "<br/><br/>";
             //FIM ACIONAMENTOS
             
 
@@ -1032,7 +1034,7 @@ class TopdeskProvider extends AbstractProvider {
 
 			
 			$argument = array(
-                    'action'            => $action_acionamentos,
+                    //'action'            => $action_acionamentos,
                     'request'           => $ticket_arguments['Body'], /** .  date('Y-m-d\TH:i:s.u', strtotime($ticket_dynamic_fields[1]['Value'])),*/
                     //'request'           => 'corpo do chamdo',
                     'briefDescription'  => $titulo,
