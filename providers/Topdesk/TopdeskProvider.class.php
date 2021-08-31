@@ -876,7 +876,7 @@ class TopdeskProvider extends AbstractProvider {
             $action_acionamentos .= "<b>contato V:</b><br/>";
             $action_acionamentos .= $ic_child_td[0]['conectividade-5-nome-completo'] . "<br/>";
             $action_acionamentos .= $ic_child_td[0]['conectividade-5-email'] . "<br/>";
-            $action_acionamentos .= $ic_child_td[0]['conectividade-5-telefone'] . "<br/><br/>";
+            $action_acionamentos .= $ic_child_td[0]['conectividade-5-telefone'] . "<br/><br/><hr>";
             //FIM ACIONAMENTOS
             
 
@@ -885,6 +885,7 @@ class TopdeskProvider extends AbstractProvider {
                 //acionamentos desativado
                 $action_acionamentos = null;
 
+
                 $ticketCliente_td_email = ticketCliente_td($ic_parents_td,
                 array(
                     'address' => $this->rule_data['address'],
@@ -892,7 +893,8 @@ class TopdeskProvider extends AbstractProvider {
                     'username' =>  $this->rule_data['username'], 
                     'password' =>  $this->rule_data['password']
                     )
-                );                
+                );
+
 
                 $email_cliente = $ticketCliente_td_email;  
 
@@ -912,7 +914,66 @@ class TopdeskProvider extends AbstractProvider {
 				// descontinuado $ticket_dynamic_fields[2]['Value'] = $ic_uf;
 				//$email_cliente = $email_cliente;
 				
-			}elseif($regra_tipo == "infrapop"){
+			}elseif($regra_tipo == "ultimamilhateste"){
+                //acionamentos desativado
+                //$action_acionamentos = null;
+
+
+                $ticketCliente_td_email = ticketCliente_td($ic_parents_td,
+                array(
+                    'address' => $this->rule_data['address'],
+                    'path' =>  $this->rule_data['path'],
+                    'username' =>  $this->rule_data['username'], 
+                    'password' =>  $this->rule_data['password']
+                    )
+                );
+
+                //RECUPERADO INFOMAÇÔES do POP para a nota de acionameto
+                foreach($ic_parents_td as $value_ic_pai_td){
+
+                    if ($value_ic_pai_td["linkType"] == "parent"){
+                        $pai_name = $value_ic_pai_td["name"];
+                        $pai_assetId = $value_ic_pai_td["assetId"];
+                    }
+            
+                }
+                $ic_pai_td = consultaIcTopdesk($pai_name, $regra_tipo, $serviceOuHost,
+                array(
+                    'address' => $this->rule_data['address'],
+                    'path' =>  $this->rule_data['path'],
+                    'username' =>  $this->rule_data['username'], 
+                    'password' =>  $this->rule_data['password']
+                    )
+                );
+                
+                $action_acionamentos .= "<b>Localização(PoP):</b><br/>";
+                $action_acionamentos .= $ic_pai_td[0]['telefone'] . "<br/>";
+                $action_acionamentos .= $ic_pai_td[0]['telefone-2'] . "<br/>";
+                $action_acionamentos .= $ic_pai_td[0]['email'] . "<br/>";
+                $action_acionamentos .= $ic_pai_td[0]['uf'] . "<br/>";
+                $action_acionamentos .= $ic_pai_td[0]['endereco'] . "<br/>";
+                $action_acionamentos .= $ic_pai_td[0]['informacao'] . "<br/><br/><hr>";
+                //FIM RECUPERADO INFOMAÇÔES do POP
+
+                $email_cliente = $ticketCliente_td_email;  
+
+                // quando o IC não está cadastrado no OTRS abrir o chamado com o cliente do operador.
+                if(is_null($email_cliente) || $email_cliente == ""){
+                    $email_cliente = $ticket_arguments['From'];
+                }
+
+                $titulo = $ticket_arguments['Subject'];
+                //Serviço de Conectividade = 989624e9-4b7f-4bef-ab65-aa6135d52299
+                //Indisponibilidade = a0a77087-9029-4dcd-a8ab-13a40c8df466
+                // sla = Última milha = d682a47f-3160-4001-b9ab-56814bd3e864
+                $ServiceID = '989624e9-4b7f-4bef-ab65-aa6135d52299';
+                $subcategory = 'a0a77087-9029-4dcd-a8ab-13a40c8df466';
+                $sla = 'd682a47f-3160-4001-b9ab-56814bd3e864';
+						
+				// descontinuado $ticket_dynamic_fields[2]['Value'] = $ic_uf;
+				//$email_cliente = $email_cliente;
+
+            }elseif($regra_tipo == "infrapop"){
                 //acionamentos desativado
                 $action_acionamentos = null;
 
