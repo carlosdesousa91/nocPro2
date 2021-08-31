@@ -116,6 +116,10 @@ Servidor: ESR-SITE PÚBLICO-PRD
 
 - Para a automação reconhecer os relacionamento é necessário somente vincular os Servidores como pais  dos seus respectivos Centreon - Hosts no Topdesk.
 
+# Acionamentos
+
+- 
+
 # Erros Comuns
 
 ### No topdesk existem mais de um "Solicitante" com o e-mail padrão do ativo do PoP. O ativo do PoP deve possuir um e-mail exclusivo.

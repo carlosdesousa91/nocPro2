@@ -853,7 +853,7 @@ class TopdeskProvider extends AbstractProvider {
                 )
             );
             //incliur acionamentos no corpo do chamado
-            $action_acionamentos = "<b>Horário de acionamento:</b><br/>";
+            $action_acionamentos = "<b>Acionamento:</b><br/>";
             $action_acionamentos .= $ic_child_td[0]['cnt-informacoes'] . "<br/>";
             $action_acionamentos .= $ic_child_td[0]['cnt-horario-de-acionamento'] . "<br/>";
             $action_acionamentos .= $ic_child_td[0]['cnt-plantonistas'] . "<br/>";
@@ -943,7 +943,7 @@ class TopdeskProvider extends AbstractProvider {
                 $action_acionamentos .= $ic_pai_td[0]['email'] . "<br/>";
                 //$action_acionamentos .= $ic_pai_td[0]['uf'] . "<br/>";
                 $action_acionamentos .= $ic_pai_td[0]['endereco'] . "<br/>";
-                $action_acionamentos .= $ic_pai_td[0]['informacao'] . "<br/><br/><hr>";
+                $action_acionamentos .= $ic_pai_td[0]['informacao'] . "<br/><br/>";
 
                 //operadora
                 $contato_id = $child_assetId;
@@ -976,10 +976,10 @@ class TopdeskProvider extends AbstractProvider {
                 $action_acionamentos .= "<b>Operadora:</b><br/>";
                 $action_acionamentos .= $ic_operadora_td[0]['op-nome'] . "<br/>";
                 $action_acionamentos .= $ic_operadora_td[0]['op-telefone'] . "<br/>";
-                $action_acionamentos .= $ic_operadora_td[0]['op-e-email'] . "<br/>";
+                $action_acionamentos .= $ic_operadora_td[0]['op-e-mail'] . "<br/>";
                 //$action_acionamentos .= $ic_pai_td[0]['uf'] . "<br/>";
                 $action_acionamentos .= $ic_operadora_td[0]['op-portal'] . "<br/>";
-                $action_acionamentos .= $ic_operadora_td[0]['op-observacoes'] . "<br/><br/><hr>";
+                $action_acionamentos .= $ic_operadora_td[0]['op-observacoes'] . "<br/><br/>";
 
                 //FIM RECUPERADO INFOMAÇÔES do POP e operadora
 

@@ -829,7 +829,7 @@ function consultaIcTopdesk($service_note_centreon, $regra_tipo, $serviceOuHost, 
     $base_url .= $rule_data['address'];
     $base_url .= $rule_data['path'] . '/api';
     $base_url .= '/assetmgmt/assets?fields=';
-	$base_url .= 'op-nome,op-telefone,op-e-email,op-portal,op-observacoes,';
+	$base_url .= 'op-nome,op-telefone,op-e-mail,op-portal,op-observacoes,';
 	$base_url .= 'telefone,telefone-2,uf,endereco,informacao,';
 	$base_url .= 'conectividade-2-nome-completo,conectividade-2-email,conectividade-2-telefone,';
 	$base_url .= 'conectividade-3-nome-completo,conectividade-3-email,conectividade-3-telefone,';
