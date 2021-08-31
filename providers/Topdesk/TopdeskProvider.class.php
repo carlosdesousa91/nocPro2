@@ -876,7 +876,7 @@ class TopdeskProvider extends AbstractProvider {
             $action_acionamentos .= "<b>contato V:</b><br/>";
             $action_acionamentos .= $ic_child_td[0]['conectividade-5-nome-completo'] . "<br/>";
             $action_acionamentos .= $ic_child_td[0]['conectividade-5-email'] . "<br/>";
-            $action_acionamentos .= $ic_child_td[0]['conectividade-5-telefone'] . "<br/><br/><hr>";
+            $action_acionamentos .= $ic_child_td[0]['conectividade-5-telefone'] . "<br/><br/>";
             //FIM ACIONAMENTOS
             
 
@@ -919,16 +919,7 @@ class TopdeskProvider extends AbstractProvider {
                 //$action_acionamentos = null;
 
 
-                $ticketCliente_td_email = ticketCliente_td($ic_parents_td,
-                array(
-                    'address' => $this->rule_data['address'],
-                    'path' =>  $this->rule_data['path'],
-                    'username' =>  $this->rule_data['username'], 
-                    'password' =>  $this->rule_data['password']
-                    )
-                );
-
-                //RECUPERADO INFOMAÇÔES do POP para a nota de acionameto
+                //RECUPERADO INFOMAÇÔES do POP e da Operadora para a nota de acionameto
                 foreach($ic_parents_td as $value_ic_pai_td){
 
                     if ($value_ic_pai_td["linkType"] == "parent"){
@@ -950,12 +941,49 @@ class TopdeskProvider extends AbstractProvider {
                 $action_acionamentos .= $ic_pai_td[0]['telefone'] . "<br/>";
                 $action_acionamentos .= $ic_pai_td[0]['telefone-2'] . "<br/>";
                 $action_acionamentos .= $ic_pai_td[0]['email'] . "<br/>";
-                $action_acionamentos .= $ic_pai_td[0]['uf'] . "<br/>";
+                //$action_acionamentos .= $ic_pai_td[0]['uf'] . "<br/>";
                 $action_acionamentos .= $ic_pai_td[0]['endereco'] . "<br/>";
                 $action_acionamentos .= $ic_pai_td[0]['informacao'] . "<br/><br/><hr>";
-                //FIM RECUPERADO INFOMAÇÔES do POP
 
-                $email_cliente = $ticketCliente_td_email;  
+                //operadora
+                $contato_id = $child_assetId;
+                $ic_operadora_td = consultaICsAssociadosTopdesk($contato_id,
+                array(
+                    'address' => $this->rule_data['address'],
+                    'path' =>  $this->rule_data['path'],
+                    'username' =>  $this->rule_data['username'], 
+                    'password' =>  $this->rule_data['password']
+                    )
+                );
+                foreach($ic_operadora_td as $value_ic_operadora_td){
+
+                    if ($value_ic_operadora_td["linkType"] == "child"){
+                        $operadora_name = $value_ic_operadora_td["name"];
+                        $operadora_assetId = $value_ic_operadora_td["assetId"];
+                    }
+            
+                }
+                $operadora_name = str_replace(" ", "%20", $operadora_name);
+                $ic_operadora_td = consultaIcTopdesk($operadora_name, $regra_tipo, $serviceOuHost,
+                array(
+                    'address' => $this->rule_data['address'],
+                    'path' =>  $this->rule_data['path'],
+                    'username' =>  $this->rule_data['username'], 
+                    'password' =>  $this->rule_data['password']
+                    )
+                );
+                
+                $action_acionamentos .= "<b>Operadora:</b><br/>";
+                $action_acionamentos .= $ic_operadora_td[0]['op-nome'] . "<br/>";
+                $action_acionamentos .= $ic_operadora_td[0]['op-telefone'] . "<br/>";
+                $action_acionamentos .= $ic_operadora_td[0]['op-e-email'] . "<br/>";
+                //$action_acionamentos .= $ic_pai_td[0]['uf'] . "<br/>";
+                $action_acionamentos .= $ic_operadora_td[0]['op-portal'] . "<br/>";
+                $action_acionamentos .= $ic_operadora_td[0]['op-observacoes'] . "<br/><br/><hr>";
+
+                //FIM RECUPERADO INFOMAÇÔES do POP e operadora
+
+
 
                 // quando o IC não está cadastrado no OTRS abrir o chamado com o cliente do operador.
                 if(is_null($email_cliente) || $email_cliente == ""){
