@@ -883,10 +883,28 @@ class TopdeskProvider extends AbstractProvider {
             //checa tipo de ticket um/backbone/sti
 			if($regra_tipo == "ultimamilha"){
                 //acionamentos desativado
-                $action_acionamentos = null;
+                //$action_acionamentos = null;
 
 
-                $ticketCliente_td_email = ticketCliente_td($ic_parents_td,
+                //$ticketCliente_td_email = ticketCliente_td($ic_parents_td,
+                //array(
+                //    'address' => $this->rule_data['address'],
+                //    'path' =>  $this->rule_data['path'],
+                //    'username' =>  $this->rule_data['username'], 
+                //    'password' =>  $this->rule_data['password']
+                //    )
+                //);
+
+                //RECUPERADO INFOMAÇÔES do POP e da Operadora para a nota de acionameto
+                foreach($ic_parents_td as $value_ic_pai_td){
+
+                    if ($value_ic_pai_td["linkType"] == "parent"){
+                        $pai_name = $value_ic_pai_td["name"];
+                        $pai_assetId = $value_ic_pai_td["assetId"];
+                    }
+            
+                }
+                $ic_pai_td = consultaIcTopdesk($pai_name, $regra_tipo, $serviceOuHost,
                 array(
                     'address' => $this->rule_data['address'],
                     'path' =>  $this->rule_data['path'],
@@ -894,9 +912,56 @@ class TopdeskProvider extends AbstractProvider {
                     'password' =>  $this->rule_data['password']
                     )
                 );
+                
+                $action_acionamentos .= "<b>Localização(PoP):</b><br/>";
+                $action_acionamentos .= $ic_pai_td[0]['telefone'] . "<br/>";
+                $action_acionamentos .= $ic_pai_td[0]['telefone-2'] . "<br/>";
+                $action_acionamentos .= $ic_pai_td[0]['email'] . "<br/>";
+                //$action_acionamentos .= $ic_pai_td[0]['uf'] . "<br/>";
+                $action_acionamentos .= $ic_pai_td[0]['endereco'] . "<br/>";
+                $action_acionamentos .= $ic_pai_td[0]['informacao'] . "<br/><br/>";
 
+                //operadora
+                $contato_id = $child_assetId;
+                $ic_operadora_td = consultaICsAssociadosTopdesk($contato_id,
+                array(
+                    'address' => $this->rule_data['address'],
+                    'path' =>  $this->rule_data['path'],
+                    'username' =>  $this->rule_data['username'], 
+                    'password' =>  $this->rule_data['password']
+                    )
+                );
+                foreach($ic_operadora_td as $value_ic_operadora_td){
 
-                $email_cliente = $ticketCliente_td_email;  
+                    if ($value_ic_operadora_td["linkType"] == "child"){
+                        $operadora_name = $value_ic_operadora_td["name"];
+                        $operadora_assetId = $value_ic_operadora_td["assetId"];
+                    }
+            
+                }
+                $operadora_name = str_replace(" ", "%20", $operadora_name);
+                $ic_operadora_td = consultaIcTopdesk($operadora_name, $regra_tipo, $serviceOuHost,
+                array(
+                    'address' => $this->rule_data['address'],
+                    'path' =>  $this->rule_data['path'],
+                    'username' =>  $this->rule_data['username'], 
+                    'password' =>  $this->rule_data['password']
+                    )
+                );
+                
+                $action_acionamentos .= "<b>Operadora:</b><br/>";
+                $action_acionamentos .= $ic_operadora_td[0]['op-nome'] . "<br/>";
+                $action_acionamentos .= $ic_operadora_td[0]['op-telefone'] . "<br/>";
+                $action_acionamentos .= $ic_operadora_td[0]['op-e-mail'] . "<br/>";
+                //$action_acionamentos .= $ic_pai_td[0]['uf'] . "<br/>";
+                $action_acionamentos .= 'Portal: ' . $ic_operadora_td[0]['op-portal'] . "<br/>";
+                $action_acionamentos .= 'Observações: ' . $ic_operadora_td[0]['op-observacoes'] . "<br/><br/>";
+
+                //FIM RECUPERADO INFOMAÇÔES do POP e operadora
+                
+
+                //$email_cliente = $ticketCliente_td_email;
+                $email_cliente = $ic_pai_td[0]['email'];  
 
                 // quando o IC não está cadastrado no OTRS abrir o chamado com o cliente do operador.
                 if(is_null($email_cliente) || $email_cliente == ""){
@@ -1076,7 +1141,7 @@ class TopdeskProvider extends AbstractProvider {
                 foreach($ic_parents_td as $value_ic_parents_td){
 
                     if ($value_ic_parents_td["linkType"] == "parent"){
-                        $parent_name = $value_ic_parents_td["name"] . ' | ' . $parent_name;
+                        $parent_name = $value_ic_parents_td["name"] . ', ' . $parent_name;
                         $parent_assetId = $value_ic_parents_td["assetId"];
                     }
             
@@ -1092,7 +1157,7 @@ class TopdeskProvider extends AbstractProvider {
                 foreach($ic_avo_td as $value_ic_avo_td){
 
                     if ($value_ic_avo_td["linkType"] == "parent"){
-                        $avo_name = $value_ic_avo_td["name"] . ' | ' . $parent_name;
+                        $avo_name = $value_ic_avo_td["name"] . ', ' . $avo_name;
                         $avo_assetId = $value_ic_avo_td["assetId"];
                     }
             
@@ -1108,7 +1173,7 @@ class TopdeskProvider extends AbstractProvider {
                 foreach($ic_bisa_td as $value_ic_bisa_td){
 
                     if ($value_ic_bisa_td["linkType"] == "parent"){
-                        $bisa_name = $value_ic_bisa_td["name"] . ' | ' . $parent_name;
+                        $bisa_name = $value_ic_bisa_td["name"] . ', ' . $bisa_name;
                         $bisa_assetId = $value_ic_bisa_td["assetId"];
                     }
             
