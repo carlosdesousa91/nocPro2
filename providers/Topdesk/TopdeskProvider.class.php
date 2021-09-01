@@ -856,7 +856,7 @@ class TopdeskProvider extends AbstractProvider {
             $action_acionamentos = "<b>Acionamento:</b><br/>";
             $action_acionamentos .= 'Informações: ' . $ic_child_td[0]['cnt-informacoes'] . "<br/>";
             $action_acionamentos .= 'Horário de acionamento: ' . $ic_child_td[0]['cnt-horario-de-acionamento'] . "<br/>";
-            $action_acionamentos .= 'Plantonistas: ' . $ic_child_td[0]['cnt-plantonistas'] . "<br/>";
+            $action_acionamentos .= 'Plantonistas: ' . $ic_child_td[0]['cnt-plantonistas'] . "<br/><br/>";
             $action_acionamentos .= "<b>Contatos:</b><br/>";
             $action_acionamentos .= $ic_child_td[0]['nome-completo'] . "<br/>";
             $action_acionamentos .= $ic_child_td[0]['conectividade-email'] . "<br/>";
@@ -1076,7 +1076,7 @@ class TopdeskProvider extends AbstractProvider {
                 foreach($ic_parents_td as $value_ic_parents_td){
 
                     if ($value_ic_parents_td["linkType"] == "parent"){
-                        $parent_name = $value_ic_parents_td["name"];
+                        $parent_name = $value_ic_parents_td["name"] . ' | ' . $parent_name;
                         $parent_assetId = $value_ic_parents_td["assetId"];
                     }
             
@@ -1092,7 +1092,7 @@ class TopdeskProvider extends AbstractProvider {
                 foreach($ic_avo_td as $value_ic_avo_td){
 
                     if ($value_ic_avo_td["linkType"] == "parent"){
-                        $avo_name = $value_ic_avo_td["name"];
+                        $avo_name = $value_ic_avo_td["name"] . ' | ' . $parent_name;
                         $avo_assetId = $value_ic_avo_td["assetId"];
                     }
             
@@ -1108,7 +1108,7 @@ class TopdeskProvider extends AbstractProvider {
                 foreach($ic_bisa_td as $value_ic_bisa_td){
 
                     if ($value_ic_bisa_td["linkType"] == "parent"){
-                        $bisa_name = $value_ic_bisa_td["name"];
+                        $bisa_name = $value_ic_bisa_td["name"] . ' | ' . $parent_name;
                         $bisa_assetId = $value_ic_bisa_td["assetId"];
                     }
             
