@@ -852,28 +852,28 @@ class TopdeskProvider extends AbstractProvider {
                 'password' =>  $this->rule_data['password']
                 )
             );
-            //incliur acionamentos no corpo do chamado
+            //incliur acionamentos no action do chamado
             $action_acionamentos = "<b>Acionamento:</b><br/>";
             $action_acionamentos .= $ic_child_td[0]['cnt-informacoes'] . "<br/>";
             $action_acionamentos .= $ic_child_td[0]['cnt-horario-de-acionamento'] . "<br/>";
             $action_acionamentos .= $ic_child_td[0]['cnt-plantonistas'] . "<br/>";
-            $action_acionamentos .= "<b>contato I:</b><br/>";
+            $action_acionamentos .= "<b>Contatos:</b><br/>";
             $action_acionamentos .= $ic_child_td[0]['nome-completo'] . "<br/>";
             $action_acionamentos .= $ic_child_td[0]['conectividade-email'] . "<br/>";
             $action_acionamentos .= $ic_child_td[0]['conectividade-telefone'] . "<br/>";
-            $action_acionamentos .= "<b>contato II:</b><br/>";
+            //$action_acionamentos .= "<b>contato II:</b><br/>";
             $action_acionamentos .= $ic_child_td[0]['conectividade-2-nome-completo'] . "<br/>";
             $action_acionamentos .= $ic_child_td[0]['conectividade-2-email'] . "<br/>";
             $action_acionamentos .= $ic_child_td[0]['conectividade-2-telefone'] . "<br/>";
-            $action_acionamentos .= "<b>contato III:</b><br/>";
+            //$action_acionamentos .= "<b>contato III:</b><br/>";
             $action_acionamentos .= $ic_child_td[0]['conectividade-3-nome-completo'] . "<br/>";
             $action_acionamentos .= $ic_child_td[0]['conectividade-3-email'] . "<br/>";
             $action_acionamentos .= $ic_child_td[0]['conectividade-3-telefone'] . "<br/>";
-            $action_acionamentos .= "<b>contato IV:</b><br/>";
+            //$action_acionamentos .= "<b>contato IV:</b><br/>";
             $action_acionamentos .= $ic_child_td[0]['conectividade-4-nome-completo'] . "<br/>";
             $action_acionamentos .= $ic_child_td[0]['conectividade-4-email'] . "<br/>";
             $action_acionamentos .= $ic_child_td[0]['conectividade-4-telefone'] . "<br/>";
-            $action_acionamentos .= "<b>contato V:</b><br/>";
+            //$action_acionamentos .= "<b>contato V:</b><br/>";
             $action_acionamentos .= $ic_child_td[0]['conectividade-5-nome-completo'] . "<br/>";
             $action_acionamentos .= $ic_child_td[0]['conectividade-5-email'] . "<br/>";
             $action_acionamentos .= $ic_child_td[0]['conectividade-5-telefone'] . "<br/><br/>";
