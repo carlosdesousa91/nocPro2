@@ -1077,7 +1077,7 @@ class TopdeskProvider extends AbstractProvider {
 
 			}elseif($regra_tipo == "backbone" && $serviceOuHost == "Service"){
                 //acionamentos desativado
-                $action_acionamentos = null;
+                //$action_acionamentos = null;
 
                 $ic_designacao = $ic_recuperado_td[0]['designacao'];
 
