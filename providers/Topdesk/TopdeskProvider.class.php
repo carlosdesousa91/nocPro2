@@ -1155,7 +1155,7 @@ class TopdeskProvider extends AbstractProvider {
                         );
                         //Responsáveis
                         foreach($avo_persons as $value_avo_persons){
-                            $avo_persons_name = $value_avo_persons["person"]["name"];
+                            $avo_persons_name = '@' . $value_avo_persons["person"]["name"];
                             $avo_r_name = $avo_persons_name . ' / ' . $avo_r_name;
 
                         }
@@ -1189,7 +1189,7 @@ class TopdeskProvider extends AbstractProvider {
                         );
                         //Responsáveis
                         foreach($bisa_persons as $value_bisa_persons){
-                            $bisa_persons_name = $value_bisa_persons["person"]["name"];
+                            $bisa_persons_name = '@' . $value_bisa_persons["person"]["name"];
                             $bisa_r_name = $bisa_persons_name . ' / ' . $bisa_r_name;
                         }
                         //fim pessoas
