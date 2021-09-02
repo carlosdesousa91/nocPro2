@@ -979,14 +979,81 @@ function ticketCliente_td($ic_parents_td,$rule_data=array()){
 
 }
 
-function splitBody($body,$servidor,$sistema){
+function splitBody($persons,$body,$servidor,$sistema){
+	//Responsáveis
+	foreach($persons as $value_persons){
+			$persons_name = $value_persons["person"]["name"] . ' / ' . $persons_name;
+	}
+
 	$body_new = explode("evento:", $body);
 	$body_new = $body_new[0] .
-	"evento:<br/> <b>Sistemas:</b> " . $sistema .
-	"<br/> <b>Servidor:</b> " . $servidor .
+	"evento:" .
+	"<br/><b>Responsável(eis):</b> " . $persons_name .
+	"<br/><b>Sistemas:</b> " . $sistema .
+	"<br/><b>Servidor:</b> " . $servidor .
 	$body_new[1];
 
 	return $body_new;
+}
+
+function consultaIcAtribuicaoes($ativo_id, $rule_data=array()){
+
+	$base_url = 'https://';
+    $base_url .= $rule_data['address'];
+    $base_url .= $rule_data['path'] . '/api';
+    $base_url .= '/assetmgmt/assets/' . $ativo_id;
+	$base_url .= '/assignments';
+        
+    $Authorization = base64_encode($rule_data['username'] . ":" . $rule_data['password']);
+	
+	$ch = curl_init($base_url);
+	if ($ch == false) {
+		$this->setWsError("cannot init curl object");
+		return 1;
+	}
+	$argument = array(
+			
+
+	);
+	$argument_json = json_encode($argument);
+	curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
+	curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 60);
+	curl_setopt($ch, CURLOPT_TIMEOUT, 60);
+	curl_setopt($ch, CURLOPT_POSTFIELDS, $argument_json);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+	curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+		'Authorization: Basic ' . $Authorization,
+		'Content-Type: application/json',
+		'Accept: application/json',
+		'Content-Length: ' . strlen($argument_json),
+		'Connection: close', 
+		'Cache-Control: no-cache')
+	);
+
+	$result = curl_exec($ch);
+	if ($result == false) {
+		//$this->setWsError(curl_error($ch));
+		curl_close($ch);
+		return 1;
+	}
+				
+	$decoded_result = json_decode($result, TRUE);
+	if (is_null($decoded_result) || $decoded_result == false) {
+		//$this->setWsError($result);
+		//retorna nehum ticket
+		return 1;
+	}
+
+	curl_close($ch);
+
+	if (isset($decoded_result['Error'])) {
+			//$this->setWsError($decoded_result['Error']['ErrorMessage']);
+			//erro autenticação
+			return 2;
+	}
+
+	return $decoded_result['persons'];
 }
 
 

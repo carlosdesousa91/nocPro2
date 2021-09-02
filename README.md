@@ -108,6 +108,8 @@ Servidor: ESR-SITE PÚBLICO-PRD
 Sistema: ESR - Site Público
 Servidor: ESR-SITE PÚBLICO-PRD
 ```
+- Os responsáveis são os usuários atribuidos ao "Sistema".
+
 ## exemplo de relacionamento:
  
 - Quando um chamado for aberto para o CENTREON_4543 ou para um de seus filhos(CENTREON_4543_29565, CENTREON_4543_29576, etc) o NOCPro identificará o ESR-SITE PÚBLICO-PRD(Servidor) e o ESR - Site Público(Sistema).

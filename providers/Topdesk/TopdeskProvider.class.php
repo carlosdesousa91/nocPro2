@@ -1121,6 +1121,7 @@ class TopdeskProvider extends AbstractProvider {
 				$email_cliente = $ticket_arguments['From'];
 			}else{
 
+                //REMOVER
                 $ic_recuperado_td = consultaIcTopdesk($ticket_arguments['CustomerUser'], $regra_tipo, $serviceOuHost,
                 array(
                     'address' => $this->rule_data['address'],
@@ -1138,10 +1139,11 @@ class TopdeskProvider extends AbstractProvider {
                     'password' =>  $this->rule_data['password']
                     )
                 );
+                //FIM REMOVER
                 foreach($ic_parents_td as $value_ic_parents_td){
 
                     if ($value_ic_parents_td["linkType"] == "parent"){
-                        $parent_name = $value_ic_parents_td["name"] . ', ' . $parent_name;
+                        $parent_name = $value_ic_parents_td["name"] . ' / ' . $parent_name;
                         $parent_assetId = $value_ic_parents_td["assetId"];
                     }
             
@@ -1157,7 +1159,7 @@ class TopdeskProvider extends AbstractProvider {
                 foreach($ic_avo_td as $value_ic_avo_td){
 
                     if ($value_ic_avo_td["linkType"] == "parent"){
-                        $avo_name = $value_ic_avo_td["name"] . ', ' . $avo_name;
+                        $avo_name = $value_ic_avo_td["name"] . ' / ' . $avo_name;
                         $avo_assetId = $value_ic_avo_td["assetId"];
                     }
             
@@ -1173,17 +1175,33 @@ class TopdeskProvider extends AbstractProvider {
                 foreach($ic_bisa_td as $value_ic_bisa_td){
 
                     if ($value_ic_bisa_td["linkType"] == "parent"){
-                        $bisa_name = $value_ic_bisa_td["name"] . ', ' . $bisa_name;
+                        $bisa_name = $value_ic_bisa_td["name"] . ' / ' . $bisa_name;
                         $bisa_assetId = $value_ic_bisa_td["assetId"];
                     }
             
                 }
                 //incliur associados no corpo do chamado
                 if($serviceOuHost == "Host"){
-                    $ticket_arguments['Body'] = splitBody($ticket_arguments['Body'], $parent_name, $avo_name);
+                    $persons = consultaIcAtribuicaoes($avo_name,
+                    array(
+                        'address' => $this->rule_data['address'],
+                        'path' =>  $this->rule_data['path'],
+                        'username' =>  $this->rule_data['username'], 
+                        'password' =>  $this->rule_data['password']
+                        )
+                    );
+                    $ticket_arguments['Body'] = splitBody($persons, $ticket_arguments['Body'], $parent_name, $avo_name);
                     $titulo = $avo_name . " - " . $ticket_arguments['Subject'];
                 }else{
-                    $ticket_arguments['Body'] = splitBody($ticket_arguments['Body'], $avo_name, $bisa_name);
+                    $persons = consultaIcAtribuicaoes($bisa_name,
+                    array(
+                        'address' => $this->rule_data['address'],
+                        'path' =>  $this->rule_data['path'],
+                        'username' =>  $this->rule_data['username'], 
+                        'password' =>  $this->rule_data['password']
+                        )
+                    );
+                    $ticket_arguments['Body'] = splitBody($persons, $ticket_arguments['Body'], $avo_name, $bisa_name);
                     $titulo = $bisa_name . " - " . $ticket_arguments['Subject'];
                 }
 
