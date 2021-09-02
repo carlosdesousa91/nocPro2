@@ -1159,8 +1159,24 @@ class TopdeskProvider extends AbstractProvider {
                 foreach($ic_avo_td as $value_ic_avo_td){
 
                     if ($value_ic_avo_td["linkType"] == "parent"){
-                        $avo_name = $value_ic_avo_td["name"] . ' / ' . $avo_name;
+                        
                         $avo_assetId = $value_ic_avo_td["assetId"];
+                        //pessoas
+                        $avo_persons = consultaIcAtribuicaoes($avo_assetId,
+                        array(
+                            'address' => $this->rule_data['address'],
+                            'path' =>  $this->rule_data['path'],
+                            'username' =>  $this->rule_data['username'], 
+                            'password' =>  $this->rule_data['password']
+                            )
+                        );
+                        //Responsáveis
+                        foreach($avo_persons as $value_avo_persons){
+                            $avo_persons_name = $value_avo_persons["person"]["name"];
+                            $avo_name = '<br/>' . $value_ic_avo_td["name"] . ' - Responsável: ' . $avo_persons_name . '<br/>' . $avo_name;
+                        }
+                        //fim pessoas
+
                     }
             
                 }
@@ -1175,34 +1191,33 @@ class TopdeskProvider extends AbstractProvider {
                 foreach($ic_bisa_td as $value_ic_bisa_td){
 
                     if ($value_ic_bisa_td["linkType"] == "parent"){
-                        $bisa_name = $value_ic_bisa_td["name"] . ' / ' . $bisa_name;
+                        //$bisa_name = $value_ic_bisa_td["name"] . ' / ' . $bisa_name;
                         $bisa_assetId = $value_ic_bisa_td["assetId"];
+                        //pessoas
+                        $bisa_persons = consultaIcAtribuicaoes($bisa_assetId,
+                        array(
+                            'address' => $this->rule_data['address'],
+                            'path' =>  $this->rule_data['path'],
+                            'username' =>  $this->rule_data['username'], 
+                            'password' =>  $this->rule_data['password']
+                            )
+                        );
+                        //Responsáveis
+                        foreach($bisa_persons as $value_bisa_persons){
+                            $bisa_persons_name = $value_bisa_persons["person"]["name"];
+                            $bisa_name = '<br/>' . $value_ic_bisa_td["name"] . ' - Responsável: ' . $bisa_persons_name . '<br/>' . $bisa_name;
+                        }
+                        //fim pessoas
                     }
             
                 }
                 //incliur associados no corpo do chamado
                 if($serviceOuHost == "Host"){
-                    $persons = consultaIcAtribuicaoes($avo_name,
-                    array(
-                        'address' => $this->rule_data['address'],
-                        'path' =>  $this->rule_data['path'],
-                        'username' =>  $this->rule_data['username'], 
-                        'password' =>  $this->rule_data['password']
-                        )
-                    );
-                    $ticket_arguments['Body'] = splitBody($persons, $ticket_arguments['Body'], $parent_name, $avo_name);
-                    $titulo = $avo_name . " - " . $ticket_arguments['Subject'];
+                    $ticket_arguments['Body'] = splitBody($ticket_arguments['Body'], $parent_name, $avo_name);
+                    //$titulo = $avo_name . " - " . $ticket_arguments['Subject'];
                 }else{
-                    $persons = consultaIcAtribuicaoes($bisa_name,
-                    array(
-                        'address' => $this->rule_data['address'],
-                        'path' =>  $this->rule_data['path'],
-                        'username' =>  $this->rule_data['username'], 
-                        'password' =>  $this->rule_data['password']
-                        )
-                    );
-                    $ticket_arguments['Body'] = splitBody($persons, $ticket_arguments['Body'], $avo_name, $bisa_name);
-                    $titulo = $bisa_name . " - " . $ticket_arguments['Subject'];
+                    $ticket_arguments['Body'] = splitBody($ticket_arguments['Body'], $avo_name, $bisa_name);
+                    //$titulo = $bisa_name . " - " . $ticket_arguments['Subject'];
                 }
 
 				//$titulo = $ticket_arguments['Subject'];

@@ -979,16 +979,11 @@ function ticketCliente_td($ic_parents_td,$rule_data=array()){
 
 }
 
-function splitBody($persons,$body,$servidor,$sistema){
-	//Responsáveis
-	foreach($persons as $value_persons){
-			$persons_name = $value_persons["person"]["name"] . ' / ' . $persons_name;
-	}
+function splitBody($body,$servidor,$sistema){
 
 	$body_new = explode("evento:", $body);
 	$body_new = $body_new[0] .
 	"evento:" .
-	"<br/><b>Responsável(eis):</b> " . $persons_name .
 	"<br/><b>Sistemas:</b> " . $sistema .
 	"<br/><b>Servidor:</b> " . $servidor .
 	$body_new[1];
