@@ -1173,10 +1173,10 @@ class TopdeskProvider extends AbstractProvider {
                         //Responsáveis
                         foreach($avo_persons as $value_avo_persons){
                             $avo_persons_name = $value_avo_persons["person"]["name"];
-                            $avo_name = '<br/>' . $value_ic_avo_td["name"] . ' - Responsável: ' . $avo_persons_name . '<br/>' . $avo_name;
+                            $avo_r_name = $avo_persons_name . ' / ' . $avo_r_name;
                         }
                         //fim pessoas
-
+                        $avo_name = '<br/>' . $value_ic_avo_td["name"] . ' - Responsável(eis): ' . $avo_r_name;
                     }
             
                 }
@@ -1205,9 +1205,11 @@ class TopdeskProvider extends AbstractProvider {
                         //Responsáveis
                         foreach($bisa_persons as $value_bisa_persons){
                             $bisa_persons_name = $value_bisa_persons["person"]["name"];
-                            $bisa_name = '<br/>' . $value_ic_bisa_td["name"] . ' - Responsável: ' . $bisa_persons_name . '<br/>' . $bisa_name;
+                            $bisa_r_name = $bisa_persons_name . ' / ' . $bisa_r_name;
                         }
                         //fim pessoas
+                        $bisa_name = '<br/>' . $value_ic_bisa_td["name"] . ' - Responsável(eis): ' . $bisa_r_name;
+
                     }
             
                 }
@@ -1220,7 +1222,7 @@ class TopdeskProvider extends AbstractProvider {
                     //$titulo = $bisa_name . " - " . $ticket_arguments['Subject'];
                 }
 
-				//$titulo = $ticket_arguments['Subject'];
+				$titulo = $ticket_arguments['Subject'];
 				//Infraestrutura = a0c472d6-fa00-47d7-9003-b386aa564ab4
                 //Servidor = c3a90c32-07cc-48a7-85b7-11ead8ba3888
                 // sla = Backbone = 2e589a5e-4d5d-4cf5-ba19-6a95b7ce892b
