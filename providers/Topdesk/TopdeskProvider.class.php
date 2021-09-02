@@ -1106,7 +1106,7 @@ class TopdeskProvider extends AbstractProvider {
 
 				$email_cliente = $ticket_arguments['From'];
 				
-			}elseif($regra_tipo == "stigti" || $regra_tipo == "stigsc" || $regra_tipo == "sticentreon"){
+			}elseif($regra_tipo == "stigti" || $regra_tipo == "sticentreon"){
                 //acionamentos desativado
                 $action_acionamentos = null;
 
@@ -1119,27 +1119,10 @@ class TopdeskProvider extends AbstractProvider {
                 $sla = null;
 
 				$email_cliente = $ticket_arguments['From'];
-			}else{
+			}elseif($regra_tipo == "stigsc"){
+                //acionamentos desativado
+                $action_acionamentos = null;
 
-                //REMOVER
-                $ic_recuperado_td = consultaIcTopdesk($ticket_arguments['CustomerUser'], $regra_tipo, $serviceOuHost,
-                array(
-                    'address' => $this->rule_data['address'],
-                    'path' =>  $this->rule_data['path'],
-                    'username' =>  $this->rule_data['username'], 
-                    'password' =>  $this->rule_data['password']
-                    )
-                );
-                //recupera dados dos parents
-                $ic_parents_td = consultaICsAssociadosTopdesk($ic_recuperado_td[0]['unid'],
-                array(
-                    'address' => $this->rule_data['address'],
-                    'path' =>  $this->rule_data['path'],
-                    'username' =>  $this->rule_data['username'], 
-                    'password' =>  $this->rule_data['password']
-                    )
-                );
-                //FIM REMOVER
                 foreach($ic_parents_td as $value_ic_parents_td){
 
                     if ($value_ic_parents_td["linkType"] == "parent"){
