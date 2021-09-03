@@ -787,7 +787,8 @@ class TopdeskProvider extends AbstractProvider {
 				
                 //VERIFICA acionamento personalizado
                 if($valuetabRelacionamento[0]['state'] != 0 ){
-                    $acionamento_personalizado = "<br/><b>O " . $valuetabRelacionamento[0]['name'] . "está indisponível, realizar acionamento personalizado.</b>" . $acionamento_personalizado;
+                    $acionamento_personalizado = "<br/>O <b>" .
+                    $valuetabRelacionamento[0]['name'] . "</b> está indisponível, realizar acionamento personalizado." . $acionamento_personalizado;
                 }
 				
 			}
@@ -994,7 +995,7 @@ class TopdeskProvider extends AbstractProvider {
                 //acionamentos desativado
                 //$action_acionamentos = null;
 
-                $action_acionamentos = $acionamento_personalizado . $action_acionamentos;
+                $action_acionamentos = $acionamento_personalizado . "<br/>" . $action_acionamentos;
 
                 //RECUPERADO INFOMAÇÔES do POP e da Operadora para a nota de acionameto
                 foreach($ic_parents_td as $value_ic_pai_td){

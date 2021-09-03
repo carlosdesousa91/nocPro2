@@ -120,7 +120,19 @@ Servidor: ESR-SITE PÚBLICO-PRD
 
 # Acionamentos
 
-- 
+- Os ativos de "acionamentos" devem ser associados como "filhos" do ativos de circuitos.
+
+- Para última milha os ativos de "localização(PoP)" são "pais" dos ativos de circuitos.
+
+- Para última milha os ativos de "operadoras" são pais dos ativos de "acionamentos" assim como os ativos de circuitos.
+
+### acionamentos personalizados
+
+- Os acionamentos personalizados serão incluidos na nota de acionamentos se o relacionamento estiver cadastrado no campo notes do centreon:
+
+```ic::0000::acionamento::24218,24219```
+
+- os dois últimos Ids separados por virgula são services do centreon que o NOCPro validará se estão indisponiveis.
 
 # Erros Comuns
 
