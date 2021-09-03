@@ -659,13 +659,20 @@ class TopdeskProvider extends AbstractProvider {
 					foreach ($relacionamentos_ids as $valuerelacionamentos_ids) {
 						$tabRelacionamento = relacionamentoFalhasEquivalentes($valuerelacionamentos_ids, $db_storage, $serviceOuHost);
 						$tabRelacionamentoFull[] = array($tabRelacionamento);
-                        if($tabRelacionamento['state'] != 0 ){
 
-                        }
 					}
 
-                    $ticketsPopUp[] = Json_encode($tabRelacionamentoFull);
-                    $this->_otrs_call_response['TicketNumber'] = Json_encode($tabRelacionamentoFull);
+                    //$ticketsPopUp[] = Json_encode($tabRelacionamentoFull);
+                    //$this->_otrs_call_response['TicketNumber'] = Json_encode($tabRelacionamentoFull);
+
+                    $ticket_arguments['CustomerUser'] = $relacionamentos_array[1];
+                    $code = $this->createTicketTopdesk($ticket_arguments, $ticket_dynamic_fields, $serviceOuHost, $tabRelacionamentoFull);
+                    if ($code == -1) {
+                        $result['ticket_error_message'] = $this->ws_error;
+                        return $result;
+                    }
+                    $ticketsPopUp[] =  $this->_otrs_call_response['TicketNumber'] . "_" . $stringNetosAck;
+
 
                 }else{
 				
@@ -777,7 +784,11 @@ class TopdeskProvider extends AbstractProvider {
 					}
 				}
 				$ticket_existenteTopdesk = $ticket_existeAnterior;
-								
+				
+                //VERIFICA acionamento personalizado
+                if($valuetabRelacionamento[0]['state'] != 0 ){
+                    $acionamento_personalizado = "<br/>O " . $valuetabRelacionamento[0]['name'] . "está indisponível, realizar acionamento personalizado." . $acionamento_personalizado;
+                }
 				
 			}
 		}
@@ -983,6 +994,7 @@ class TopdeskProvider extends AbstractProvider {
                 //acionamentos desativado
                 //$action_acionamentos = null;
 
+                $action_acionamentos = $acionamento_personalizado;
 
                 //RECUPERADO INFOMAÇÔES do POP e da Operadora para a nota de acionameto
                 foreach($ic_parents_td as $value_ic_pai_td){
