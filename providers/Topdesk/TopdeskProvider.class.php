@@ -1092,6 +1092,8 @@ class TopdeskProvider extends AbstractProvider {
                 //acionamentos desativado
                 //$action_acionamentos = null;
 
+                $action_acionamentos = $acionamento_personalizado . "<br/>" . $action_acionamentos;
+
                 $ic_designacao = $ic_recuperado_td[0]['designacao'];
 
                 $titulo = $ticket_arguments['Subject'] . " (" . $ic_designacao . ")";
